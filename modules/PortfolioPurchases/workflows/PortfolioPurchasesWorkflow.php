@@ -391,8 +391,8 @@ class PortfolioPurchasesWorkflow
 	{
 		$id = $recordModel->getId();
 
-		\App\Log::warning("PortfolioPurchases::Workflows::recalculateFromBuybackClaims:" . $id);
+		\App\Log::warning("PortfolioPurchases::Workflows::InvokeCustomFunction:" . $id);
 
-    $recordModel->recalculateFromBuybackClaims();
+    $recordModel->InvokeCustomFunction();
 	}
 }
