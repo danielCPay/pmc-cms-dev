@@ -149,13 +149,13 @@ class PortfolioPurchases_Record_Model extends Vtiger_Record_Model
     $id = $this->getId();
     $lockAutomation = $this->get('lock_automation');
 		
-    \App\Log::warning("PortfolioPurchases::recalculateFromBuybackClaims:$id/$lockAutomation");
+    \App\Log::warning("PortfolioPurchases::InvokeCustomFunction:$id/$lockAutomation");
 
     // If Lock automation = Yes, do nothing
     if(!$lockAutomation) {
       $buybackClearance = (new \App\QueryGenerator('Claims'))->setField('buyback_amount')->addCondition('buyback_portfolio_purchase', $id, 'eid')->createQuery()->sum('Coalesce(buyback_amount, 0)') ?: 0;
 
-      \App\Log::trace("PortfolioPurchases::recalculateFromBuybackClaims:buyback_clearance = $buybackClearance");
+      \App\Log::trace("PortfolioPurchases::InvokeCustomFunction:buyback_clearance = $buybackClearance");
       $this->set('buyback_clearance', round($buybackClearance, 2));
 
       $this->save();
