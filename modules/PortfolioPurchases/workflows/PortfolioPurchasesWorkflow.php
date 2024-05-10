@@ -386,4 +386,13 @@ class PortfolioPurchasesWorkflow
       throw new \App\Exceptions\BatchErrorHandledWorkflowException($error);
     }
   }
+
+  public static function InvokeCustomFunction(Vtiger_Record_Model $recordModel)
+	{
+		$id = $recordModel->getId();
+
+		\App\Log::warning("PortfolioPurchases::Workflows::recalculateFromBuybackClaims:" . $id);
+
+    $recordModel->recalculateFromBuybackClaims();
+	}
 }
