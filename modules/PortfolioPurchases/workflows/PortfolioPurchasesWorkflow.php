@@ -395,4 +395,29 @@ class PortfolioPurchasesWorkflow
 
     $recordModel->InvokeCustomFunction();
 	}
+
+  public static function updateOpenDateOfPortfolios(Vtiger_Record_Model $recordModel)
+  {
+    $id = $recordModel->getId();
+    $portfolioId = $recordModel->get('portfolio');
+    $portfoliopurchases = $recordModel->get('portfoliopurchases');
+    $purchase_date = $portfoliopurchases->get('purchase_date');
+
+    \App\Log::warning("Portfolios::Workflows::updateOpenDateOfPortfolios:$id/$portfolioId/$portfoliopurchases");
+
+    if (!empty($purchase_date)) {
+      //$portfoliopurchases = Vtiger_Record_Model::getInstanceById($portfoliopurchases);
+     
+      // get min purchase_date from previous opened_date for portfoliopurchases
+      $purchase_date = (new \App\QueryGenerator('PortfolioPurchases'))      
+        ->createQuery()
+        ->andWhere('portfolio', $portfolioId)
+        ->min("purchase_date");         
+
+      // set purchase_date
+      $recordModelPortfolios = \Vtiger_Record_Model::getCleanInstance('Portfolios');
+      $recordModelPortfolios->set('opened_date', "$purchase_date");
+      $recordModelPortfolios->save();
+    }
+  }
 }

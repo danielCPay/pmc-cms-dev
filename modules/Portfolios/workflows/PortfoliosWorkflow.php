@@ -235,30 +235,4 @@ class PortfoliosWorkflow
 
     Portfolios_Module_Model::resetToNew();
   }
-
-  public static function updateOpenDateOfPortfolios(Vtiger_Record_Model $recordModel)
-  {
-    $id = $recordModel->getId();
-    $currentPortfolioId = $recordModel->get('portfoliosid');
-    $portfoliopurchases = $recordModel->get('portfoliopurchases');
-    $purchase_date = $portfoliopurchases->get('purchase_date');
-
-    \App\Log::warning("Portfolios::Workflows::updateOpenDateOfPortfolios:$id/$currentPortfolioId/$portfoliopurchases");
-
-    if (!empty($purchase_date)) {
-      $portfoliopurchases = Vtiger_Record_Model::getInstanceById($portfoliopurchases);
-     
-      // get min purchase_date from previous opened_date for portfoliopurchases
-      $purchase_date = (new \App\QueryGenerator('PortfolioPurchases'))      
-        ->createQuery()
-        ->andWhere('portfoliosid', $currentPortfolioId)
-        ->min("purchase_date");    
-
-      /// $buybackClearance = (new \App\QueryGenerator('Claims'))->setField('buyback_amount')->addCondition('buyback_portfolio_purchase', $id, 'eid')->createQuery()->sum('Coalesce(buyback_amount, 0)') ?: 0;
-
-      // set purchase_date
-      $recordModel->set('opened_date', "$purchase_date");
-      $recordModel->save();
-    }
-  }
 }

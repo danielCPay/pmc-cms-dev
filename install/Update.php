@@ -97,8 +97,7 @@ $customFunctions = [
     [ 'methodName' => 'releaseReservesToProvider', 'functionPath' => 'modules/Portfolios/workflows/PortfoliosWorkflow.php', 'functionName' => 'PortfoliosWorkflow' ],
     [ 'methodName' => 'stopIfMoreClaimsToUnderwrite', 'functionPath' => 'modules/Portfolios/workflows/PortfoliosWorkflow.php', 'functionName' => 'PortfoliosWorkflow' ],
     [ 'methodName' => 'createHOAttorneyConfirmationRequests', 'functionPath' => 'modules/Portfolios/workflows/PortfoliosWorkflow.php', 'functionName' => 'PortfoliosWorkflow' ],
-    [ 'methodName' => 'resetToNew', 'functionPath' => 'modules/Portfolios/workflows/PortfoliosWorkflow.php', 'functionName' => 'PortfoliosWorkflow' ],
-    [ 'methodName' => 'updateOpenDateOfPortfolios', 'functionPath' => 'modules/Portfolios/workflows/PortfoliosWorkflow.php', 'functionName' => 'PortfoliosWorkflow' ],
+    [ 'methodName' => 'resetToNew', 'functionPath' => 'modules/Portfolios/workflows/PortfoliosWorkflow.php', 'functionName' => 'PortfoliosWorkflow' ],    
   ],
   'PortfolioPurchases' => [
     [ 'methodName' => 'generatePortfolioPurchaseName', 'functionPath' => 'modules/PortfolioPurchases/workflows/PortfolioPurchasesWorkflow.php', 'functionName' => 'PortfolioPurchasesWorkflow' ],
@@ -108,7 +107,8 @@ $customFunctions = [
     [ 'methodName' => 'recalculateFromBuybackClaims', 'functionPath' => 'modules/PortfolioPurchases/workflows/PortfolioPurchasesWorkflow.php', 'functionName' => 'PortfolioPurchasesWorkflow' ],
     [ 'methodName' => 'checkNoPurchaseDocument', 'functionPath' => 'modules/PortfolioPurchases/workflows/PortfolioPurchasesWorkflow.php', 'functionName' => 'PortfolioPurchasesWorkflow' ],
     [ 'methodName' => 'sendForSigning', 'functionPath' => 'modules/PortfolioPurchases/workflows/PortfolioPurchasesWorkflow.php', 'functionName' => 'PortfolioPurchasesWorkflow' ],
-    [ 'methodName' => 'InvokeCustomFunction', 'functionPath' => 'modules/PortfolioPurchases/workflows/PortfolioPurchasesWorkflow.php', 'functionName' => 'PortfolioPurchasesWorkflow' ]
+    [ 'methodName' => 'InvokeCustomFunction', 'functionPath' => 'modules/PortfolioPurchases/workflows/PortfolioPurchasesWorkflow.php', 'functionName' => 'PortfolioPurchasesWorkflow' ],
+    [ 'methodName' => 'updateOpenDateOfPortfolios', 'functionPath' => 'modules/PortfolioPurchases/workflows/PortfolioPurchasesWorkflow.php', 'functionName' => 'PortfolioPurchasesWorkflow' ],
   ],
   'DocumentTypes' => [
     [ 'methodName' => 'refreshDocumentTypesPaths', 'functionPath' => 'modules/DocumentTypes/workflows/DocumentTypesWorkflow.php', 'functionName' => 'DocumentTypesWorkflow' ],
