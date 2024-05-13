@@ -14,7 +14,7 @@ class PortfolioPurchasesServiceImpl implements PortfolioPurchasesService
         $this->portfolioPurchasesRepository = $portfolioPurchasesRepository;
     }
 
-    public function getAllPortfolios()
+    public function getAllPortfolioPurchases()
     {
         return $this->portfolioPurchasesRepository->getAll();
     }

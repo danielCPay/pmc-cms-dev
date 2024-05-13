@@ -4,7 +4,7 @@ namespace App\Services;
 
 interface PortfolioPurchasesService
 {
-    public function getAllPortfolios();
+    public function getAllPortfolioPurchases();
     
     public function getLatestPortfolio();
 

@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Repositories;
 
 use App\Models\PortfolioPurchases;
@@ -28,14 +29,14 @@ class PortfolioPurchasesRepository
     public function store(array $data)
     {
         return PortfolioPurchases::create($data);
-
     }
 
     public function getById($portfoliosid)
     {
         # return $this->prices->where('price','>=',0)->min('price');
         $portfolio = PortfolioPurchases::where('portfolio', $portfoliosid)->min('purchase_date');
-        return $portfolio;
+
+        return substr($portfolio, 0, 10);
     }
 
     public function update(array $data, PortfolioPurchases $portfoliosid)
@@ -57,8 +58,5 @@ class PortfolioPurchasesRepository
 
         // Delete the Portfolio record
         $portfolio->delete();
-
-       
     }
 }
-?>

@@ -15,8 +15,8 @@ class PortfolioPurchasesController extends Controller
     }
     public function index()
     {
-        $portfolios = $this->portfolioPurchasesService->getAllPortfolios();
-        return $portfolios;
+        $portfolioPurchases = $this->portfolioPurchasesService->getAllPortfolioPurchases();
+        return $portfolioPurchases;
     }
 
     public function getLatest()
