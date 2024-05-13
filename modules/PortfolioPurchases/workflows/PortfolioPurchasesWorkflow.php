@@ -416,7 +416,7 @@ class PortfolioPurchasesWorkflow
 
       // set purchase_date
       $recordModelPortfolios = \Vtiger_Record_Model::getCleanInstance('Portfolios');
-      $recordModelPortfolios->set('opened_date', "$purchase_date");
+      $recordModelPortfolios->set('opened_date', substr($purchase_date , 0, 10));
       $recordModelPortfolios->save();
     }
   }
