@@ -9,7 +9,7 @@ class PortfolioPurchasesService
         return $this->sendRequest('POST', $endpoint, $data);
     }
 
-    public function get($endpoint)
+    public function read($endpoint)
     {
         return $this->sendRequest('GET', $endpoint);
     }
