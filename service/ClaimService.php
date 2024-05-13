@@ -2,7 +2,7 @@
 
 class ClaimService
 {
-    private $baseUrl='http://10.3.0.6:8000/api/claims';
+    private $baseUrl='http://10.3.0.13:8000/api/claims';
 
     public function create($endpoint, $data)
     {

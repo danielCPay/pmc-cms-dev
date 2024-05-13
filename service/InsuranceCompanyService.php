@@ -2,7 +2,7 @@
 
 class InsuranceCompanyService
 {
-    private $baseUrl='http://10.3.0.6:8000/api/insurancecompanies';
+    private $baseUrl='http://10.3.0.13:8000/api/insurancecompanies';
 
     public function create($endpoint, $data)
     {

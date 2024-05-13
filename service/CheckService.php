@@ -2,7 +2,7 @@
 
 class CheckService
 {
-    private $baseUrl='http://10.3.0.6:8000/api/checks';
+    private $baseUrl='http://10.3.0.13:8000/api/checks';
 
     public function create($endpoint, $data)
     {

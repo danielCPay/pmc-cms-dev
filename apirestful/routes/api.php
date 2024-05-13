@@ -14,3 +14,6 @@ require __DIR__.'/api/InsuranceCompanies.php';
 
 // Include the claims routes
 require __DIR__.'/api/Cases.php';
+
+// Include the PortfolioPurchases routes
+require __DIR__.'/api/PortfolioPurchases.php';

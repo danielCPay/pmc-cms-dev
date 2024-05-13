@@ -2,7 +2,7 @@
 
 class ProviderService
 {
-    private $baseUrl='http://10.3.0.6:8000/api/providers';
+    private $baseUrl='http://10.3.0.13:8000/api/providers';
 
     public function create($endpoint, $data)
     {
