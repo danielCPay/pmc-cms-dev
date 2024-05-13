@@ -1,6 +1,6 @@
 <?php
 
-class CheckService
+class PortfolioPurchasesService
 {
     private $baseUrl='http://10.3.0.13:8000/api/portfoliopurchases';
 

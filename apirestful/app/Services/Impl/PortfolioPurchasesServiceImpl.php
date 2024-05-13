@@ -2,10 +2,10 @@
 
 namespace App\Services\Impl;
 
-use App\Services\PortfolioPurchasesServices;
+use App\Services\PortfolioPurchasesService;
 use App\Repositories\PortfolioPurchasesRepository;
 
-class PortfolioPurchasesServiceImpl implements PortfolioPurchasesServices
+class PortfolioPurchasesServiceImpl implements PortfolioPurchasesService
 {
     protected $portfolioPurchasesRepository;
 

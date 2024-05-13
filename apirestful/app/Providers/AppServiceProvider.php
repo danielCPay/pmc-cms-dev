@@ -8,6 +8,7 @@ use App\Services\CheckService;
 use App\Services\ClaimService;
 use App\Services\InsuranceCompanyService;
 use App\Services\PortfolioService;
+use App\Services\PortfolioPurchasesService;
 use App\Services\ProviderService;
 use App\Services\Impl\CaseServiceImpl;
 use App\Services\Impl\CheckServiceImpl;
@@ -15,6 +16,7 @@ use App\Services\Impl\ClaimServiceImpl;
 use App\Services\Impl\InsuranceCompanyServiceImpl;
 use App\Services\Impl\PortfolioServiceImpl;
 use App\Services\Impl\ProviderServiceImpl;
+use App\Services\Impl\PortfolioPurchasesServiceImpl;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -30,6 +32,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(ClaimService::class, ClaimServiceImpl::class);
         $this->app->bind(InsuranceCompanyService::class, InsuranceCompanyServiceImpl::class);
         $this->app->bind(PortfolioService::class, PortfolioServiceImpl::class);
+        $this->app->bind(PortfolioPurchasesService::class, PortfolioPurchasesServiceImpl::class);
         $this->app->bind(ProviderService::class, ProviderServiceImpl::class);
     }
 

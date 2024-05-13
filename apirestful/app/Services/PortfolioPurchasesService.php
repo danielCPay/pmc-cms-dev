@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-interface PortfolioPurchasesServices
+interface PortfolioPurchasesService
 {
     public function getAllPortfolios();
     
