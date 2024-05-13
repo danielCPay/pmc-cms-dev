@@ -98,6 +98,7 @@ $customFunctions = [
     [ 'methodName' => 'stopIfMoreClaimsToUnderwrite', 'functionPath' => 'modules/Portfolios/workflows/PortfoliosWorkflow.php', 'functionName' => 'PortfoliosWorkflow' ],
     [ 'methodName' => 'createHOAttorneyConfirmationRequests', 'functionPath' => 'modules/Portfolios/workflows/PortfoliosWorkflow.php', 'functionName' => 'PortfoliosWorkflow' ],
     [ 'methodName' => 'resetToNew', 'functionPath' => 'modules/Portfolios/workflows/PortfoliosWorkflow.php', 'functionName' => 'PortfoliosWorkflow' ],
+    [ 'methodName' => 'updateOpenDateOfPortfolios', 'functionPath' => 'modules/Portfolios/workflows/PortfoliosWorkflow.php', 'functionName' => 'PortfoliosWorkflow' ],
   ],
   'PortfolioPurchases' => [
     [ 'methodName' => 'generatePortfolioPurchaseName', 'functionPath' => 'modules/PortfolioPurchases/workflows/PortfolioPurchasesWorkflow.php', 'functionName' => 'PortfolioPurchasesWorkflow' ],
