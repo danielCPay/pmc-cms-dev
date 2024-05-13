@@ -2,7 +2,7 @@
 
 //use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\CheckController;
+use App\Http\Controllers\PortfolioPurchasesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,11 +19,11 @@ use App\Http\Controllers\CheckController;
     return $request->user();
 });*/
 
-Route::get('/portfoliopurchases', [CheckController::class, 'index']);
-Route::get('/portfoliopurchases/latest', [CheckController::class, 'getLatest']);
-Route::get('/portfoliopurchases/{portfolio}', [CheckController::class, 'show']);
-Route::post('/portfoliopurchases', [CheckController::class, 'store']);
-Route::put('/portfoliopurchases/{portfolio}', [CheckController::class, 'update']);
-Route::delete('/portfoliopurchases/{check}', [CheckController::class, 'destroy']);
-Route::put('/portfoliopurchases/fill/fields', [CheckController::class, 'fillFields']);
-Route::get('/portfoliopurchases/countrows/{filePath}', [CheckController::class, 'countRows']);
+Route::get('/portfoliopurchases', [PortfolioPurchasesController::class, 'index']);
+Route::get('/portfoliopurchases/latest', [PortfolioPurchasesController::class, 'getLatest']);
+Route::get('/portfoliopurchases/{portfolio}', [PortfolioPurchasesController::class, 'show']);
+Route::post('/portfoliopurchases', [PortfolioPurchasesController::class, 'store']);
+Route::put('/portfoliopurchases/{portfolio}', [PortfolioPurchasesController::class, 'update']);
+Route::delete('/portfoliopurchases/{check}', [PortfolioPurchasesController::class, 'destroy']);
+Route::put('/portfoliopurchases/fill/fields', [PortfolioPurchasesController::class, 'fillFields']);
+Route::get('/portfoliopurchases/countrows/{filePath}', [PortfolioPurchasesController::class, 'countRows']);
