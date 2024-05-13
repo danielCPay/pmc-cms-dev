@@ -34,7 +34,7 @@ class PortfolioPurchasesRepository
     public function getById($portfoliosid)
     {
         # return $this->prices->where('price','>=',0)->min('price');
-        $portfolio = PortfolioPurchases::where('portfoliosid', $portfoliosid)->min('price');
+        $portfolio = PortfolioPurchases::where('portfolio', $portfoliosid)->min('purchase_date');
         return $portfolio;
     }
 
