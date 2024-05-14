@@ -427,11 +427,34 @@ class PortfolioPurchasesWorkflow
     try {
       $id = $recordModel->getId();
 
-      \App\Log::warning("PortfolioPurchases::Workflows::updateOpenDateOfPortfoliosAll:" . $id);    
-      $recordModel->updateOpenDateOfPortfoliosAll();
+      \App\Log::warning("PortfolioPurchases::Workflows::updateOpenDateOfPortfoliosAll:" . $id);
      
+      $portfolios = Vtiger_RelationListView_Model::getInstance($recordModel, "Portfolios");
+      $portfoliosRows = $portfolios->getRelationQuery();
+      //$portfoliosRecords = $portfolios->getRecordsFromArray($portfoliosRows);
+
+      // foreach ($relatedRecords as $id => $portfolio) {
+
+      //   $portfolio = Vtiger_Record_Model::getInstanceById($portfolio->getId());
+
+      //   $purchase_date = $portfolio->get('purchase_date');
+      //   $portfolioId = $portfolio->get('portfolio');
+
+      //   if (!empty($purchase_date)) {
+
+      //     $purchase_date = (new \App\QueryGenerator('PortfolioPurchases'))
+      //       ->addCondition('portfolio', $portfolioId, 'eid')
+      //       ->createQuery()
+      //       ->min("purchase_date");
+
+      //     // set purchase_date        
+      //     $recordModel = \Vtiger_Record_Model::getInstanceById($portfolioId, 'Portfolios');
+      //     $recordModel->set('opened_date', substr($purchase_date, 0, 10));
+      //     $recordModel->save();
+      //   }
+      // }
     } catch (\Throwable $th) {
-      var_dump("error " . $th);
+      var_dump("portfoliosRows " . $th);
     }
   }
 }

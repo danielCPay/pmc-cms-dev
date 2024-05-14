@@ -15,6 +15,12 @@
  */
 class PortfolioPurchases_Record_Model extends Vtiger_Record_Model
 {
+  protected $portfolioPurchasesService;
+  public function __construct()
+  {
+    $this->portfolioPurchasesService = new PortfolioPurchasesService();
+  }
+
   public function recalculateFromClaims()
   {
     $id = $this->getId();
@@ -153,7 +159,7 @@ class PortfolioPurchases_Record_Model extends Vtiger_Record_Model
     $lockAutomation = $this->get('lock_automation');
 
     \App\Log::warning("PortfolioPurchases::InvokeCustomFunction:$id/$lockAutomation");
-
+    $purchase_date = $this->portfolioPurchasesService->fillFields('fill/fields');
     // If Lock automation = Yes, do nothing
     if (!$lockAutomation) {
       $buybackClearance = (new \App\QueryGenerator('Claims'))->setField('buyback_amount')->addCondition('buyback_portfolio_purchase', $id, 'eid')->createQuery()->sum('Coalesce(buyback_amount, 0)') ?: 0;
@@ -165,43 +171,5 @@ class PortfolioPurchases_Record_Model extends Vtiger_Record_Model
 
       $this->InvokeCustomFunction();
     }
-  }
-  public function updateOpenDateOfPortfoliosAll()
-  {
-    try {
-      $portfolios = Vtiger_RelationListView_Model::getInstance($this, "Portfolios");
-      $portfoliosRows = $portfolios->getRelationQuery()->all();
-      $portfoliosRecords = $portfolios->getRecordsFromArray($portfoliosRows);
-    } catch (\Throwable $th) {
-      var_dump("error " . $th);
-    }
-    /*$relationModel = Vtiger_RelationListView_Model::getInstance($recordModel, "Portfolios");
-      $rows = $relationModel->getRelationQuery()->all();
-      $relatedRecords = $relationModel->getRecordsFromArray($rows);*/
-
-    //$portfolios = Vtiger_RelationListView_Model::getInstance($recordModel, "Portfolios");
-    //$portfoliosRows = $portfolios->getRelationQuery()->all();
-    //$portfoliosRecords = $portfolios->getRecordsFromArray($portfoliosRows);
-
-    // foreach ($relatedRecords as $id => $portfolio) {
-
-    //   $portfolio = Vtiger_Record_Model::getInstanceById($portfolio->getId());
-
-    //   $purchase_date = $portfolio->get('purchase_date');
-    //   $portfolioId = $portfolio->get('portfolio');
-
-    //   if (!empty($purchase_date)) {
-
-    //     $purchase_date = (new \App\QueryGenerator('PortfolioPurchases'))
-    //       ->addCondition('portfolio', $portfolioId, 'eid')
-    //       ->createQuery()
-    //       ->min("purchase_date");
-
-    //     // set purchase_date        
-    //     $recordModel = \Vtiger_Record_Model::getInstanceById($portfolioId, 'Portfolios');
-    //     $recordModel->set('opened_date', substr($purchase_date, 0, 10));
-    //     $recordModel->save();
-    //   }
-    // }
-  }
+  } 
 }
