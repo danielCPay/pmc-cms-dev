@@ -426,32 +426,26 @@ class PortfolioPurchasesWorkflow
       \App\Log::warning("PortfolioPurchases::Workflows::updateOpenDateOfPortfoliosAll:" . $id);
 
       $portfolios = VTWorkflowUtils::getAllRelatedRecords($recordModel, 'Portfolios');
-      //$portfolios = Vtiger_RelationListView_Model::getInstance($recordModel, "Portfolios");
-      //$portfoliosRows = $portfolios->getRelationQuery();
-      //$portfoliosRecords = $portfolios->getRecordsFromArray($portfoliosRows);
 
-      // foreach ($relatedRecords as $id => $portfolio) {
+      foreach ($portfolios as $portfoliosRow) {
 
-      //   $portfolio = Vtiger_Record_Model::getInstanceById($portfolio->getId());
+        $portfolio = Vtiger_Record_Model::getInstanceById($portfoliosRow['id']);
 
-      //   $purchase_date = $portfolio->get('purchase_date');
-      //   $portfolioId = $portfolio->get('portfolio');
+        $portfolioId = $portfolio->get('portfoliosid');
 
-      //   if (!empty($purchase_date)) {
+        $purchase_date = (new \App\QueryGenerator('PortfolioPurchases'))
+          ->addCondition('portfolio', $portfolioId, 'eid')
+          ->createQuery()
+          ->min("purchase_date");
 
-      //     $purchase_date = (new \App\QueryGenerator('PortfolioPurchases'))
-      //       ->addCondition('portfolio', $portfolioId, 'eid')
-      //       ->createQuery()
-      //       ->min("purchase_date");
-
-      //     // set purchase_date        
-      //     $recordModel = \Vtiger_Record_Model::getInstanceById($portfolioId, 'Portfolios');
-      //     $recordModel->set('opened_date', substr($purchase_date, 0, 10));
-      //     $recordModel->save();
-      //   }
-      // }
+        if (!empty($purchase_date)) {
+          $recordModel = \Vtiger_Record_Model::getInstanceById($portfolioId, 'Portfolios');
+          $recordModel->set('opened_date', substr($purchase_date, 0, 10));
+          $recordModel->save();
+        }
+      }
     } catch (\Throwable $th) {
-      var_dump("portfoliosRows " . $portfolios);
+      var_dump("Error " . $th);
     }
   }
 }
