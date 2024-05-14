@@ -425,12 +425,18 @@ class PortfolioPurchasesWorkflow
 
       \App\Log::warning("PortfolioPurchases::Workflows::updateOpenDateOfPortfoliosAll:" . $id);
 
-      $portfolios = \VTWorkflowUtils::getAllRelatedRecords($recordModel, 'Portfolios');
+      //$portfolios = \VTWorkflowUtils::getAllRelatedRecords($recordModel, 'Portfolios');
+
+      $portfolios =  (new \App\QueryGenerator('PortfolioPurchases'))
+        ->createQuery()
+        ->all();
+
+      foreach ($portfolios as $portfoliosRow) {
+      }
 
       if (count($portfolios) > 0) {
         var_dump("portfolios lleno" . $portfolios);
       }
-
 
       foreach ($portfolios as $portfoliosRow) {
 
