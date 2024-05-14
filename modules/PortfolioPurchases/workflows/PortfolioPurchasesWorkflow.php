@@ -402,10 +402,10 @@ class PortfolioPurchasesWorkflow
     try {
       $id = $recordModel->getId();
       $portfolioId = $recordModel->get('portfolio');
-      $portfoliopurchases = $recordModel->get('portfoliopurchases');
-      $purchase_date = $portfoliopurchases->get('purchase_date');
+      //$portfoliopurchases = $recordModel->get('portfoliopurchases');
+      $purchase_date = $recordModel->get('purchase_date');
 
-      \App\Log::warning("PortfolioPurchases::Workflows::updateOpenDateOfPortfolios:$id/$portfolioId/$portfoliopurchases");
+      \App\Log::warning("PortfolioPurchases::Workflows::updateOpenDateOfPortfolios:$id/$portfolioId");
 
       if (!empty($purchase_date)) {
         //$portfoliopurchases = Vtiger_Record_Model::getInstanceById($portfoliopurchases);
