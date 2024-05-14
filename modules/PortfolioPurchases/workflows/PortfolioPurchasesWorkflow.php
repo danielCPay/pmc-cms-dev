@@ -440,7 +440,7 @@ class PortfolioPurchasesWorkflow
 
       foreach ($portfolios as $portfoliosRow) {
 
-        var_dump($portfoliosRow);
+        var_dump($portfoliosRow['portfoliosid']);
         exit();
         # $recordModel = \Vtiger_Record_Model::getInstanceById($portfolioId, 'Portfolios');
         $portfolio = Vtiger_Record_Model::getInstanceById($portfoliosRow['id'], 'Portfolios');
