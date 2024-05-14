@@ -414,7 +414,6 @@ class PortfolioPurchasesWorkflow
         $purchase_date = (new \App\QueryGenerator('PortfolioPurchases'))
           ->addCondition('portfolio', $portfolioId, 'eid')
           ->createQuery()
-          //->andWhere('portfolio', $portfolioId)
           ->min("purchase_date");
 
         // set purchase_date
@@ -422,8 +421,8 @@ class PortfolioPurchasesWorkflow
       $recordModelPortfolios->set('opened_date', substr($purchase_date , 0, 10));
       $recordModelPortfolios->save();*/
 
-        //$recordModel->set('note', substr($purchase_date, 0, 10));
-        //$recordModel->save();
+        $recordModel->set('note', substr($purchase_date, 0, 10));
+        $recordModel->save();
       }
     } catch (\Throwable $th) {
       var_dump($th);
