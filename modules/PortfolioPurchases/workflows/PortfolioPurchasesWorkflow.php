@@ -412,7 +412,7 @@ class PortfolioPurchasesWorkflow
       var_dump($th);
     }
   }
-  
+
   /**
    * Create journal entry in QuickBooks. Ensures required accounts and customers exist.
    *
@@ -425,8 +425,9 @@ class PortfolioPurchasesWorkflow
 
       \App\Log::warning("PortfolioPurchases::Workflows::updateOpenDateOfPortfoliosAll:" . $id);
 
-      $portfolios = Vtiger_RelationListView_Model::getInstance($recordModel, "Portfolios");
-      $portfoliosRows = $portfolios->getRelationQuery();
+      $portfolios = VTWorkflowUtils::getAllRelatedRecords($recordModel, 'Portfolios');
+      //$portfolios = Vtiger_RelationListView_Model::getInstance($recordModel, "Portfolios");
+      //$portfoliosRows = $portfolios->getRelationQuery();
       //$portfoliosRecords = $portfolios->getRecordsFromArray($portfoliosRows);
 
       // foreach ($relatedRecords as $id => $portfolio) {
@@ -450,7 +451,7 @@ class PortfolioPurchasesWorkflow
       //   }
       // }
     } catch (\Throwable $th) {
-      var_dump("portfoliosRows " . $th);
+      var_dump("portfoliosRows " . $portfolios);
     }
   }
 }
