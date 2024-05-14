@@ -37,16 +37,21 @@ class PortfolioRepository
         return $portfolio;
     }
 
-    public function update(array $data, Portfolio $portfoliosid)
+    public function update(array $data, $portfoliosid)
     {
         // Find the Portfolio record by insurancecompanysid
-        $portfolio = Portfolio::where('portfoliosid', $portfoliosid)->firstOrFail();
-
+        //$portfolio = Portfolio::where('portfoliosid', $portfoliosid)->firstOrFail();           
         // Update the Portfolio record with the request data
-        $portfolio->update($data);
-
+        //$portfolio->update($data);
         // Return the updated Portfolio record
-        return $portfolio;
+        //return $portfolio;        
+        $portfolio = Portfolio::find($portfoliosid);
+
+        $portfolio->opened_date = $data['opened_date'];
+
+        $portfolio->save();
+
+        return $portfolio; 
     }
 
     public function delete($portfoliosid)

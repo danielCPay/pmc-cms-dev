@@ -1,8 +1,8 @@
 <?php
 
-class PortfolioPurchasesService
+class PortfolioService
 {
-    private $baseUrl='http://10.3.0.13:8000/api/portfoliopurchases';
+    private $baseUrl='http://10.3.0.13:8000/api/portfolio';
 
     public function create($endpoint, $data)
     {

@@ -44,7 +44,7 @@ class PortfolioController extends Controller
 
     public function update(Request $request, $portfoliosid)
     {
-        $data = $request->all();
+        $data = $request->all();       
         $portfolio = $this->portfolioService->updatePortfolio($data,$portfoliosid);
 
         // Return the updated Portfolios record

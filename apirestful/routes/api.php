@@ -17,3 +17,6 @@ require __DIR__.'/api/Cases.php';
 
 // Include the PortfolioPurchases routes
 require __DIR__.'/api/PortfolioPurchases.php';
+
+// Include the Portfolio routes
+require __DIR__.'/api/Portfolio.php';
