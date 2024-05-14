@@ -420,7 +420,7 @@ class PortfolioPurchasesWorkflow
         $recordModelPortfolios = \Vtiger_Record_Model::getCleanInstance('Portfolios');
         $recordModelPortfolios->set('opened_date', substr($purchase_date, 0, 10));
         $recordModelPortfolios->save();
-
+        return ['id' => $recordModelPortfolios->getId()];
         /*$recordModel->set('note', substr($purchase_date, 0, 10));
         $recordModel->save();*/
       }
