@@ -458,7 +458,7 @@ class PortfolioPurchasesWorkflow
       //   }
       // }
     } catch (\Throwable $th) {
-      var_dump("portfoliosRows " . $portfoliosRows);
+      var_dump("error " . $th);
     }
   }
 }
