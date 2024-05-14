@@ -412,8 +412,9 @@ class PortfolioPurchasesWorkflow
 
         // get min purchase_date from previous opened_date for portfoliopurchases
         $purchase_date = (new \App\QueryGenerator('PortfolioPurchases'))
+          ->addCondition('portfolio', $portfolioId, 'eid')
           ->createQuery()
-          ->andWhere('portfolio', $portfolioId)
+          //->andWhere('portfolio', $portfolioId)
           ->min("purchase_date");
 
         // set purchase_date
