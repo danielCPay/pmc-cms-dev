@@ -426,14 +426,13 @@ class PortfolioPurchasesWorkflow
       \App\Log::warning("PortfolioPurchases::Workflows::updateOpenDateOfPortfoliosAll:" . $id);
 
       $portfolios = VTWorkflowUtils::getAllRelatedRecords($recordModel, 'Portfolios');
-      print_r($portfolios);
-      //exit();
+
       foreach ($portfolios as $portfoliosRow) {
 
         $portfolio = Vtiger_Record_Model::getInstanceById($portfoliosRow['id']);
 
         $portfolioId = $portfolio->get('portfoliosid');
-
+        var_dump($portfolioId);
         $purchase_date = (new \App\QueryGenerator('PortfolioPurchases'))
           ->addCondition('portfolio', $portfolioId, 'eid')
           ->createQuery()
