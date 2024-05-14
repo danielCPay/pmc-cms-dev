@@ -402,33 +402,20 @@ class PortfolioPurchasesWorkflow
     try {
       $id = $recordModel->getId();
       $portfolioId = $recordModel->get('portfolio');
-      //$portfoliopurchases = $recordModel->get('portfoliopurchases');
       $purchase_date = $recordModel->get('purchase_date');
 
       \App\Log::warning("PortfolioPurchases::Workflows::updateOpenDateOfPortfolios:$id/$portfolioId");
 
       if (!empty($purchase_date)) {
-        //$portfoliopurchases = Vtiger_Record_Model::getInstanceById($portfoliopurchases);
-
-        // get min purchase_date from previous opened_date for portfoliopurchases
         $purchase_date = (new \App\QueryGenerator('PortfolioPurchases'))
           ->addCondition('portfolio', $portfolioId, 'eid')
           ->createQuery()
           ->min("purchase_date");
 
-        // set purchase_date
-        //$recordModelPortfolios = \Vtiger_Record_Model::getCleanInstance('Portfolios');
-        //$recordModel = \Vtiger_Relation_Model::getInstanceById($portfolioId, "Portfolios");
+        // set purchase_date        
         $recordModel = \Vtiger_Record_Model::getInstanceById($portfolioId, 'Portfolios');
         $recordModel->set('opened_date', substr($purchase_date, 0, 10));
         $recordModel->save();
-        //return ['id' => $recordModelPortfolios->getId()];
-
-        /*$this->parentRecordModel = \Vtiger_Record_Model::getInstanceById($accountId, 'Accounts');
-        $this->pricebookId = $this->parentRecordModel->get('pricebook_id');*/
-
-        /*$recordModel->set('note', substr($purchase_date, 0, 10));
-        $recordModel->save();*/
       }
     } catch (\Throwable $th) {
       var_dump($th);
