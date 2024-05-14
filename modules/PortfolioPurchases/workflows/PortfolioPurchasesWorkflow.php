@@ -427,12 +427,14 @@ class PortfolioPurchasesWorkflow
 
       $portfolios = VTWorkflowUtils::getAllRelatedRecords($recordModel, 'Portfolios');
 
+      var_dump(count($portfolios));
+      
       foreach ($portfolios as $portfoliosRow) {
 
         $portfolio = Vtiger_Record_Model::getInstanceById($portfoliosRow['id']);
 
         $portfolioId = $portfolio->get('portfoliosid');
-        var_dump($portfolioId);
+
         $purchase_date = (new \App\QueryGenerator('PortfolioPurchases'))
           ->addCondition('portfolio', $portfolioId, 'eid')
           ->createQuery()
