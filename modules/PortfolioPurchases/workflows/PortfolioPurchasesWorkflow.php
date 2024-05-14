@@ -427,16 +427,16 @@ class PortfolioPurchasesWorkflow
 
       //$portfolios = \VTWorkflowUtils::getAllRelatedRecords($recordModel, 'Portfolios');
 
-      $portfolios =  (new \App\QueryGenerator('PortfolioPurchases'))
+      $portfolios =  (new \App\QueryGenerator('Portfolios'))
         ->createQuery()
         ->all();
 
-      foreach ($portfolios as $portfoliosRow) {
-      }
+      // foreach ($portfolios as $portfoliosRow) {
+      // }
 
-      if (count($portfolios) > 0) {
-        var_dump("portfolios lleno" . $portfolios);
-      }
+      // if (count($portfolios) > 0) {
+      //   var_dump("portfolios lleno" . $portfolios);
+      // }
 
       foreach ($portfolios as $portfoliosRow) {
 
