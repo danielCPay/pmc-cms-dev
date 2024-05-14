@@ -15,12 +15,6 @@
  */
 class PortfolioPurchases_Record_Model extends Vtiger_Record_Model
 {
-  protected $portfolioPurchasesService;
-  public function __construct()
-  {
-    $this->portfolioPurchasesService = new PortfolioPurchasesService();
-  }
-
   public function recalculateFromClaims()
   {
     $id = $this->getId();
