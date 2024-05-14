@@ -425,7 +425,7 @@ class PortfolioPurchasesWorkflow
         $recordModel->save();
       }
     } catch (\Throwable $th) {
-      throw $th;
+      var_dump($th);
     }
   }
 }
