@@ -54,7 +54,7 @@ class Debug
 	public static $DISPLAY_DEBUG_CONSOLE = true;
 
 	/** Enable displaying logs in debug console. Values: false/true default: false */
-	public static $DISPLAY_LOGS_IN_CONSOLE = false;
+	public static $DISPLAY_LOGS_IN_CONSOLE = true;
 
 	/** Enable displaying logs in debug console. Values: false/true default: false*/
 	public static $DISPLAY_CONFIG_IN_CONSOLE = false;
