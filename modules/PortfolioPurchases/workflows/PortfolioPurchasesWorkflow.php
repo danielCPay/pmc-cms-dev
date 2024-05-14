@@ -427,7 +427,10 @@ class PortfolioPurchasesWorkflow
 
       $portfolios = \VTWorkflowUtils::getAllRelatedRecords($recordModel, 'Portfolios');
 
-      var_dump(count($portfolios));
+      if (count($portfolios) > 0) {
+        var_dump("portfolios lleno" . $portfolios);
+      }
+
 
       foreach ($portfolios as $portfoliosRow) {
 
