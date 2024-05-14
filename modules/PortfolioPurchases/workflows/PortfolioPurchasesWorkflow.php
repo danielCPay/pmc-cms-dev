@@ -425,10 +425,10 @@ class PortfolioPurchasesWorkflow
 
       \App\Log::warning("PortfolioPurchases::Workflows::updateOpenDateOfPortfoliosAll:" . $id);
 
-      $portfolios = VTWorkflowUtils::getAllRelatedRecords($recordModel, 'Portfolios');
+      $portfolios = \VTWorkflowUtils::getAllRelatedRecords($recordModel, 'Portfolios');
 
       var_dump(count($portfolios));
-      
+
       foreach ($portfolios as $portfoliosRow) {
 
         $portfolio = Vtiger_Record_Model::getInstanceById($portfoliosRow['id']);
