@@ -418,9 +418,10 @@ class PortfolioPurchasesWorkflow
 
         // set purchase_date
         //$recordModelPortfolios = \Vtiger_Record_Model::getCleanInstance('Portfolios');
-        $recordModelPortfolios = \Vtiger_Relation_Model::getInstanceById($portfolioId, "Portfolios");
-        $recordModelPortfolios->set('opened_date', substr($purchase_date, 0, 10));
-        //$recordModelPortfolios->save();
+        //$recordModel = \Vtiger_Relation_Model::getInstanceById($portfolioId, "Portfolios");
+        $recordModel = \Vtiger_Record_Model::getInstanceById($portfolioId, 'Portfolios');
+        $recordModel->set('opened_date', substr($purchase_date, 0, 10));
+        $recordModel->save();
         //return ['id' => $recordModelPortfolios->getId()];
 
         /*$this->parentRecordModel = \Vtiger_Record_Model::getInstanceById($accountId, 'Accounts');
