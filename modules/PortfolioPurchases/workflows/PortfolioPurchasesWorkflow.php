@@ -435,7 +435,7 @@ class PortfolioPurchasesWorkflow
 
       $portfolios = Vtiger_RelationListView_Model::getInstance($recordModel, "Portfolios");
       $portfoliosRows = $portfolios->getRelationQuery()->all();
-      $portfoliosRecords = $portfolios->getRecordsFromArray($portfoliosRows);
+      //$portfoliosRecords = $portfolios->getRecordsFromArray($portfoliosRows);
 
       // foreach ($relatedRecords as $id => $portfolio) {
 
@@ -458,7 +458,7 @@ class PortfolioPurchasesWorkflow
       //   }
       // }
     } catch (\Throwable $th) {
-      var_dump($portfoliosRecords);
+      var_dump("portfoliosRows " . $portfoliosRows);
     }
   }
 }
