@@ -426,7 +426,7 @@ class PortfolioPurchasesWorkflow
       \App\Log::warning("PortfolioPurchases::Workflows::updateOpenDateOfPortfoliosAll:" . $id);
 
       $portfolios = VTWorkflowUtils::getAllRelatedRecords($recordModel, 'Portfolios');
-      var_dump($portfolios);
+      print_r($portfolios);
       //exit();
       foreach ($portfolios as $portfoliosRow) {
 
