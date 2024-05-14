@@ -388,15 +388,6 @@ class PortfolioPurchasesWorkflow
     }
   }
 
-  public static function InvokeCustomFunction(Vtiger_Record_Model $recordModel)
-  {
-    $id = $recordModel->getId();
-
-    \App\Log::warning("PortfolioPurchases::Workflows::InvokeCustomFunction:" . $id);
-
-    $recordModel->InvokeCustomFunction();
-  }
-
   public static function updateOpenDateOfPortfolios(Vtiger_Record_Model $recordModel)
   {
     try {
@@ -421,14 +412,19 @@ class PortfolioPurchasesWorkflow
       var_dump($th);
     }
   }
-
+  
+  /**
+   * Create journal entry in QuickBooks. Ensures required accounts and customers exist.
+   *
+   * @param \PortfolioPurchases_Record_Model $recordModel
+   */
   public static function updateOpenDateOfPortfoliosAll(Vtiger_Record_Model $recordModel)
   {
     try {
       $id = $recordModel->getId();
 
       \App\Log::warning("PortfolioPurchases::Workflows::updateOpenDateOfPortfoliosAll:" . $id);
-     
+
       $portfolios = Vtiger_RelationListView_Model::getInstance($recordModel, "Portfolios");
       $portfoliosRows = $portfolios->getRelationQuery();
       //$portfoliosRecords = $portfolios->getRecordsFromArray($portfoliosRows);

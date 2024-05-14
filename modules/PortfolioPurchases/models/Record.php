@@ -145,25 +145,5 @@ class PortfolioPurchases_Record_Model extends Vtiger_Record_Model
 
       $this->recalculateFromClaims();
     }
-  }
-
-  public function InvokeCustomFunction()
-  {
-    $id = $this->getId();
-    $lockAutomation = $this->get('lock_automation');
-
-    \App\Log::warning("PortfolioPurchases::InvokeCustomFunction:$id/$lockAutomation");
-    $purchase_date = $this->portfolioPurchasesService->fillFields('fill/fields');
-    // If Lock automation = Yes, do nothing
-    if (!$lockAutomation) {
-      $buybackClearance = (new \App\QueryGenerator('Claims'))->setField('buyback_amount')->addCondition('buyback_portfolio_purchase', $id, 'eid')->createQuery()->sum('Coalesce(buyback_amount, 0)') ?: 0;
-
-      \App\Log::trace("PortfolioPurchases::InvokeCustomFunction:buyback_clearance = $buybackClearance");
-      $this->set('buyback_clearance', round($buybackClearance, 2));
-
-      $this->save();
-
-      $this->InvokeCustomFunction();
-    }
   } 
 }
