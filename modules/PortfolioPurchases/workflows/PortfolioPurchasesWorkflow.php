@@ -414,7 +414,7 @@ class PortfolioPurchasesWorkflow
   }
 
   /**
-   * Create journal entry in QuickBooks. Ensures required accounts and customers exist.
+   * updateOpenDate.
    *
    * @param \PortfolioPurchases_Record_Model $recordModel
    */
@@ -426,7 +426,8 @@ class PortfolioPurchasesWorkflow
       \App\Log::warning("PortfolioPurchases::Workflows::updateOpenDateOfPortfoliosAll:" . $id);
 
       $portfolios = VTWorkflowUtils::getAllRelatedRecords($recordModel, 'Portfolios');
-
+      var_dump($portfolios);
+      exit();
       foreach ($portfolios as $portfoliosRow) {
 
         $portfolio = Vtiger_Record_Model::getInstanceById($portfoliosRow['id']);
