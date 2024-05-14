@@ -426,18 +426,16 @@ class PortfolioPurchasesWorkflow
   {
     try {
       $id = $recordModel->getId();
-      //$portfolioId = $recordModel->get('portfolio');
-      //$purchase_date = $recordModel->get('purchase_date');
 
       \App\Log::warning("PortfolioPurchases::Workflows::updateOpenDateOfPortfoliosAll:" . $id);
 
-      $relationModel = Vtiger_RelationListView_Model::getInstance($recordModel, "Portfolios");
+      /*$relationModel = Vtiger_RelationListView_Model::getInstance($recordModel, "Portfolios");
       $rows = $relationModel->getRelationQuery()->all();
-      $relatedRecords = $relationModel->getRecordsFromArray($rows);
+      $relatedRecords = $relationModel->getRecordsFromArray($rows);*/
 
-      /* $claims = Vtiger_RelationListView_Model::getInstance($recordModel, "Claims");
-        $claimsRows = $claims->getRelationQuery()->all();
-        $claimsRecords = $claims->getRecordsFromArray($claimsRows);*/
+      $portfolios = Vtiger_RelationListView_Model::getInstance($recordModel, "Portfolios");
+      $portfoliosRows = $portfolios->getRelationQuery()->all();
+      $portfoliosRecords = $portfolios->getRecordsFromArray($portfoliosRows);
 
       // foreach ($relatedRecords as $id => $portfolio) {
 
@@ -460,7 +458,7 @@ class PortfolioPurchasesWorkflow
       //   }
       // }
     } catch (\Throwable $th) {
-      var_dump($th);
+      var_dump($portfoliosRecords);
     }
   }
 }
