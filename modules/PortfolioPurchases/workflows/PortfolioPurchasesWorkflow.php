@@ -427,7 +427,7 @@ class PortfolioPurchasesWorkflow
 
       $portfolios = VTWorkflowUtils::getAllRelatedRecords($recordModel, 'Portfolios');
       var_dump($portfolios);
-      exit();
+      //exit();
       foreach ($portfolios as $portfoliosRow) {
 
         $portfolio = Vtiger_Record_Model::getInstanceById($portfoliosRow['id']);
