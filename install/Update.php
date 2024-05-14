@@ -109,6 +109,7 @@ $customFunctions = [
     [ 'methodName' => 'sendForSigning', 'functionPath' => 'modules/PortfolioPurchases/workflows/PortfolioPurchasesWorkflow.php', 'functionName' => 'PortfolioPurchasesWorkflow' ],
     [ 'methodName' => 'InvokeCustomFunction', 'functionPath' => 'modules/PortfolioPurchases/workflows/PortfolioPurchasesWorkflow.php', 'functionName' => 'PortfolioPurchasesWorkflow' ],
     [ 'methodName' => 'updateOpenDateOfPortfolios', 'functionPath' => 'modules/PortfolioPurchases/workflows/PortfolioPurchasesWorkflow.php', 'functionName' => 'PortfolioPurchasesWorkflow' ],
+    [ 'methodName' => 'updateOpenDateOfPortfoliosAll', 'functionPath' => 'modules/PortfolioPurchases/workflows/PortfolioPurchasesWorkflow.php', 'functionName' => 'PortfolioPurchasesWorkflow' ],
   ],
   'DocumentTypes' => [
     [ 'methodName' => 'refreshDocumentTypesPaths', 'functionPath' => 'modules/DocumentTypes/workflows/DocumentTypesWorkflow.php', 'functionName' => 'DocumentTypesWorkflow' ],
