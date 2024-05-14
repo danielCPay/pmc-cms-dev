@@ -417,12 +417,12 @@ class PortfolioPurchasesWorkflow
           ->min("purchase_date");
 
         // set purchase_date
-        /*$recordModelPortfolios = \Vtiger_Record_Model::getCleanInstance('Portfolios');
-      $recordModelPortfolios->set('opened_date', substr($purchase_date , 0, 10));
-      $recordModelPortfolios->save();*/
+        $recordModelPortfolios = \Vtiger_Record_Model::getCleanInstance('Portfolios');
+        $recordModelPortfolios->set('opened_date', substr($purchase_date, 0, 10));
+        $recordModelPortfolios->save();
 
-        $recordModel->set('note', substr($purchase_date, 0, 10));
-        $recordModel->save();
+        /*$recordModel->set('note', substr($purchase_date, 0, 10));
+        $recordModel->save();*/
       }
     } catch (\Throwable $th) {
       var_dump($th);
