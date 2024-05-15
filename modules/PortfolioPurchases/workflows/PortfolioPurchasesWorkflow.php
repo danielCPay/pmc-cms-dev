@@ -427,8 +427,7 @@ class PortfolioPurchasesWorkflow
 
       $portfolios =  (new \App\QueryGenerator('Portfolios'))
         ->setField(['portfoliosid'])
-        ->createQuery()
-        ->all();
+        ->createQuery();
 
       var_dump($portfolios);
       exit();
