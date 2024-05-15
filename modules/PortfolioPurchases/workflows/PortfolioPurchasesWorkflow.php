@@ -437,9 +437,6 @@ class PortfolioPurchasesWorkflow
         ->createQuery()
         ->all();
 
-      var_dump($portfolios);
-      exit();
-
       foreach ($portfolios as $portfoliosRow) {
 
         $portfolioId = $portfoliosRow['portfoliosid'];
