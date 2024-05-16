@@ -216,11 +216,11 @@ class Checks_Record_Model extends Vtiger_Record_Model
         $warnings = [];
 
         // get/prepare claim/case cache
-        $cacheNameCases = "CheckRegister:Cases";
-        $cacheNameOutsideCases = "CheckRegister:OutsideCases";
-        $cacheNameClaims = "CheckRegister:Claims";
-        $cacheNameProviders = "CheckRegister:Providers";
-        $cacheNameInsuranceCompanies = "CheckRegister:InsuranceCompanies";
+        $cacheNameCases = "Checks:Cases";
+        $cacheNameOutsideCases = "Checks:OutsideCases";
+        $cacheNameClaims = "Checks:Claims";
+        $cacheNameProviders = "Checks:Providers";
+        $cacheNameInsuranceCompanies = "Checks:InsuranceCompanies";
         if (\App\Cache::has('Checks', $cacheNameCases)) {
             $cases = \App\Cache::get('Checks', $cacheNameCases);
         } else {
