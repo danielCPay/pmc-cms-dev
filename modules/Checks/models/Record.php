@@ -8,7 +8,7 @@
  * All Rights Reserved.
  * *********************************************************************************** */
 
-class Record extends Vtiger_Module_Model
+class Checks_Record_Model extends Vtiger_Module_Model
 {
   /**
    * Get next batch number for Checks.
