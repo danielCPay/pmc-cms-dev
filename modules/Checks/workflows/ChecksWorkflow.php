@@ -18,6 +18,7 @@ class ChecksWorkflow
 	 *
 	 * @param \Vtiger_Record_Model $recordModel
 	 */
+	
   public static function assignNextBatchNumber( Vtiger_Record_Model $recordModel )
   {
     $id = $recordModel->getId();
