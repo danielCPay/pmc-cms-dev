@@ -18,13 +18,13 @@ class ChecksWorkflow
 	 *
 	 * @param \Vtiger_Record_Model $recordModel
 	 */
-	
+
   public static function assignNextBatchNumber( Vtiger_Record_Model $recordModel )
   {
     $id = $recordModel->getId();
     \App\Log::warning("Checks::Workflows::assignNextBatchNumber:$id");
 
-    $batchNumber = Record::getNextBatchNumber();
+    $batchNumber = Checks_Record_Model::getNextBatchNumber();
 
     $recordModel->set('batch_number', $batchNumber);
     $recordModel->save();
@@ -42,7 +42,7 @@ class ChecksWorkflow
     $id = $recordModel->getId();
     \App\Log::warning("Checks::Workflows::reprocessCheck:$id");
 
-    Record::processCheck($recordModel);
+    Checks_Record_Model::processCheck($recordModel);
     
     \App\Log::warning("Checks::Workflows::reprocessCheck:done");
   }
