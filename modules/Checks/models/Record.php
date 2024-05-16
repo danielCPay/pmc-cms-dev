@@ -209,6 +209,9 @@ class Checks_Record_Model extends Vtiger_Record_Model
         $insured = $recordModel->get('insured');
         $insuranceCompanyName = $recordModel->get('insurance_company_user');
 
+        var_dump($claimNumber, $providerName, $insured, $insuranceCompanyName);
+        exit();
+
         $case = null;
         $warnings = [];
 
