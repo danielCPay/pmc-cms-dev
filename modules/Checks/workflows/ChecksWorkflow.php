@@ -12,22 +12,21 @@
 
 class ChecksWorkflow
 {
-    /**
+	/**
 	 * Recalculate from claim collections
 	 *
 	 * @param \Checks_Record_Model $recordModel
 	 */
-	
-    public static function exampleMethod(Vtiger_Record_Model $recordModel)
-    {
-        $id = $recordModel->getId();
-		
+
+	public static function exampleMethod(Vtiger_Record_Model $recordModel)
+	{
+		$id = $recordModel->getId();
+
 
 		\App\Log::warning("Checks::Workflows::exampleMethod:$id");
-		
+
 		$recordModel->exampleMethod();
-        
-    }
+	}
 
 	/**
 	 * Recalculate from claim collections
@@ -35,22 +34,48 @@ class ChecksWorkflow
 	 * @param \Checks_Record_Model $recordModel
 	 */
 	public static function fillFields(Vtiger_Record_Model $recordModel)
-    {
-        $id = $recordModel->getId();
-		
+	{
+		$id = $recordModel->getId();
+
 
 		\App\Log::warning("Checks::Workflows::fillFields:$id");
-		
-		$recordModel->fillFields();
-        
-    }
-	public static function import_claims_from_excel( Vtiger_Record_Model $recordModel)
-    {
-        \App\Log::warning( 'ImportClaims::import_claims_from_excel F-' . memory_get_usage( false) . " T-" . memory_get_usage( true));;
 
-        $path = $recordModel->getFileDetails()['path'];
-        $fn = $recordModel->get('filename');
-        $at = $recordModel->getFileDetails()['attachmentsid'];
+		$recordModel->fillFields();
+	}
+	public static function import_claims_from_excel(Vtiger_Record_Model $recordModel)
+	{
+		\App\Log::warning('ImportClaims::import_claims_from_excel F-' . memory_get_usage(false) . " T-" . memory_get_usage(true));;
+
+		$path = $recordModel->getFileDetails()['path'];
+		$fn = $recordModel->get('filename');
+		$at = $recordModel->getFileDetails()['attachmentsid'];
+	}
+
+	public static function assignNextBatchNumber(Vtiger_Record_Model $recordModel)
+	{
+		$id = $recordModel->getId();
+		\App\Log::warning("Checks::Workflows::assignNextBatchNumber:$id");
+
+		$batchNumber = Checks_Record_Model::getNextBatchNumber();
+
+		$recordModel->set('batch_number', $batchNumber);
+		$recordModel->save();
+
+		\App\Log::warning("Checks::Workflows::assignNextBatchNumber:batch number = $batchNumber");
+	}
+
+	/**
+	 * Reprocess Check.
+	 * 
+	 * @param \Vtiger_Record_Model $recordModel
+	 */
+	public static function reprocessCheck(Vtiger_Record_Model $recordModel)
+	{
+		$id = $recordModel->getId();
+		\App\Log::warning("Checks::Workflows::reprocessCheck:$id");
+
+		Checks_Record_Model::processCheck($recordModel);
+
+		\App\Log::warning("Checks::Workflows::reprocessCheck:done");
 	}
 }
-?>
