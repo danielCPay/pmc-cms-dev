@@ -1,49 +1,56 @@
 <?php
 
 /**
- * ChecksWorkflow
+ * CasesWorkflow.
  *
  * @package   Workflow
  *
  * @copyright DOT Systems
  * @license   YetiForce Public License 3.0 (licenses/LicenseEN.txt or yetiforce.com)
- * @author    Michał Kamiński <mkaminski@dotsystems.pl>
- * @author    Michał Jastrzębski <mjastrzebski@dotsystems.pl>
+ * @author    Marcos Arteta <marcos@claimpay.net>
  */
 
 class ChecksWorkflow
 {
-	/**
-	 * Assign Batch Number.
+    /**
+	 * Recalculate from claim collections
 	 *
-	 * @param \Vtiger_Record_Model $recordModel
+	 * @param \Checks_Record_Model $recordModel
 	 */
+	
+    public static function exampleMethod(Vtiger_Record_Model $recordModel)
+    {
+        $id = $recordModel->getId();
+		
 
-  public static function assignNextBatchNumber( Vtiger_Record_Model $recordModel )
-  {
-    $id = $recordModel->getId();
-    \App\Log::warning("Checks::Workflows::assignNextBatchNumber:$id");
+		\App\Log::warning("Checks::Workflows::exampleMethod:$id");
+		
+		$recordModel->exampleMethod();
+        
+    }
 
-    $batchNumber = Checks_Record_Model::getNextBatchNumber();
+	/**
+	 * Recalculate from claim collections
+	 *
+	 * @param \Checks_Record_Model $recordModel
+	 */
+	public static function fillFields(Vtiger_Record_Model $recordModel)
+    {
+        $id = $recordModel->getId();
+		
 
-    $recordModel->set('batch_number', $batchNumber);
-    $recordModel->save();
+		\App\Log::warning("Checks::Workflows::fillFields:$id");
+		
+		$recordModel->fillFields();
+        
+    }
+	public static function import_claims_from_excel( Vtiger_Record_Model $recordModel)
+    {
+        \App\Log::warning( 'ImportClaims::import_claims_from_excel F-' . memory_get_usage( false) . " T-" . memory_get_usage( true));;
 
-    \App\Log::warning("Checks::Workflows::assignNextBatchNumber:batch number = $batchNumber");
-  }
-
-  /**
-   * Reprocess Check.
-   * 
-   * @param \Vtiger_Record_Model $recordModel
-   */
-  public static function reprocessCheck( Vtiger_Record_Model $recordModel )
-  {
-    $id = $recordModel->getId();
-    \App\Log::warning("Checks::Workflows::reprocessCheck:$id");
-
-    Checks_Record_Model::processCheck($recordModel);
-    
-    \App\Log::warning("Checks::Workflows::reprocessCheck:done");
-  }
+        $path = $recordModel->getFileDetails()['path'];
+        $fn = $recordModel->get('filename');
+        $at = $recordModel->getFileDetails()['attachmentsid'];
+	}
 }
+?>

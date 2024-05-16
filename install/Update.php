@@ -25,9 +25,7 @@ $customFunctions = [
   ],
   'Checks'=>[
     [ 'methodName' => 'exampleMethod', 'functionPath' => 'modules/Checks/workflows/ChecksWorkflow.php', 'functionName' => 'ChecksWorkflow' ],
-    [ 'methodName' => 'fillFields', 'functionPath' => 'modules/Checks/workflows/ChecksWorkflow.php', 'functionName' => 'ChecksWorkflow' ],
-    [ 'methodName' => 'assignNextBatchNumber', 'functionPath' => 'modules/Checks/workflows/ChecksWorkflow.php', 'functionName' => 'ChecksWorkflow' ],
-    [ 'methodName' => 'reprocessCheck', 'functionPath' => 'modules/Checks/workflows/ChecksWorkflow.php', 'functionName' => 'ChecksWorkflow' ],
+    [ 'methodName' => 'fillFields', 'functionPath' => 'modules/Checks/workflows/ChecksWorkflow.php', 'functionName' => 'ChecksWorkflow' ]
   ],
   'TexasCases' => [
     [ 'methodName' => 'recalculateFromClaims', 'functionPath' => 'modules/TexasCases/workflows/TexasCasesWorkflow.php', 'functionName' => 'TexasCasesWorkflow' ],
