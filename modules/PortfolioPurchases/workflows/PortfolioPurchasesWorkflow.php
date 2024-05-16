@@ -425,10 +425,6 @@ class PortfolioPurchasesWorkflow
 
       \App\Log::warning("PortfolioPurchases::Workflows::updateOpenDateOfPortfoliosAll:" . $id);
 
-      /*$portfolios =  (new \App\QueryGenerator('Portfolios'))
-        ->createQuery()
-        ->all();*/
-
       $queryGenerator = new \App\QueryGenerator('Portfolios');
       $portfolios = $queryGenerator
         ->setFields([
