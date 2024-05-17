@@ -318,6 +318,8 @@ class ChecksRegister_Module_Model extends Vtiger_Module_Model
 
       // download file from URL in db_link
       $dbLink = $recordModel->get('db_link');
+      var_dump("dbLink" . $dbLink);
+      exit();
       if ($dbLink) {
         // remove GET parameter dl with it's value and append dl=1
         $dbLink = preg_replace('/\bdl=[^&]*&?/', '', $dbLink);
@@ -325,8 +327,7 @@ class ChecksRegister_Module_Model extends Vtiger_Module_Model
 
         $params = [];
         $file = \App\Fields\File::loadFromUrl($dbLink, $params, true);
-        var_dump("file" . $file);
-        exit();
+
         if ($file && $file->validateAndSecure()) {
           $params['document_type'] = $documentType;
           $params['checks_register'] = $recordModel->getId();
