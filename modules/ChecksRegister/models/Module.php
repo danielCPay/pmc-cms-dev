@@ -325,7 +325,7 @@ class ChecksRegister_Module_Model extends Vtiger_Module_Model
 
         $params = [];
         $file = \App\Fields\File::loadFromUrl($dbLink, $params, true);
-        var_dump($file);
+        var_dump("file" . $file);
         exit();
         if ($file && $file->validateAndSecure()) {
           $params['document_type'] = $documentType;
