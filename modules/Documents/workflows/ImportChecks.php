@@ -30,7 +30,7 @@ class ImportChecks
 
 
     public static function import_checks_from_excel(Vtiger_Record_Model $recordModel)
-    {      
+    {
         $path = $recordModel->getFileDetails()['path'];
         $fn = $recordModel->get('filename');
         $at = $recordModel->getFileDetails()['attachmentsid'];
@@ -112,7 +112,7 @@ class ImportChecks
                 $recordModel->set('attorney', $check['attorney']);
                 $recordModel->set('insured', $check['insured']);
                 $recordModel->set('batch_number', $batchNumber);
-               
+
                 ChecksRegister_Module_Model::processCheck($recordModel);
 
                 $checksRegisterModule = $recordModel->getModule();
@@ -120,7 +120,7 @@ class ImportChecks
                 $relationModel->addRelation($recordModel->getId(), $id);
             }
         } catch (Exception $ex) {
-            var_dump($ex);
+            var_dump("importIncomingChecks" . $ex);
             exit();
             \App\Log::error("Documents::Workflows::importIncomingChecks:Problem importing file $fullPath - " . $ex->getMessage());
             \App\Toasts::addToast(\App\User::getCurrentUserOriginalId(), "Problem importing file $fileName - " . $ex->getMessage(), "errorSticky");
