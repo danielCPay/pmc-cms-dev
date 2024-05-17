@@ -30,10 +30,7 @@ class ImportChecks
 
 
     public static function import_checks_from_excel(Vtiger_Record_Model $recordModel)
-    {
-
-        var_dump("invoque Importacion Checks");
-        exit();
+    {      
         $path = $recordModel->getFileDetails()['path'];
         $fn = $recordModel->get('filename');
         $at = $recordModel->getFileDetails()['attachmentsid'];
@@ -115,8 +112,7 @@ class ImportChecks
                 $recordModel->set('attorney', $check['attorney']);
                 $recordModel->set('insured', $check['insured']);
                 $recordModel->set('batch_number', $batchNumber);
-                var_dump("Ingreso al foreach");
-                exit();
+               
                 ChecksRegister_Module_Model::processCheck($recordModel);
 
                 $checksRegisterModule = $recordModel->getModule();
