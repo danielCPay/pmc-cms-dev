@@ -8,6 +8,16 @@ use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 use PhpOffice\PhpSpreadsheet\Style\Color;
 
 require_once '/var/www/html/service/CheckService.php';
+
+class ImportException extends Exception
+{
+    public function __construct(string $msg)
+    {
+        parent::__construct($msg);
+    }
+}
+
+
 class ImportChecks
 {
 
