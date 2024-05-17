@@ -322,14 +322,12 @@ class ChecksRegister_Module_Model extends Vtiger_Module_Model
       if ($dbLink) {
         // remove GET parameter dl with it's value and append dl=1
         $dbLink = preg_replace('/\bdl=[^&]*&?/', '', $dbLink);
-        $dbLink .= (strpos($dbLink, '?') === false ? '?' : '&') . 'dl=1';
+        $dbLink .= (strpos($dbLink, '?') === false ? '?' : '&') . 'dl=1';       
 
-        var_dump("dbLink " . $dbLink);
-        exit();
-        
         $params = [];
         $file = \App\Fields\File::loadFromUrl($dbLink, $params, true);
-
+        var_dump("file " . $file);
+        exit();
         if ($file && $file->validateAndSecure()) {
           $params['document_type'] = $documentType;
           $params['checks_register'] = $recordModel->getId();
