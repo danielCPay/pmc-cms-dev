@@ -68,6 +68,7 @@ $customFunctions = [
     ['methodName' => 'assignCaseToCollection', 'functionPath' => 'modules/Documents/workflows/CaseToCollection.php', 'functionName' => 'CaseToCollection'],
     ['methodName' => 'import_cases_from_excel', 'functionPath' => 'modules/Cases/workflows/ImportHOCases.php', 'functionName' => 'ImportHOCases'],
     ['methodName' => 'import_checks_from_excel', 'functionPath' => 'modules/Documents/workflows/ImportChecks.php', 'functionName' => 'ImportChecks'],
+    ['methodName' => 'importIncomingChecks', 'functionPath' => 'modules/Documents/workflows/ImportChecks.php', 'functionName' => 'ImportChecks' ],
   ],
   'Insureds' => [
     ['methodName' => 'findCounty', 'functionPath' => 'modules/Insureds/workflows/InsuredsWorkflow.php', 'functionName' => 'InsuredsWorkflow'],
