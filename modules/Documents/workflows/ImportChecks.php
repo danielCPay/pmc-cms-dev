@@ -112,6 +112,8 @@ class ImportChecks
                 $relationModel->addRelation($recordModel->getId(), $id);
             }
         } catch (Exception $ex) {
+            var_dump($ex);
+            exit();
             \App\Log::error("Documents::Workflows::importIncomingChecks:Problem importing file $fullPath - " . $ex->getMessage());
             \App\Toasts::addToast(\App\User::getCurrentUserOriginalId(), "Problem importing file $fileName - " . $ex->getMessage(), "errorSticky");
             throw new \App\Exceptions\NoRethrowWorkflowException("Problem importing file $fileName - " . $ex->getMessage(), 0, $ex);
