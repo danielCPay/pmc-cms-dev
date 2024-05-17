@@ -347,7 +347,7 @@ class ChecksRegister_Module_Model extends Vtiger_Module_Model
 
       \App\Log::warning("ChecksRegister::processCheck:finished");
     } catch (\Throwable $th) {
-      var_dump($th);
+      var_dump("processCheck" . $th);
     }
   }
 }
