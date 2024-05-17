@@ -1,6 +1,7 @@
 <?php
 
 require_once 'claimsAttachements.php';
+
 use PhpOffice\PhpSpreadsheet\Shared\Date;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Reader\Xlsx;
@@ -114,7 +115,8 @@ class ImportChecks
                 $recordModel->set('attorney', $check['attorney']);
                 $recordModel->set('insured', $check['insured']);
                 $recordModel->set('batch_number', $batchNumber);
-
+                var_dump("Ingreso al foreach");
+                exit();
                 ChecksRegister_Module_Model::processCheck($recordModel);
 
                 $checksRegisterModule = $recordModel->getModule();
