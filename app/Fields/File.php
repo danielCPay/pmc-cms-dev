@@ -217,7 +217,7 @@ class File
 	 *
 	 * @return self|bool
 	 */
-	public static function loadFromUrl($url, $param = [])
+	public static function loadFromUrl($url, $param = [], $overrideContentType = false)
 	{
 		if (empty($url)) {
 			Log::warning('No url: ' . $url, __CLASS__);
@@ -234,8 +234,13 @@ class File
 				Log::warning('Error when downloading content: ' . $url . ' | Status code: ' . $response->getStatusCode(), __CLASS__);
 				return false;
 			}
+			$fileName = static::sanitizeFileNameFromUrl($url);
 			$contents = $response->getBody()->getContents();
-			$param['mimeType'] = explode(';', $response->getHeaderLine('Content-Type'))[0];
+			if ($overrideContentType) {
+				$param['mimeType'] = self::$mimeTypes[pathinfo($fileName, PATHINFO_EXTENSION)];
+			} else {
+				$param['mimeType'] = explode(';', $response->getHeaderLine('Content-Type'))[0];
+			}
 			$param['size'] = \strlen($contents);
 		} catch (\Throwable $exc) {
 			Log::warning('Error when downloading content: ' . $url . ' | ' . $exc->getMessage(), __CLASS__);
@@ -245,7 +250,7 @@ class File
 			Log::warning('Url does not contain content: ' . $url, __CLASS__);
 			return false;
 		}
-		return static::loadFromContent($contents, static::sanitizeFileNameFromUrl($url), $param);
+		return static::loadFromContent($contents, $fileName, $param);
 	}
 
 	/**
