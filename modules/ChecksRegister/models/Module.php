@@ -337,12 +337,12 @@ class ChecksRegister_Module_Model extends Vtiger_Module_Model
           $relationModel = Vtiger_Relation_Model::getInstance($checksRegisterModule, Vtiger_Module_Model::getInstance('Documents'));
           if ($relationModel->getRelationType() != Vtiger_Relation_Model::RELATION_O2M || empty($relationModel->getRelationField())) {
             $relationModel->addRelation($recordModel->getId(), $fileId);
-          }
-          var_dump("fileId" . $fileId);
-          exit();
-
+          }        
           $recordModel->set('check', $fileId);
           $recordModel->save();
+          var_dump("save " . $fileId);
+          exit();
+
         } else if ($file) {
           var_dump("file delete()");
           exit();
