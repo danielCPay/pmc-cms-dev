@@ -325,13 +325,11 @@ class ChecksRegister_Module_Model extends Vtiger_Module_Model
         $dbLink .= (strpos($dbLink, '?') === false ? '?' : '&') . 'dl=1';
 
         $params = [];
-        $file = \App\Fields\File::loadFromUrl($dbLink, $params, true);
-
-        $data = json_decode(json_encode($file), true);
-
-        print_r("file " . $data);
-        exit();
+        $file = \App\Fields\File::loadFromUrl($dbLink, $params, true);       
+      
         if ($file && $file->validateAndSecure()) {
+          var_dump("file && file->validateAndSecure()");
+          exit();
           $params['document_type'] = $documentType;
           $params['checks_register'] = $recordModel->getId();
           ['crmid' => $fileId] = \App\Fields\File::saveFromContent($file, $params);
@@ -345,6 +343,8 @@ class ChecksRegister_Module_Model extends Vtiger_Module_Model
           $recordModel->set('check', $fileId);
           $recordModel->save();
         } else if ($file) {
+          var_dump("file delete()");
+          exit();
           $file->delete();
         } else {
           throw new ImportException('Error while downloading file');
