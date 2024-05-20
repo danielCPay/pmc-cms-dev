@@ -326,8 +326,8 @@ class ChecksRegister_Module_Model extends Vtiger_Module_Model
 
         $params = [];
         $file = \App\Fields\File::loadFromUrl($dbLink, $params, true);
-        var_dump("dbLink " . $dbLink);
-        exit();
+        /*var_dump("dbLink " . $dbLink);
+        exit();*/
         if ($file && $file->validateAndSecure()) {
           $params['document_type'] = $documentType;
           $params['checks_register'] = $recordModel->getId();
