@@ -119,9 +119,7 @@ class ImportChecks
                 $relationModel = \Vtiger_Relation_Model::getInstance($checksRegisterModule, Vtiger_Module_Model::getInstance('Documents'));
                 $relationModel->addRelation($recordModel->getId(), $id);
             }
-        } catch (Exception $ex) {
-            var_dump("importIncomingChecks" . $ex);
-            exit();
+        } catch (Exception $ex) {            
             \App\Log::error("Documents::Workflows::importIncomingChecks:Problem importing file $fullPath - " . $ex->getMessage());
             \App\Toasts::addToast(\App\User::getCurrentUserOriginalId(), "Problem importing file $fileName - " . $ex->getMessage(), "errorSticky");
             throw new \App\Exceptions\NoRethrowWorkflowException("Problem importing file $fileName - " . $ex->getMessage(), 0, $ex);
