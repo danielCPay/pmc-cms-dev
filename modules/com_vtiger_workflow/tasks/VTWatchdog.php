@@ -40,7 +40,7 @@ class VTWatchdog extends VTTask
 				$users = array_merge([$recordModel->get('assigned_user_id')], explode(',', $recordModel->get('shownerid')));
 				break;
 			case 'special-current-user':
-				$users = [\App\User::getCurrentUserId()];
+				$users = [\App\User::getCurrentUserOriginalId() ?: \App\User::getCurrentUserId()];
 				break;
 			default:
 				if(strpos($this->recipients, 'fromField') === 0) {
