@@ -337,15 +337,10 @@ class ChecksRegister_Module_Model extends Vtiger_Module_Model
           $relationModel = Vtiger_Relation_Model::getInstance($checksRegisterModule, Vtiger_Module_Model::getInstance('Documents'));
           if ($relationModel->getRelationType() != Vtiger_Relation_Model::RELATION_O2M || empty($relationModel->getRelationField())) {
             $relationModel->addRelation($recordModel->getId(), $fileId);
-          }        
+          }
           $recordModel->set('check', $fileId);
           $recordModel->save();
-          var_dump("save " . $fileId);
-          exit();
-
         } else if ($file) {
-          var_dump("file delete()");
-          exit();
           $file->delete();
         } else {
           throw new ImportException('Error while downloading file');
@@ -354,7 +349,7 @@ class ChecksRegister_Module_Model extends Vtiger_Module_Model
 
       \App\Log::warning("ChecksRegister::processCheck:finished");
     } catch (\Throwable $th) {
-      var_dump("processCheck" . $th);
+      //var_dump("processCheck" . $th);
     }
   }
 }
