@@ -14,6 +14,7 @@ class User
 {
 	protected static $currentUserId;
 	protected static $currentUserRealId = false;
+	protected static $currentUserOriginalId = false;
 	protected static $currentUserCache = false;
 	protected static $userModelCache = [];
 	protected $privileges = [];
@@ -37,6 +38,17 @@ class User
 	{
 		static::$currentUserId = $userId;
 		static::$currentUserCache = false;
+		if (!static::$currentUserOriginalId) {
+			static::$currentUserOriginalId = $userId;
+		}
+	}
+
+	public static function resetCurrentUserRealId() 
+	{
+		static::$currentUserRealId = false;
+		if (\App\Session::has('baseUserId') && \App\Session::get('baseUserId')) {
+			\App\Session::delete('baseUserId');
+		}
 	}
 
 	/**
@@ -56,6 +68,16 @@ class User
 		}
 		static::$currentUserRealId = $id;
 		return $id;
+	}
+
+	/**
+	 * Get original current user Id.
+	 *
+	 * @return int
+	 */
+	public static function getCurrentUserOriginalId()
+	{
+		return static::$currentUserOriginalId;
 	}
 
 	/**
