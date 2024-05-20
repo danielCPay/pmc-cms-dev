@@ -325,11 +325,10 @@ class ChecksRegister_Module_Model extends Vtiger_Module_Model
         $dbLink .= (strpos($dbLink, '?') === false ? '?' : '&') . 'dl=1';
 
         $params = [];
-        $file = \App\Fields\File::loadFromUrl($dbLink, $params, true);       
-      
+        $file = \App\Fields\File::loadFromUrl($dbLink, $params, true);
+
         if ($file && $file->validateAndSecure()) {
-          var_dump("file && file->validateAndSecure()");
-          exit();
+
           $params['document_type'] = $documentType;
           $params['checks_register'] = $recordModel->getId();
           ['crmid' => $fileId] = \App\Fields\File::saveFromContent($file, $params);
@@ -339,6 +338,8 @@ class ChecksRegister_Module_Model extends Vtiger_Module_Model
           if ($relationModel->getRelationType() != Vtiger_Relation_Model::RELATION_O2M || empty($relationModel->getRelationField())) {
             $relationModel->addRelation($recordModel->getId(), $fileId);
           }
+          var_dump("fileId" . $fileId);
+          exit();
 
           $recordModel->set('check', $fileId);
           $recordModel->save();
