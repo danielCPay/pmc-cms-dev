@@ -28,6 +28,6 @@ class VTToast extends VTTask
 		$title = $textParser->setContent($this->title)->parse()->getContent();
 		unset($textParser);
 
-		\App\Toasts::addToast(\App\User::getCurrentUserId(), $message, $this->level . ( $this->sticky ? 'Sticky' : '' ), $title);
+		\App\Toasts::addToast(\App\User::getCurrentUserOriginalId() ?: \App\User::getCurrentUserId(), $message, $this->level . ( $this->sticky ? 'Sticky' : '' ), $title);
 	}
 }
