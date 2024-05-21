@@ -125,7 +125,7 @@ class ImportChecks
             throw new \App\Exceptions\NoRethrowWorkflowException("Problem importing file $fileName - " . $ex->getMessage(), 0, $ex);
         }
 
-        //\App\Toasts::addToast(\App\User::getCurrentUserOriginalId(), "File $fileName imported", "successSticky");
+        \App\Toasts::addToast(\App\User::getCurrentUserOriginalId(), "File $fileName imported", "successSticky");
     }
 
     public static function parseIncomingChecks(string $fullPath)
