@@ -307,6 +307,11 @@ $crons = [
     'frequency' => 60, 'module' => 'Portfolios', 'status' => 1, 'sequence' => 0,
     'description' => 'Resets "In Underwriting" Portfolios to "New" if they don\'t have Claims in specific statuses. Handled by real cron, frequency set here doesn\'t matter'
   ],
+  [
+    'name' => 'LBL_CHECKSREGISTER_AGE', 'handler_class' => 'ChecksRegister_Age_Cron',
+    'frequency' => 60, 'module' => 'ChecksRegister', 'status' => 1, 'sequence' => 0,
+    'description' => 'Handles check aging. Handled by real cron, frequency set here doesn\'t matter'
+  ],
 ];
 
 foreach ($crons as $cron) {
