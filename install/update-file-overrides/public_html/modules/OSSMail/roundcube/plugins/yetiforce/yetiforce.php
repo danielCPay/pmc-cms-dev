@@ -272,8 +272,6 @@ class yetiforce extends rcube_plugin
 
 				if ($this->rc->config->get('oauth_provider')) {
 					$_SESSION['oauth_token']['refresh_token'] = $this->rc->encrypt($args['pass']);
-					// set oauth_host to domain of $args['user']
-					$_SESSION['oauth_host'] = substr(strrchr($args['user'], '@'), 1);
 
 					$this->rc->plugins->exec_hook('refresh');
 

@@ -25,7 +25,6 @@ class ClaimCollectionData {
     $claimCollection->set('collection', $collection->getId());
     $claimCollection->set('portfolio', $caseClaim->get('portfolio'));
     $claimCollection->set('claim', $caseClaim->getId());
-    $claimCollection->set('disbursed_date', $collection->get('disbursed_date'));
 
     $this->claim = $caseClaim;
     $this->claimCollection = $claimCollection;

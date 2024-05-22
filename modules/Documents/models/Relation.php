@@ -17,22 +17,13 @@ class Documents_Relation_Model extends Vtiger_Relation_Model
 	 */
 	public function setExceptionData()
 	{
-		if ($this->getRelationModuleModel()->getName() != 'BatchErrors') {
-			$data = [
-				'tabid' => $this->getParentModuleModel()->getId(),
-				'related_tabid' => $this->getRelationModuleModel()->getId(),
-				'name' => 'getRelatedRecord',
-				'actions' => 'ADD, SELECT',
-				'modulename' => $this->getParentModuleModel()->getName(),
-			];
-		} else {
-			$data = [
-				'tabid' => $this->getParentModuleModel()->getId(),
-				'related_tabid' => $this->getRelationModuleModel()->getId(),
-				'name' => 'getDependentsList',
-				'modulename' => $this->getParentModuleModel()->getName(),
-			];
-		}
+		$data = [
+			'tabid' => $this->getParentModuleModel()->getId(),
+			'related_tabid' => $this->getRelationModuleModel()->getId(),
+			'name' => 'getRelatedRecord',
+			'actions' => 'ADD, SELECT',
+			'modulename' => $this->getParentModuleModel()->getName(),
+		];
 		$this->setData($data);
 	}
 }

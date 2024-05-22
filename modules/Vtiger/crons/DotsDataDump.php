@@ -34,81 +34,67 @@ class Vtiger_DotsDataDump_Cron extends \App\CronHandler
         'dumpPort' => $dumpPort, 'tables' => $tables
         ], true));
 
-      $errors = [];
       foreach ($tables as $table) {
         \App\Log::warning("Vtiger::cron::Vtiger_DotsDataDump_Cron: Exporting $table");
 
-        try {
-          $columns = [];
-          $dataReader = \App\Db::getInstance()->createCommand("select column_name, data_type from information_schema.columns where table_schema = 'yetiforce' and table_name = '$table' order by ordinal_position")->query();
+        $columns = [];
+        $dataReader = \App\Db::getInstance()->createCommand("select column_name, data_type from information_schema.columns where table_schema = 'yetiforce' and table_name = '$table' order by ordinal_position")->query();
+        while ($row = $dataReader->read()) {
+          switch ($row['data_type']) {
+            case 'tinyint':
+            case 'int':
+              $type = 'Int64.Type';
+              break;
+            case 'decimal':
+              $type = 'type number';
+              break;
+            case 'date':
+              $type = 'type date';
+              break;
+            case 'datetime':
+              $type = 'type datetime';
+              break;
+            case 'text':
+            case 'varchar':
+              $type = 'type text';
+              break;
+            default:
+              throw new \Exception('Unexpected data type ' . $row['data_type'] . ' for column ' . $row['column_name']);
+          }
+          $columns[] = '{"' . $row['column_name'] . '", ' . $type . '}';
+        }
+        $columns = implode(', ', $columns);
+        $meta = <<<META
+let
+  Source = Csv.Document(Web.Contents("$siteUrl:$dumpPort/$table.csv"),[Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.None]),
+  #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+  #"Changed Types" = Table.TransformColumnTypes(#"Promoted Headers",{{$columns}}, "en-US"),
+  #"Renamed Columns" = Table.RenameColumns(#"Changed Types", {})
+in
+  #"Renamed Columns"
+
+META;
+
+        file_put_contents("$outVolume$outDir$table.meta", $meta);
+
+        $file = fopen("$outVolume$outDir$table.csv", 'w');
+        if ($file !== false) {
+          $dataReader = \App\Db::getInstance()->createCommand('select * from ' . $table)->query();
+          $headerExported = false;
           while ($row = $dataReader->read()) {
-            switch ($row['data_type']) {
-              case 'tinyint':
-              case 'int':
-                $type = 'Int64.Type';
-                break;
-              case 'decimal':
-                $type = 'type number';
-                break;
-              case 'date':
-                $type = 'type date';
-                break;
-              case 'datetime':
-                $type = 'type datetime';
-                break;
-              case 'text':
-              case 'varchar':
-                $type = 'type text';
-                break;
-              default:
-                throw new \Exception('Unexpected data type ' . $row['data_type'] . ' for column ' . $row['column_name']);
+            if (!$headerExported) {
+              fputcsv($file, array_keys($row));
+              $headerExported = true;
             }
-            $columns[] = '{"' . $row['column_name'] . '", ' . $type . '}';
-          }
-          $columns = implode(', ', $columns);
-          $meta = <<<META
-  let
-    Source = Csv.Document(Web.Contents("$siteUrl:$dumpPort/$table.csv"),[Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.None]),
-    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
-    #"Changed Types" = Table.TransformColumnTypes(#"Promoted Headers",{{$columns}}, "en-US"),
-    #"Renamed Columns" = Table.RenameColumns(#"Changed Types", {})
-  in
-    #"Renamed Columns"
-
-  META;
-
-          file_put_contents("$outVolume$outDir$table.meta", $meta);
-
-          $file = fopen("$outVolume$outDir$table.csv", 'w');
-          if ($file !== false) {
-            $dataReader = \App\Db::getInstance()->createCommand('select * from ' . $table)->query();
-            $headerExported = false;
-            while ($row = $dataReader->read()) {
-              if (!$headerExported) {
-                fputcsv($file, array_keys($row));
-                $headerExported = true;
+            foreach ($row as $key => $value) {
+              if (is_string($value) && str_contains($value, "\n")) {
+                $row[$key] = str_replace("\n", '; ', $value);
               }
-              foreach ($row as $key => $value) {
-                if (is_string($value) && str_contains($value, "\n")) {
-                  $row[$key] = str_replace("\n", '; ', $value);
-                }
-              }
-              fputcsv($file, $row, ',', '"');
             }
-            fclose($file);
+            fputcsv($file, $row, ',', '"');
           }
+          fclose($file);
         }
-        catch (\Exception $e) {
-          $error = "Vtiger::cron::Vtiger_DotsDataDump_Cron: Error exporting $table: " . $e->getMessage();
-          \App\Log::error($error);
-          $errors[] = $error;
-        }
-      }
-
-      if (!empty($errors)) {
-        $errors = implode("\n", $errors);
-        \VTWorkflowUtils::createBatchErrorEntryRaw("Report Data Dump", -1, "Vtiger", "Some errors occurred while exporting data for reporting subsystem", null, $errors);
-        throw new \Exception("Vtiger::cron::Vtiger_DotsDataDump_Cron: Errors: " . $errors);
       }
 
       \App\Log::warning("Vtiger::cron::Vtiger_DotsDataDump_Cron: Finished");

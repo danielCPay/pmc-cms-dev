@@ -54,7 +54,6 @@ if (PHP_SAPI === 'cli' || $user || App\Config::main('application_unique_key') ==
 	$response .= sprintf('---------------  %s | Start CRON  ----------', date('Y-m-d H:i:s')) . PHP_EOL;
 	foreach ($cronTasks as $cronTask) {
 		if (empty($cronTask)) {
-			$response .= sprintf('%s | Cron task not found', date('Y-m-d H:i:s')) . PHP_EOL;
 			continue;
 		}
 		try {

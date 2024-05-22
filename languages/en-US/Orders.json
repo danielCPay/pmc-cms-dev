@@ -1,0 +1,9 @@
+{
+	"php": {
+		"Orders": "YF Orders",
+		"SINGLE_Orders": "YF Orders",
+		"LBL_CUSTOM_INFORMATION": "Custom Information",
+		"LBL_BASIC_INFORMATION": "Basic Information",
+		"Amount": "Amount"
+	}
+}

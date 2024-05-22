@@ -81,7 +81,6 @@ class VTExpressionsManager
 		return ['concat' => 'concat(a,b)', 'Substring' => 'substr(string, start, length)', 'Substring to end' => 'substr(string, start)',
 			'time_diffmonths(a,b)' => 'time_diffmonths(a,b)', 'time_diffmonths(a)' => 'time_diffmonths(a)', 'time_diffdays(a,b)' => 'time_diffdays(a,b)', 'time_diffdays(a)' => 'time_diffdays(a)', 
 			'time_diff(a,b)' => 'time_diff(a,b)', 'time_diff(a)' => 'time_diff(a)', 'add_days' => 'add_days(datefield, noofdays)', 'sub_days' => 'sub_days(datefield, noofdays)', 
-			'add_months' => 'add_months(datefield, noofmonths)', 'sub_months' => 'sub_months(datefield, noofmonths)',
 			'add_time(timefield, minutes)' => 'add_time(timefield, minutes)', 'sub_time(timefield, minutes)' => 'sub_time(timefield, minutes)',
 			'today' => "get_date('today')", 'tomorrow' => "get_date('tomorrow')", 'yesterday' => "get_date('yesterday')", 'nvl' => 'nvl(a, 0)', 'get_datetime()' => 'get_datetime()', 
 			'truncdd' => 'truncdd(datefield)', 'truncmm' => 'truncmm(datefield)', 
@@ -97,7 +96,6 @@ class VTExpressionsManager
 			'Get formatted field by field' => 'get_field_display(moduleName, fieldName, fieldValue, targetField)',
 			'Replace' => 'replace(value, searchValue, replaceValue)',
 			'Get record id by user group' => 'get_by_user_group(userGroup, module, field)',
-			'Get county from address' => 'get_county_from_address(address)',
 		];
 	}
 }

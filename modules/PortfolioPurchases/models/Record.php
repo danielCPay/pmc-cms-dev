@@ -1,6 +1,6 @@
 <?php
 
- /* +***********************************************************************************
+/* +***********************************************************************************
  * The contents of this file are subject to the vtiger CRM Public License Version 1.0
  * ("License"); You may not use this file except in compliance with the License
  * The Original Code is:  vtiger CRM Open Source
@@ -15,13 +15,14 @@
  */
 class PortfolioPurchases_Record_Model extends Vtiger_Record_Model
 {
-  public function recalculateFromClaims() {
+  public function recalculateFromClaims()
+  {
     $id = $this->getId();
     $lockAutomation = $this->get('lock_automation');
-		\App\Log::warning("PortfolioPurchases::recalculateFromClaims:$id/$lockAutomation");
+    \App\Log::warning("PortfolioPurchases::recalculateFromClaims:$id/$lockAutomation");
 
     // If Lock automation = Yes, do nothing
-    if(!$lockAutomation) {
+    if (!$lockAutomation) {
 
       // Total Number of Claims - Number of all claims in this Purchase
       $num = 0;
@@ -52,10 +53,10 @@ class PortfolioPurchases_Record_Model extends Vtiger_Record_Model
       $claims = Vtiger_RelationListView_Model::getInstance($this, "Claims");
       $claimsRows = $claims->getRelationQuery()->all();
       $claimsRecords = $claims->getRecordsFromArray($claimsRows);
-      
+
       foreach ($claimsRecords as $id => $claim) {
-      	$claim = Vtiger_Record_Model::getInstanceById($claim->getId());
-        
+        $claim = Vtiger_Record_Model::getInstanceById($claim->getId());
+
         $num = $num + 1;
 
         if ($claim->get('type_of_claim') === "AOB") {
@@ -126,14 +127,15 @@ class PortfolioPurchases_Record_Model extends Vtiger_Record_Model
     }
   }
 
-  public function recalculateFromBuybackClaims() {
+  public function recalculateFromBuybackClaims()
+  {
     $id = $this->getId();
     $lockAutomation = $this->get('lock_automation');
-		
+
     \App\Log::warning("PortfolioPurchases::recalculateFromBuybackClaims:$id/$lockAutomation");
 
     // If Lock automation = Yes, do nothing
-    if(!$lockAutomation) {
+    if (!$lockAutomation) {
       $buybackClearance = (new \App\QueryGenerator('Claims'))->setField('buyback_amount')->addCondition('buyback_portfolio_purchase', $id, 'eid')->createQuery()->sum('Coalesce(buyback_amount, 0)') ?: 0;
 
       \App\Log::trace("PortfolioPurchases::recalculateFromBuybackClaims:buyback_clearance = $buybackClearance");
@@ -143,5 +145,5 @@ class PortfolioPurchases_Record_Model extends Vtiger_Record_Model
 
       $this->recalculateFromClaims();
     }
-  }
+  } 
 }

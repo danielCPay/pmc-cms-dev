@@ -115,14 +115,10 @@ class OSSMail_Record_Model extends Vtiger_Record_Model
 			]);
 
 			try {
-				$domain = substr(strrchr($user, '@'), 1);
-				$oauthConfigs = $config['oauth_configs'];
-        $oauthConfig = $oauthConfigs[$domain] ?? [];
-
 				$response = $client->post($config['oauth_token_uri'], [
 					'form_params' => [
-						'client_id'     => $oauthConfig['client_id'],
-						'client_secret' => $oauthConfig['client_secret'],
+						'client_id'     => $config['oauth_client_id'],
+						'client_secret' => $config['oauth_client_secret'],
 						'refresh_token' => $password,
 						'grant_type'    => 'refresh_token',
 					],

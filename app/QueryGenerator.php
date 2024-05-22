@@ -1271,9 +1271,6 @@ class QueryGenerator
 					break;
 				}
 			}
-			if (!$relatedModule) {
-				$relatedModule = \Vtiger_Module_Model::getInstance($fieldDetail['relatedModule']);
-			}
 
 			// add join
 			$tableName = $relatedFieldModel->getTableName();

@@ -1,0 +1,9 @@
+{
+	"php": {
+		"Product": "YF Product ",
+		"SINGLE_Product": "YF Product ",
+		"LBL_CUSTOM_INFORMATION": "Custom Information",
+		"LBL_BASIC_INFORMATION": "Basic Information",
+		"Product Name": "Product Name"
+	}
+}

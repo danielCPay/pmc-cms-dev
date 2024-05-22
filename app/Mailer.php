@@ -294,14 +294,10 @@ class Mailer
 				case 'smtpxoauth':
 					$this->mailer->isSMTP();
 					$this->mailer->AuthType = 'XOAUTH2';
-
-					$domain = substr(strrchr(trim($this->smtp['username']), '@'), 1);;
-					$oauthConfigs = \App\Config::module('OSSMail', 'oauth_configs');
-        	$oauthConfig = $oauthConfigs[$domain] ?? [];
 	
 					$provider = new \League\OAuth2\Client\Provider\GenericProvider([
-						'clientId' => $oauthConfig['client_id'],
-						'clientSecret' => $oauthConfig['client_secret'],
+						'clientId' => \App\Config::module('OSSMail', 'oauth_client_id'),
+						'clientSecret' => \App\Config::module('OSSMail', 'oauth_client_secret'),
 						'urlAuthorize' => \App\Config::module('OSSMail', 'oauth_auth_uri'),
 						'urlAccessToken' => \App\Config::module('OSSMail', 'oauth_token_uri'),
 						'urlResourceOwnerDetails' => \App\Config::module('OSSMail', 'oauth_identity_uri'),
@@ -310,8 +306,8 @@ class Mailer
 					$this->mailer->setOAuth(
 						new \PHPMailer\PHPMailer\OAuth([
 							'provider' => $provider,
-							'clientId' => $oauthConfig['client_id'],
-							'clientSecret' => $oauthConfig['client_secret'],
+							'clientId' => \App\Config::module('OSSMail', 'oauth_client_id'),
+							'clientSecret' => \App\Config::module('OSSMail', 'oauth_client_secret'),
 							'refreshToken' => Encryption::getInstance()->decrypt($this->smtp['password']),
 							'userName' => $this->smtp['username'],
 					]));

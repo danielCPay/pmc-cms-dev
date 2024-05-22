@@ -45,8 +45,8 @@ services:
             - /var/log/nginx:/var/log/nginx
             - /data/sftp/templates/templates:/var/www/html/storage/Templates
             - ~/.git-credentials:/.git-credentials
-            - ./configs/cms/certificate/server.crt:/etc/nginx/ssl/fullchain.pem
-            - ./configs/cms/certificate/server.key:/etc/nginx/ssl/privkey.pem
+            - ./configs/cms/certificate/FullChain-pmc04-cert.pem:/etc/nginx/ssl/fullchain.pem
+            - ./configs/cms/certificate/pmc04-key.pem:/etc/nginx/ssl/privkey.pem
             - ./yeti-logs:/logs
         depends_on:
             - yeti-db

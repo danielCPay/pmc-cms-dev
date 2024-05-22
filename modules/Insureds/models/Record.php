@@ -38,70 +38,103 @@ class Insureds_Record_Model extends Vtiger_Record_Model
 
     $address = "{$this->get('street')} {$this->get('zip')} {$this->get('city')} {$this->get('state')}";
 
-    $county = \App\Utils::getCounty($address);
+    $url = "https://atlas.microsoft.com/search/address/json?api-version=1.0&countrySet=US&limit=1&query=$address";
+    $requestOptions = \App\RequestHttp::getOptions();
+    $requestOptions['headers']['Authorization'] = \App\Config::api('azureAddressKey');
 
-    // set whereever
-    $this->set('county', $county);
-    $this->save();
+    \App\Log::warning("Insureds::findCounty:$url");
 
-    $claims = VTWorkflowUtils::getAllRelatedRecords($this, 'Claims');
-    $cases = VTWorkflowUtils::getAllRelatedRecords($this, 'Cases');
-    $texasCases = VTWorkflowUtils::getAllRelatedRecords($this, 'TexasCases');
-
-    foreach ($claims as $claimRow) {
-      $claim = Vtiger_Record_Model::getInstanceById($claimRow['id']);
-
-      if (empty($claim->get('county'))) {
-        $claim->set('county', $county);
-        $claim->save();
-      } else if ($claim->get('county') != $county) {
-        VTWorkflowUtils::createNotification(
-          $claim, 
-          'Claims', 
-          array_unique([$claim->get('assigned_user_id'), $claim->get('claim_underwriter'), $claim->get('claim_acceptant')]),
-          'Important notice about County',
-          'County for claim <a href="$(record : CrmDetailViewURL)$">$(record : RecordLabel)$</a> is inconsistent with Insured\' County',
-          'PLL_USERS'
-        );
-      }
+    $result = (new \GuzzleHttp\Client($requestOptions))->get($url, ['timeout' => 20, 'connect_timeout' => 10]);
+    if (200 == $result->getStatusCode()) {
+      $response = $result->getBody();
+    } else {
+      throw new \Exception("Azure Address request failed: {$result->getStatusCode()}/{$result->getReasonPhrase()}");
     }
 
-    foreach ($cases as $caseRow) {
-      $case = Vtiger_Record_Model::getInstanceById($caseRow['id']);
+    \App\Log::warning("Insureds::findCounty:$response");
 
-      if (empty($case->get('county'))) {
-        $case->set('county', $county);
-        $case->save();
-      } else if ($case->get('county') != $county) {
-        VTWorkflowUtils::createNotification(
-          $case, 
-          'Cases', 
-          array_unique([$case->get('assigned_user_id'), $case->get('attorney_user'), $case->get('case_manager')]),
-          'Important notice about County',
-          'County for case <a href="$(record : CrmDetailViewURL)$">$(record : RecordLabel)$</a> is inconsistent with Insured\' County',
-          'PLL_USERS'
-        );
+    $json = \App\Json::decode($response);
+
+    if ($json['summary']['numResults'] < 1) {
+      // error, not found
+      throw new \Exception("Could not geolocate address '$address'");
+    } else {
+      $countyName = $json['results'][0]['address']['countrySecondarySubdivision'];
+
+      // find county in Counties
+      $county = (new \App\QueryGenerator('Counties'))
+        ->setField('id')
+        ->addCondition('county', $countyName, 's')
+        ->createQuery()
+        ->scalar();
+
+      if (empty($county)) {
+        throw new \Exception("County $countyName not found in Counties dictionary");
       }
-    }
 
-    foreach ($texasCases as $caseRow) {
-      $case = Vtiger_Record_Model::getInstanceById($caseRow['id']);
+      // set whereever
+      $this->set('county', $county);
+      $this->save();
 
-      if (empty($case->get('county'))) {
-        $case->set('county', $county);
-        $case->save();
-      } else if ($case->get('county') != $county) {
-        VTWorkflowUtils::createNotification(
-          $case, 
-          'TexasCases', 
-          array_unique([$case->get('assigned_user_id'), $case->get('attorney_user'), $case->get('case_manager')]),
-          'Important notice about County',
-          'County for Texas case <a href="$(record : CrmDetailViewURL)$">$(record : RecordLabel)$</a> is inconsistent with Insured\' County',
-          'PLL_USERS'
-        );
+      $claims = VTWorkflowUtils::getAllRelatedRecords($this, 'Claims');
+      $cases = VTWorkflowUtils::getAllRelatedRecords($this, 'Cases');
+      $texasCases = VTWorkflowUtils::getAllRelatedRecords($this, 'TexasCases');
+
+      foreach ($claims as $claimRow) {
+        $claim = Vtiger_Record_Model::getInstanceById($claimRow['id']);
+
+        if (empty($claim->get('county'))) {
+          $claim->set('county', $county);
+          $claim->save();
+        } else if ($claim->get('county') != $county) {
+          VTWorkflowUtils::createNotification(
+            $claim, 
+            'Claims', 
+            array_unique([$claim->get('assigned_user_id'), $claim->get('claim_underwriter'), $claim->get('claim_acceptant')]),
+            'Important notice about County',
+            'County for claim <a href="$(record : CrmDetailViewURL)$">$(record : RecordLabel)$</a> is inconsistent with Insured\' County',
+            'PLL_USERS'
+          );
+        }
       }
-    }
 
-    return $county;
+      foreach ($cases as $caseRow) {
+        $case = Vtiger_Record_Model::getInstanceById($caseRow['id']);
+
+        if (empty($case->get('county'))) {
+          $case->set('county', $county);
+          $case->save();
+        } else if ($case->get('county') != $county) {
+          VTWorkflowUtils::createNotification(
+            $case, 
+            'Cases', 
+            array_unique([$case->get('assigned_user_id'), $case->get('attorney_user'), $case->get('case_manager')]),
+            'Important notice about County',
+            'County for case <a href="$(record : CrmDetailViewURL)$">$(record : RecordLabel)$</a> is inconsistent with Insured\' County',
+            'PLL_USERS'
+          );
+        }
+      }
+
+      foreach ($texasCases as $caseRow) {
+        $case = Vtiger_Record_Model::getInstanceById($caseRow['id']);
+
+        if (empty($case->get('county'))) {
+          $case->set('county', $county);
+          $case->save();
+        } else if ($case->get('county') != $county) {
+          VTWorkflowUtils::createNotification(
+            $case, 
+            'TexasCases', 
+            array_unique([$case->get('assigned_user_id'), $case->get('attorney_user'), $case->get('case_manager')]),
+            'Important notice about County',
+            'County for Texas case <a href="$(record : CrmDetailViewURL)$">$(record : RecordLabel)$</a> is inconsistent with Insured\' County',
+            'PLL_USERS'
+          );
+        }
+      }
+
+      return $county;
+    }
   }
 }

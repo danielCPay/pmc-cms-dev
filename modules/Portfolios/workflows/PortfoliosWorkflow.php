@@ -12,17 +12,17 @@
 class PortfoliosWorkflow
 {
   /**
-	 * Generate Portfolio ID as next numebr in sequence Provider.Provider Abbreviation - NNN.
-	 *
-	 * @param \Vtiger_Record_Model $recordModel
-	 */
-	public static function generatePortfolioId(Vtiger_Record_Model $recordModel)
-	{
-		$id = $recordModel->getId();
+   * Generate Portfolio ID as next numebr in sequence Provider.Provider Abbreviation - NNN.
+   *
+   * @param \Vtiger_Record_Model $recordModel
+   */
+  public static function generatePortfolioId(Vtiger_Record_Model $recordModel)
+  {
+    $id = $recordModel->getId();
     $currentPortfolioId = $recordModel->get('portfolio_id');
     $providerId = $recordModel->get('provider');
 
-		\App\Log::warning("Portfolios::Workflows::generatePortfolioId:$id/$currentPortfolioId/$providerId");
+    \App\Log::warning("Portfolios::Workflows::generatePortfolioId:$id/$currentPortfolioId/$providerId");
 
     if (empty($currentPortfolioId) || $currentPortfolioId === '---new---') {
       $provider = Vtiger_Record_Model::getInstanceById($providerId);
@@ -30,10 +30,10 @@ class PortfoliosWorkflow
 
       // get max number from previous portfolios for provider
       $number = (new \App\QueryGenerator('Portfolios'))
-          ->addCondition('provider', $providerId, 'eid')
-          ->createQuery()
-          ->andWhere(['rlike', 'portfolio_id', "^$abbreviation-\\d+$"])
-          ->max("cast(regexp_replace(portfolio_id, '^$abbreviation-', '') as integer)")
+        ->addCondition('provider', $providerId, 'eid')
+        ->createQuery()
+        ->andWhere(['rlike', 'portfolio_id', "^$abbreviation-\\d+$"])
+        ->max("cast(regexp_replace(portfolio_id, '^$abbreviation-', '') as integer)")
         ?: 0;
       $number += 1;
 
@@ -41,50 +41,24 @@ class PortfoliosWorkflow
       $recordModel->set('portfolio_id', "$abbreviation-$number");
       $recordModel->save();
     }
-	}
+  }
 
   /**
-	 * @param \Portfolios_Record_Model $recordModel
-	 */
-	public static function recalculateAll(Vtiger_Record_Model $recordModel)
-	{
-		$id = $recordModel->getId();
+   * Recalculate from claims
+   *
+   * @param \Portfolios_Record_Model $recordModel
+   */
+  public static function recalculateFromClaims(Vtiger_Record_Model $recordModel)
+  {
+    $id = $recordModel->getId();
 
-		\App\Log::warning("Portfolios::Workflows::recalculateAll:$id");
-
-    \App\Log::warning( "USER = " . \App\User::getCurrentUserId() . "/" . \App\User::getCurrentUserRealId());
-
-		$recordModel->recalculateAll();
-	}
-
-  /**
-	 * Recalculate from claims
-	 *
-	 * @param \Portfolios_Record_Model $recordModel
-	 */
-	public static function recalculateFromClaims(Vtiger_Record_Model $recordModel)
-	{
-		$id = $recordModel->getId();
-
-		\App\Log::warning("Portfolios::Workflows::recalculateFromClaims:" . $id);
+    \App\Log::warning("Portfolios::Workflows::recalculateFromClaims:" . $id);
 
     $recordModel->recalculateFromClaims();
-	}
+  }
 
   /**
-	 * @param \Portfolios_Record_Model $recordModel
-	 */
-	public static function recalculateFromPortfolioPurchases(Vtiger_Record_Model $recordModel)
-	{
-		$id = $recordModel->getId();
-
-		\App\Log::warning("Portfolios::Workflows::recalculateFromPortfolioPurchases:$id");
-
-		$recordModel->recalculateFromPortfolioPurchases();
-	}
-
-   /**
-	 * Release reserves to provider (RELEASE_RESERVES_TO_PROVIDER)
+   * Release reserves to provider (RELEASE_RESERVES_TO_PROVIDER)
    * 
    * Portfolio Level
    *   Create Payment to Provider:
@@ -111,20 +85,20 @@ class PortfoliosWorkflow
    * Take into account the Lock Automation on the Portfolio level (nothing starts if automation is locked).
    * Ignore Lock Automation on the Claims level to avoid data inconsistency.
    * Do not use the "Recalculate from Claim Collections" WF on the Claims level.
-	 *
-	 * @param \Vtiger_Record_Model $recordModel
-	 */
-	public static function releaseReservesToProvider(Vtiger_Record_Model $recordModel)
-	{
-		$id = $recordModel->getId();
+   *
+   * @param \Vtiger_Record_Model $recordModel
+   */
+  public static function releaseReservesToProvider(Vtiger_Record_Model $recordModel)
+  {
+    $id = $recordModel->getId();
     $lockAutomation = $recordModel->get('lock_automation');
     $totalReservesToBeReleased = $recordModel->get('total_reserves_to_be_released') ?: 0;
 
-		\App\Log::warning("Portfolios::Workflows::releaseReservesToProvider:$id/$lockAutomation/$totalReservesToBeReleased");
+    \App\Log::warning("Portfolios::Workflows::releaseReservesToProvider:$id/$lockAutomation/$totalReservesToBeReleased");
 
-    if(!$lockAutomation && $totalReservesToBeReleased > 0) {
+    if (!$lockAutomation && $totalReservesToBeReleased > 0) {
       $currentDate = date('Y-m-d');
-      
+
       $newPayment = Vtiger_Record_Model::getCleanInstance('Payments');
       $newPayment->set('payment_name', "Reserves released by WF");
       $newPayment->set('payment_date', $currentDate);
@@ -153,39 +127,41 @@ class PortfoliosWorkflow
       }
       $recordModel->save();
     }
-	}
+  }
 
   /**
    * Stop WF if more claims to underwrite
-	 *
-	 * @param \Portfolios_Record_Model $recordModel
+   *
+   * @param \Portfolios_Record_Model $recordModel
    */
-  public static function stopIfMoreClaimsToUnderwrite(Vtiger_Record_Model $recordModel) {
+  public static function stopIfMoreClaimsToUnderwrite(Vtiger_Record_Model $recordModel)
+  {
     $id = $recordModel->getId();
-    
-		\App\Log::warning("Portfolios::stopIfMoreClaimsToUnderwrite:$id");
+
+    \App\Log::warning("Portfolios::stopIfMoreClaimsToUnderwrite:$id");
 
     $claims = Vtiger_RelationListView_Model::getInstance($recordModel, "Claims");
     $claimsRows = $claims->getRelationQuery()->all();
     $claimsRecords = $claims->getRecordsFromArray($claimsRows);
     $err = "Claims with Onboarding Status 'Pending Underwriting' or 'In Underwriting' exists";
-    
+
     foreach ($claimsRecords as $id => $claim) {
       $claim = Vtiger_Record_Model::getInstanceById($claim->getId());
-      
+
       if ($claim->get('onboarding_status') === "Pending Underwriting" || $claim->get('onboarding_status') === "In Underwriting") {
         \App\Log::warning("Portfolios::stopIfMoreClaimsToUnderwrite:$id - stop processing");
-		    throw new \App\Exceptions\BatchErrorHandledNoRethrowWorkflowException($err);
+        throw new \App\Exceptions\BatchErrorHandledNoRethrowWorkflowException($err);
       }
     }
   }
 
   /**
    * Set HO Attorney confirmation fields and generate document packages for HO Attorneys
-	 *
-	 * @param \Portfolios_Record_Model $recordModel
+   *
+   * @param \Portfolios_Record_Model $recordModel
    */
-  public static function createHOAttorneyConfirmationRequests(Vtiger_Record_Model $recordModel) {
+  public static function createHOAttorneyConfirmationRequests(Vtiger_Record_Model $recordModel)
+  {
     $id = $recordModel->getId();
     $currentDate = date('Y-m-d');
     \App\Log::warning("Portfolios::Workflows::createHOAttorneyConfirmationRequests:$id/$currentDate");
@@ -202,7 +178,7 @@ class PortfoliosWorkflow
     // get all Claims related to this Portfolio, that have Onboarding Status equal to "Pending Underwriting" and HO Attorney Confirmation Status empty
     $relatedClaims = \VTWorkflowUtils::getAllRelatedRecords($recordModel, 'Claims', ['and', ['onboarding_status' => 'Pending Underwriting'], ['ho_attorney_confirmation_statu' => '']], ['u_yf_claims.ho_attorney']);
 
-    $claimsWithoutHOAttorney = array_filter($relatedClaims, function($claim) {
+    $claimsWithoutHOAttorney = array_filter($relatedClaims, function ($claim) {
       return empty($claim['ho_attorney']) || !\App\Record::isExists($claim['ho_attorney'], 'Attorneys');
     });
     if (!empty($claimsWithoutHOAttorney)) {
@@ -227,7 +203,7 @@ class PortfoliosWorkflow
     \App\Log::warning("Portfolios::Workflows::createHOAttorneyConfirmationRequests:HO Attorneys = " . implode(',', $hoAttorneyIds));
 
     // for each HO Attorney ID generate Document Package named "LOP Pre-Purchase Confirmation"
-    foreach($hoAttorneyIds as $hoAttorneyId) {
+    foreach ($hoAttorneyIds as $hoAttorneyId) {
       $hoAttorney = Vtiger_Record_Model::getInstanceById($hoAttorneyId);
 
       $documentId = $docPackage->generate($hoAttorney);
@@ -250,10 +226,11 @@ class PortfoliosWorkflow
 
   /**
    * Call resetToNew
-	 *
-	 * @param \Portfolios_Record_Model $recordModel
+   *
+   * @param \Portfolios_Record_Model $recordModel
    */
-  public static function resetToNew(Vtiger_Record_Model $recordModel) {
+  public static function resetToNew(Vtiger_Record_Model $recordModel)
+  {
     \App\Log::warning("Portfolios::Workflows::resetToNew");
 
     Portfolios_Module_Model::resetToNew();

@@ -202,5 +202,41 @@ class Import_CSVReader_Reader extends Import_FileReader_Reader
 				}
 			}
 		}
+		$csv = new \ParseCsv\Csv();
+		$csv->encoding($this->request->get('file_encoding'), \App\Config::main('default_charset', 'UTF-8'));
+		$csv->delimiter = $this->request->get('delimiter');
+		$csv->heading = false;
+		$csv->parse($this->getFilePath());
+		$this->data = $csv->data;
+		$rowCount = count($csv->data);  //3 
+		$db = \App\Db::getInstance();
+		$sql = "SELECT * FROM u_yf_checks ORDER BY checksid DESC LIMIT 1";
+		$result = $db->createCommand($sql)->queryOne();
+		$maxBatchNumber = $result['batch_number'];    // 112  
+		$sql1 = "SELECT * FROM u_yf_checks ORDER BY checksid DESC LIMIT 1,1";
+		$result1 = $db->createCommand($sql1)->queryOne();
+		$maxBatchNumber1 = $result1['batch_number'];    // 112   
+		//$diference=$maxBatchNumber-$maxBatchNumber1;
+		// Incrementar el max_batchnumber en 2
+		if($maxBatchNumber>0&&$rowCount>2){
+			$newBatchNumber = ($rowCount-1)*-1;    //-2
+			$updateSql = "UPDATE u_yf_checks SET batch_number = :newBatchNumber WHERE checksid = :checksid";
+			$updateParams = [':newBatchNumber' => $newBatchNumber, ':checksid' => $result['checksid']];
+			$db->createCommand($updateSql, $updateParams)->execute();
+			$updateSql1 = "UPDATE u_yf_checks SET batch_number = :maxBatchNumber WHERE checksid = :checksid";
+			$updateParams1 = [':maxBatchNumber' => $maxBatchNumber, ':checksid' => $result1['checksid']];
+			$db->createCommand($updateSql1, $updateParams1)->execute();
+		}
+		
+		
+
+		//$newBatchNumber = $newBatchNumber * -1;     
+		// Actualizar el último batch_number con el nuevo valor
+		
+
+
+
+
+
 	}
 }

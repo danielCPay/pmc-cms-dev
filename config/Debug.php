@@ -50,13 +50,13 @@ class Debug
 	/** Save logs to file (cache/logs/errors.log) */
 	public static $EXCEPTION_ERROR_TO_FILE = false;
 
-	/** Display main debug console */
-	public static $DISPLAY_DEBUG_CONSOLE = false;
+	/** Display main debug console default: false*/
+	public static $DISPLAY_DEBUG_CONSOLE = true;
 
-	/** Enable displaying logs in debug console. Values: false/true */
-	public static $DISPLAY_LOGS_IN_CONSOLE = false;
+	/** Enable displaying logs in debug console. Values: false/true default: false */
+	public static $DISPLAY_LOGS_IN_CONSOLE = true;
 
-	/** Enable displaying logs in debug console. Values: false/true */
+	/** Enable displaying logs in debug console. Values: false/true default: false*/
 	public static $DISPLAY_CONFIG_IN_CONSOLE = false;
 
 	/** List of IP addresses allowed to display debug console. Values: false = All IPS / "192.168.1.10" / ["192.168.1.10","192.168.1.11"] */

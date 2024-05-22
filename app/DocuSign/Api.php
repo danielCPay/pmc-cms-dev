@@ -360,7 +360,10 @@ class Api {
         throw new \Exception("Unmatched DocuSign document with id $envelopeId");
       }
       $portfolioPurchase = \Vtiger_Record_Model::getInstanceById($portfolioPurchaseId);
-      
+      $assignedUserId = $portfolioPurchase->get('assigned_user_id');
+      $currentUserId = \App\User::getCurrentUserId();
+      \App\User::setCurrentUserId($assignedUserId);
+
       $wfs = new \VTWorkflowManager();
 
       switch($response['event']) {
@@ -459,6 +462,10 @@ class Api {
       
       $message = $t->getMessage();
       self::createBatchError('PortfolioPurchases', 'Unexpected error when signing document', $portfolioPurchaseId, $message);
+    } finally {
+      if (!empty($currentUserId)) {
+        \App\User::setCurrentUserId($currentUserId);
+      }
     }
   }
 

@@ -571,13 +571,10 @@ class Vtiger_RelationListView_Model extends \App\Base
 		
 		$relationField = $this->getRelationModel()->getRelationField();
 		if ($relationField && $this->getRelationModel()->get('name') !== 'getSimilarCases') {
-			$childField = reset($parentRecordModel->getModule()->getFieldsByType('recordNumber'));
-			$childFieldName = $childField ? $childField->getName() : "number";
-
 			$relatedLink['RELATEDLIST_OPENPARENT'][] = Vtiger_Link_Model::getInstanceFromValues([
 				'linktype' => 'RELATEDLIST_OPENPARENT',
 				'linklabel' => \App\Language::translate('LBL_OPEN_PARENT'),
-				'linkurl' => "index.php?module={$this->getRelatedModuleModel()->getName()}&view=List&fixed_search_params=[[[\"$childFieldName:{$parentRecordModel->getModule()->getName()}:{$relationField->getName()}\", \"e\", \"{$parentRecordModel->get($childFieldName)}\"]]]",
+				'linkurl' => "index.php?module={$this->getRelatedModuleModel()->getName()}&view=List&fixed_search_params=[[[\"number:{$parentRecordModel->getModule()->getName()}:{$relationField->getName()}\", \"e\", \"{$parentRecordModel->get('number')}\"]]]",
 				'linkclass' => '',
 				'linkicon' => 'fas fa-external-link-alt'
 			]);

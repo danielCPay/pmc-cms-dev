@@ -10,117 +10,122 @@ require_once 'modules/com_vtiger_workflow/VTEntityMethodManager.php';
 
 $customFunctions = [
   'Cases' => [
-    [ 'methodName' => 'recalculateFromClaims', 'functionPath' => 'modules/Cases/workflows/CasesWorkflow.php', 'functionName' => 'CasesWorkflow' ],
-    [ 'methodName' => 'recalculateFromCollections', 'functionPath' => 'modules/Cases/workflows/CasesWorkflow.php', 'functionName' => 'CasesWorkflow' ],
-    [ 'methodName' => 'recalculateFromOthers', 'functionPath' => 'modules/Cases/workflows/CasesWorkflow.php', 'functionName' => 'CasesWorkflow' ],
-    [ 'methodName' => 'recalculateSettlementNegotiations', 'functionPath' => 'modules/Cases/workflows/CasesWorkflow.php', 'functionName' => 'CasesWorkflow' ],
-    [ 'methodName' => 'recalculateFromCase', 'functionPath' => 'modules/Cases/workflows/CasesWorkflow.php', 'functionName' => 'CasesWorkflow' ],
-    [ 'methodName' => 'recalculateAll', 'functionPath' => 'modules/Cases/workflows/CasesWorkflow.php', 'functionName' => 'CasesWorkflow' ],
-    [ 'methodName' => 'updateNextHearingDate', 'functionPath' => 'modules/Cases/workflows/CasesWorkflow.php', 'functionName' => 'CasesWorkflow' ],
-    [ 'methodName' => 'calculateStatusAge', 'functionPath' => 'modules/Cases/workflows/CasesWorkflow.php', 'functionName' => 'CasesWorkflow' ],
-    [ 'methodName' => 'findSimilarCases', 'functionPath' => 'modules/Cases/workflows/CasesWorkflow.php', 'functionName' => 'CasesWorkflow' ],
-    [ 'methodName' => 'setNewCaseId', 'functionPath' => 'modules/Cases/workflows/CasesWorkflow.php', 'functionName' => 'CasesWorkflow' ],
-    [ 'methodName' => 'setAttorneyByAssignedTo', 'functionPath' => 'modules/Cases/workflows/CasesWorkflow.php', 'functionName' => 'CasesWorkflow' ],
-    [ 'methodName' => 'revertToPreviousStatus', 'functionPath' => 'modules/Cases/workflows/CasesWorkflow.php', 'functionName' => 'CasesWorkflow' ],
+    ['methodName' => 'recalculateFromClaims', 'functionPath' => 'modules/Cases/workflows/CasesWorkflow.php', 'functionName' => 'CasesWorkflow'],
+    ['methodName' => 'recalculateFromCollections', 'functionPath' => 'modules/Cases/workflows/CasesWorkflow.php', 'functionName' => 'CasesWorkflow'],
+    ['methodName' => 'recalculateFromOthers', 'functionPath' => 'modules/Cases/workflows/CasesWorkflow.php', 'functionName' => 'CasesWorkflow'],
+    ['methodName' => 'recalculateSettlementNegotiations', 'functionPath' => 'modules/Cases/workflows/CasesWorkflow.php', 'functionName' => 'CasesWorkflow'],
+    ['methodName' => 'recalculateFromCase', 'functionPath' => 'modules/Cases/workflows/CasesWorkflow.php', 'functionName' => 'CasesWorkflow'],
+    ['methodName' => 'recalculateAll', 'functionPath' => 'modules/Cases/workflows/CasesWorkflow.php', 'functionName' => 'CasesWorkflow'],
+    ['methodName' => 'updateNextHearingDate', 'functionPath' => 'modules/Cases/workflows/CasesWorkflow.php', 'functionName' => 'CasesWorkflow'],
+    ['methodName' => 'calculateStatusAge', 'functionPath' => 'modules/Cases/workflows/CasesWorkflow.php', 'functionName' => 'CasesWorkflow'],
+    ['methodName' => 'findSimilarCases', 'functionPath' => 'modules/Cases/workflows/CasesWorkflow.php', 'functionName' => 'CasesWorkflow'],
+    ['methodName' => 'setNewCaseId', 'functionPath' => 'modules/Cases/workflows/CasesWorkflow.php', 'functionName' => 'CasesWorkflow'],
+    ['methodName' => 'setAttorneyByAssignedTo', 'functionPath' => 'modules/Cases/workflows/CasesWorkflow.php', 'functionName' => 'CasesWorkflow'],
+    ['methodName' => 'revertToPreviousStatus', 'functionPath' => 'modules/Cases/workflows/CasesWorkflow.php', 'functionName' => 'CasesWorkflow'],
   ],
-  'TexasCases' => [
-    [ 'methodName' => 'recalculateFromClaims', 'functionPath' => 'modules/TexasCases/workflows/TexasCasesWorkflow.php', 'functionName' => 'TexasCasesWorkflow' ],
-    [ 'methodName' => 'recalculateFromCollections', 'functionPath' => 'modules/TexasCases/workflows/TexasCasesWorkflow.php', 'functionName' => 'TexasCasesWorkflow' ],
-    [ 'methodName' => 'recalculateFromOthers', 'functionPath' => 'modules/TexasCases/workflows/TexasCasesWorkflow.php', 'functionName' => 'TexasCasesWorkflow' ],
-    [ 'methodName' => 'recalculateSettlementNegotiations', 'functionPath' => 'modules/TexasCases/workflows/TexasCasesWorkflow.php', 'functionName' => 'TexasCasesWorkflow' ],
-    [ 'methodName' => 'recalculateFromCase', 'functionPath' => 'modules/TexasCases/workflows/TexasCasesWorkflow.php', 'functionName' => 'TexasCasesWorkflow' ],
-    [ 'methodName' => 'recalculateAll', 'functionPath' => 'modules/TexasCases/workflows/TexasCasesWorkflow.php', 'functionName' => 'TexasCasesWorkflow' ],
-    [ 'methodName' => 'updateNextHearingDate', 'functionPath' => 'modules/TexasCases/workflows/TexasCasesWorkflow.php', 'functionName' => 'TexasCasesWorkflow' ],
-    [ 'methodName' => 'calculateStatusAge', 'functionPath' => 'modules/TexasCases/workflows/TexasCasesWorkflow.php', 'functionName' => 'TexasCasesWorkflow' ],
-    [ 'methodName' => 'findSimilarTexasCases', 'functionPath' => 'modules/TexasCases/workflows/TexasCasesWorkflow.php', 'functionName' => 'TexasCasesWorkflow' ],
-    [ 'methodName' => 'setNewCaseId', 'functionPath' => 'modules/TexasCases/workflows/TexasCasesWorkflow.php', 'functionName' => 'TexasCasesWorkflow' ],
-    [ 'methodName' => 'setAttorneyByAssignedTo', 'functionPath' => 'modules/TexasCases/workflows/TexasCasesWorkflow.php', 'functionName' => 'TexasCasesWorkflow' ],
-    [ 'methodName' => 'revertToPreviousStatus', 'functionPath' => 'modules/TexasCases/workflows/TexasCasesWorkflow.php', 'functionName' => 'TexasCasesWorkflow' ],
+  'Checks' => [
+    ['methodName' => 'exampleMethod', 'functionPath' => 'modules/Checks/workflows/ChecksWorkflow.php', 'functionName' => 'ChecksWorkflow'],
+    ['methodName' => 'fillFields', 'functionPath' => 'modules/Checks/workflows/ChecksWorkflow.php', 'functionName' => 'ChecksWorkflow']   
   ],
   'ChecksRegister' => [
-    [ 'methodName' => 'assignNextBatchNumber', 'functionPath' => 'modules/ChecksRegister/workflows/ChecksRegisterWorkflow.php', 'functionName' => 'ChecksRegisterWorkflow' ],
-    [ 'methodName' => 'reprocessCheck', 'functionPath' => 'modules/ChecksRegister/workflows/ChecksRegisterWorkflow.php', 'functionName' => 'ChecksRegisterWorkflow' ],
+    ['methodName' => 'assignNextBatchNumber', 'functionPath' => 'modules/ChecksRegister/workflows/ChecksRegisterWorkflow.php', 'functionName' => 'ChecksRegisterWorkflow'],
+    ['methodName' => 'reprocessCheck', 'functionPath' => 'modules/ChecksRegister/workflows/ChecksRegisterWorkflow.php', 'functionName' => 'ChecksRegisterWorkflow'],
+  ],
+  'TexasCases' => [
+    ['methodName' => 'recalculateFromClaims', 'functionPath' => 'modules/TexasCases/workflows/TexasCasesWorkflow.php', 'functionName' => 'TexasCasesWorkflow'],
+    ['methodName' => 'recalculateFromCollections', 'functionPath' => 'modules/TexasCases/workflows/TexasCasesWorkflow.php', 'functionName' => 'TexasCasesWorkflow'],
+    ['methodName' => 'recalculateFromOthers', 'functionPath' => 'modules/TexasCases/workflows/TexasCasesWorkflow.php', 'functionName' => 'TexasCasesWorkflow'],
+    ['methodName' => 'recalculateSettlementNegotiations', 'functionPath' => 'modules/TexasCases/workflows/TexasCasesWorkflow.php', 'functionName' => 'TexasCasesWorkflow'],
+    ['methodName' => 'recalculateFromCase', 'functionPath' => 'modules/TexasCases/workflows/TexasCasesWorkflow.php', 'functionName' => 'TexasCasesWorkflow'],
+    ['methodName' => 'recalculateAll', 'functionPath' => 'modules/TexasCases/workflows/TexasCasesWorkflow.php', 'functionName' => 'TexasCasesWorkflow'],
+    ['methodName' => 'updateNextHearingDate', 'functionPath' => 'modules/TexasCases/workflows/TexasCasesWorkflow.php', 'functionName' => 'TexasCasesWorkflow'],
+    ['methodName' => 'calculateStatusAge', 'functionPath' => 'modules/TexasCases/workflows/TexasCasesWorkflow.php', 'functionName' => 'TexasCasesWorkflow'],
+    ['methodName' => 'findSimilarTexasCases', 'functionPath' => 'modules/TexasCases/workflows/TexasCasesWorkflow.php', 'functionName' => 'TexasCasesWorkflow'],
+    ['methodName' => 'setNewCaseId', 'functionPath' => 'modules/TexasCases/workflows/TexasCasesWorkflow.php', 'functionName' => 'TexasCasesWorkflow'],
+    ['methodName' => 'setAttorneyByAssignedTo', 'functionPath' => 'modules/TexasCases/workflows/TexasCasesWorkflow.php', 'functionName' => 'TexasCasesWorkflow'],
+    ['methodName' => 'revertToPreviousStatus', 'functionPath' => 'modules/TexasCases/workflows/TexasCasesWorkflow.php', 'functionName' => 'TexasCasesWorkflow'],
   ],
   'ClaimedInvoices' => [
-    [ 'methodName' => 'recalculateFinancialSummary', 'functionPath' => 'modules/ClaimedInvoices/workflows/ClaimedInvoicesWorkflow.php', 'functionName' => 'ClaimedInvoicesWorkflow' ],
+    ['methodName' => 'recalculateFinancialSummary', 'functionPath' => 'modules/ClaimedInvoices/workflows/ClaimedInvoicesWorkflow.php', 'functionName' => 'ClaimedInvoicesWorkflow'],
   ],
   'Claims' => [
-    [ 'methodName' => 'recalculateFromClaimCollections', 'functionPath' => 'modules/Claims/workflows/ClaimsWorkflow.php', 'functionName' => 'ClaimsWorkflow' ],
-    [ 'methodName' => 'recalculateFinancialSummary', 'functionPath' => 'modules/Claims/workflows/ClaimsWorkflow.php', 'functionName' => 'ClaimsWorkflow' ],
-    [ 'methodName' => 'findRelatedCase', 'functionPath' => 'modules/Claims/workflows/ClaimsWorkflow.php', 'functionName' => 'ClaimsWorkflow' ],
-    [ 'methodName' => 'onPurchasedCondCreateCase', 'functionPath' => 'modules/Claims/workflows/ClaimsWorkflow.php', 'functionName' => 'ClaimsWorkflow' ],
-    [ 'methodName' => 'findSimilarClaims', 'functionPath' => 'modules/Claims/workflows/ClaimsWorkflow.php', 'functionName' => 'ClaimsWorkflow' ],
-    [ 'methodName' => 'verifyOnbData', 'functionPath' => 'modules/Claims/workflows/ClaimsWorkflow.php', 'functionName' => 'ClaimsWorkflow' ],
-    [ 'methodName' => 'updateInsuranceCompanyComments', 'functionPath' => 'modules/Claims/workflows/ClaimsWorkflow.php', 'functionName' => 'ClaimsWorkflow' ],
+    ['methodName' => 'recalculateFromClaimCollections', 'functionPath' => 'modules/Claims/workflows/ClaimsWorkflow.php', 'functionName' => 'ClaimsWorkflow'],
+    ['methodName' => 'recalculateFinancialSummary', 'functionPath' => 'modules/Claims/workflows/ClaimsWorkflow.php', 'functionName' => 'ClaimsWorkflow'],
+    ['methodName' => 'findRelatedCase', 'functionPath' => 'modules/Claims/workflows/ClaimsWorkflow.php', 'functionName' => 'ClaimsWorkflow'],
+    ['methodName' => 'onPurchasedCondCreateCase', 'functionPath' => 'modules/Claims/workflows/ClaimsWorkflow.php', 'functionName' => 'ClaimsWorkflow'],
+    ['methodName' => 'findSimilarClaims', 'functionPath' => 'modules/Claims/workflows/ClaimsWorkflow.php', 'functionName' => 'ClaimsWorkflow'],
+    ['methodName' => 'verifyOnbData', 'functionPath' => 'modules/Claims/workflows/ClaimsWorkflow.php', 'functionName' => 'ClaimsWorkflow'],
+    ['methodName' => 'updateInsuranceCompanyComments', 'functionPath' => 'modules/Claims/workflows/ClaimsWorkflow.php', 'functionName' => 'ClaimsWorkflow'],
   ],
   'ClaimCollections' => [],
   'Collections' => [
-    [ 'methodName' => 'applyCollectionToClaims', 'functionPath' => 'modules/Collections/workflows/CollectionsWorkflow.php', 'functionName' => 'CollectionsWorkflow' ],
-    [ 'methodName' => 'disburseCollection', 'functionPath' => 'modules/Collections/workflows/CollectionsWorkflow.php', 'functionName' => 'CollectionsWorkflow' ],
-    [ 'methodName' => 'exportCollectionToQuickBooks', 'functionPath' => 'modules/Collections/workflows/CollectionsWorkflow.php', 'functionName' => 'CollectionsWorkflow' ],
+    ['methodName' => 'applyCollectionToClaims', 'functionPath' => 'modules/Collections/workflows/CollectionsWorkflow.php', 'functionName' => 'CollectionsWorkflow'],
+    ['methodName' => 'disburseCollection', 'functionPath' => 'modules/Collections/workflows/CollectionsWorkflow.php', 'functionName' => 'CollectionsWorkflow'],
+    ['methodName' => 'exportCollectionToQuickBooks', 'functionPath' => 'modules/Collections/workflows/CollectionsWorkflow.php', 'functionName' => 'CollectionsWorkflow'],
   ],
   'Documents' => [
-    [ 'methodName' => 'import_claims_from_excel', 'functionPath' => 'modules/Documents/workflows/ImportClaims.php', 'functionName' => 'ImportClaims' ],
-    [ 'methodName' => 'assignCaseToCollection', 'functionPath' => 'modules/Documents/workflows/CaseToCollection.php', 'functionName' => 'CaseToCollection' ],
-    [ 'methodName' => 'import_cases_from_excel', 'functionPath' => 'modules/Cases/workflows/ImportHOCases.php', 'functionName' => 'ImportHOCases' ],
-    [ 'methodName' => 'importIncomingChecks', 'functionPath' => 'modules/Documents/workflows/ImportChecks.php', 'functionName' => 'ImportChecks' ],
+    ['methodName' => 'import_claims_from_excel', 'functionPath' => 'modules/Documents/workflows/ImportClaims.php', 'functionName' => 'ImportClaims'],
+    ['methodName' => 'assignCaseToCollection', 'functionPath' => 'modules/Documents/workflows/CaseToCollection.php', 'functionName' => 'CaseToCollection'],
+    ['methodName' => 'import_cases_from_excel', 'functionPath' => 'modules/Cases/workflows/ImportHOCases.php', 'functionName' => 'ImportHOCases'],
+    ['methodName' => 'import_checks_from_excel', 'functionPath' => 'modules/Documents/workflows/ImportChecks.php', 'functionName' => 'ImportChecks'],
+    ['methodName' => 'importIncomingChecks', 'functionPath' => 'modules/Documents/workflows/ImportChecks.php', 'functionName' => 'ImportChecks' ],
   ],
   'Insureds' => [
-    [ 'methodName' => 'findCounty', 'functionPath' => 'modules/Insureds/workflows/InsuredsWorkflow.php', 'functionName' => 'InsuredsWorkflow' ],
+    ['methodName' => 'findCounty', 'functionPath' => 'modules/Insureds/workflows/InsuredsWorkflow.php', 'functionName' => 'InsuredsWorkflow'],
   ],
   'OutsideCases' => [
-    [ 'methodName' => 'recalculateFromClaims', 'functionPath' => 'modules/OutsideCases/workflows/OutsideCasesWorkflow.php', 'functionName' => 'OutsideCasesWorkflow' ],
-    [ 'methodName' => 'recalculateFromCollections', 'functionPath' => 'modules/OutsideCases/workflows/OutsideCasesWorkflow.php', 'functionName' => 'OutsideCasesWorkflow' ],
-    [ 'methodName' => 'recalculateFromCase', 'functionPath' => 'modules/OutsideCases/workflows/OutsideCasesWorkflow.php', 'functionName' => 'OutsideCasesWorkflow' ],
-    [ 'methodName' => 'recalculateAll', 'functionPath' => 'modules/OutsideCases/workflows/OutsideCasesWorkflow.php', 'functionName' => 'OutsideCasesWorkflow' ],
-    [ 'methodName' => 'setDateOfService', 'functionPath' => 'modules/OutsideCases/workflows/OutsideCasesWorkflow.php', 'functionName' => 'OutsideCasesWorkflow' ],
-    [ 'methodName' => 'calculateDateOfService', 'functionPath' => 'modules/OutsideCases/workflows/OutsideCasesWorkflow.php', 'functionName' => 'OutsideCasesWorkflow' ],
+    ['methodName' => 'recalculateFromClaims', 'functionPath' => 'modules/OutsideCases/workflows/OutsideCasesWorkflow.php', 'functionName' => 'OutsideCasesWorkflow'],
+    ['methodName' => 'recalculateFromCollections', 'functionPath' => 'modules/OutsideCases/workflows/OutsideCasesWorkflow.php', 'functionName' => 'OutsideCasesWorkflow'],
+    ['methodName' => 'recalculateFromCase', 'functionPath' => 'modules/OutsideCases/workflows/OutsideCasesWorkflow.php', 'functionName' => 'OutsideCasesWorkflow'],
+    ['methodName' => 'recalculateAll', 'functionPath' => 'modules/OutsideCases/workflows/OutsideCasesWorkflow.php', 'functionName' => 'OutsideCasesWorkflow'],
+    ['methodName' => 'setDateOfService', 'functionPath' => 'modules/OutsideCases/workflows/OutsideCasesWorkflow.php', 'functionName' => 'OutsideCasesWorkflow'],
+    ['methodName' => 'calculateDateOfService', 'functionPath' => 'modules/OutsideCases/workflows/OutsideCasesWorkflow.php', 'functionName' => 'OutsideCasesWorkflow'],
   ],
   'Providers' => [
-    [ 'methodName' => 'resetProvidersEligibility', 'functionPath' => 'modules/Providers/workflows/ProvidersWorkflow.php', 'functionName' => 'ProvidersWorkflow' ],
-    [ 'methodName' => 'calculateAllEligibilityCriteriaMet', 'functionPath' => 'modules/Providers/workflows/ProvidersWorkflow.php', 'functionName' => 'ProvidersWorkflow' ],
-    [ 'methodName' => 'refreshNumberOfContactsWithSameEmail', 'functionPath' => 'modules/Providers/workflows/ProvidersWorkflow.php', 'functionName' => 'ProvidersWorkflow' ],
-    [ 'methodName' => 'refreshBuybackWalletValue', 'functionPath' => 'modules/Providers/workflows/ProvidersWorkflow.php', 'functionName' => 'ProvidersWorkflow' ],
-    [ 'methodName' => 'calculateKPIS', 'functionPath' => 'modules/Providers/workflows/ProvidersWorkflow.php', 'functionName' => 'ProvidersWorkflow' ],
-    [ 'methodName' => 'calculateYearsInBusiness', 'functionPath' => 'modules/Providers/workflows/ProvidersWorkflow.php', 'functionName' => 'ProvidersWorkflow' ],
-    [ 'methodName' => 'calculateKPISFromPortfolios', 'functionPath' => 'modules/Providers/workflows/ProvidersWorkflow.php', 'functionName' => 'ProvidersWorkflow' ],
-    [ 'methodName' => 'calculateKPISFromClaims', 'functionPath' => 'modules/Providers/workflows/ProvidersWorkflow.php', 'functionName' => 'ProvidersWorkflow' ],
-    [ 'methodName' => 'requestEmailConfirmation', 'functionPath' => 'modules/Providers/workflows/ProvidersWorkflow.php', 'functionName' => 'ProvidersWorkflow' ],
-    [ 'methodName' => 'createActivationLink', 'functionPath' => 'modules/Providers/workflows/ProvidersWorkflow.php', 'functionName' => 'ProvidersWorkflow' ],
-    [ 'methodName' => 'createResetPasswordLink', 'functionPath' => 'modules/Providers/workflows/ProvidersWorkflow.php', 'functionName' => 'ProvidersWorkflow' ],
-    [ 'methodName' => 'createPortfolio', 'functionPath' => 'modules/Providers/workflows/ProvidersWorkflow.php', 'functionName' => 'ProvidersWorkflow' ],
-    [ 'methodName' => 'createOnetimePassword', 'functionPath' => 'modules/Providers/workflows/ProvidersWorkflow.php', 'functionName' => 'ProvidersWorkflow' ],
+    ['methodName' => 'resetProvidersEligibility', 'functionPath' => 'modules/Providers/workflows/ProvidersWorkflow.php', 'functionName' => 'ProvidersWorkflow'],
+    ['methodName' => 'calculateAllEligibilityCriteriaMet', 'functionPath' => 'modules/Providers/workflows/ProvidersWorkflow.php', 'functionName' => 'ProvidersWorkflow'],
+    ['methodName' => 'refreshNumberOfContactsWithSameEmail', 'functionPath' => 'modules/Providers/workflows/ProvidersWorkflow.php', 'functionName' => 'ProvidersWorkflow'],
+    ['methodName' => 'refreshBuybackWalletValue', 'functionPath' => 'modules/Providers/workflows/ProvidersWorkflow.php', 'functionName' => 'ProvidersWorkflow'],
+    ['methodName' => 'calculateKPIS', 'functionPath' => 'modules/Providers/workflows/ProvidersWorkflow.php', 'functionName' => 'ProvidersWorkflow'],
+    ['methodName' => 'calculateYearsInBusiness', 'functionPath' => 'modules/Providers/workflows/ProvidersWorkflow.php', 'functionName' => 'ProvidersWorkflow'],
+    ['methodName' => 'calculateKPISFromPortfolios', 'functionPath' => 'modules/Providers/workflows/ProvidersWorkflow.php', 'functionName' => 'ProvidersWorkflow'],
+    ['methodName' => 'calculateKPISFromClaims', 'functionPath' => 'modules/Providers/workflows/ProvidersWorkflow.php', 'functionName' => 'ProvidersWorkflow'],
+    ['methodName' => 'requestEmailConfirmation', 'functionPath' => 'modules/Providers/workflows/ProvidersWorkflow.php', 'functionName' => 'ProvidersWorkflow'],
+    ['methodName' => 'createActivationLink', 'functionPath' => 'modules/Providers/workflows/ProvidersWorkflow.php', 'functionName' => 'ProvidersWorkflow'],
+    ['methodName' => 'createResetPasswordLink', 'functionPath' => 'modules/Providers/workflows/ProvidersWorkflow.php', 'functionName' => 'ProvidersWorkflow'],
+    ['methodName' => 'createPortfolio', 'functionPath' => 'modules/Providers/workflows/ProvidersWorkflow.php', 'functionName' => 'ProvidersWorkflow'],
+    ['methodName' => 'createOnetimePassword', 'functionPath' => 'modules/Providers/workflows/ProvidersWorkflow.php', 'functionName' => 'ProvidersWorkflow'],
   ],
   'Portfolios' => [
-    [ 'methodName' => 'generatePortfolioId', 'functionPath' => 'modules/Portfolios/workflows/PortfoliosWorkflow.php', 'functionName' => 'PortfoliosWorkflow' ],
-    [ 'methodName' => 'recalculateAll', 'functionPath' => 'modules/Portfolios/workflows/PortfoliosWorkflow.php', 'functionName' => 'PortfoliosWorkflow' ],
-    [ 'methodName' => 'recalculateFromClaims', 'functionPath' => 'modules/Portfolios/workflows/PortfoliosWorkflow.php', 'functionName' => 'PortfoliosWorkflow' ],
-    [ 'methodName' => 'recalculateFromPortfolioPurchases', 'functionPath' => 'modules/Portfolios/workflows/PortfoliosWorkflow.php', 'functionName' => 'PortfoliosWorkflow' ],
-    [ 'methodName' => 'releaseReservesToProvider', 'functionPath' => 'modules/Portfolios/workflows/PortfoliosWorkflow.php', 'functionName' => 'PortfoliosWorkflow' ],
-    [ 'methodName' => 'stopIfMoreClaimsToUnderwrite', 'functionPath' => 'modules/Portfolios/workflows/PortfoliosWorkflow.php', 'functionName' => 'PortfoliosWorkflow' ],
-    [ 'methodName' => 'createHOAttorneyConfirmationRequests', 'functionPath' => 'modules/Portfolios/workflows/PortfoliosWorkflow.php', 'functionName' => 'PortfoliosWorkflow' ],
-    [ 'methodName' => 'resetToNew', 'functionPath' => 'modules/Portfolios/workflows/PortfoliosWorkflow.php', 'functionName' => 'PortfoliosWorkflow' ],
+    ['methodName' => 'generatePortfolioId', 'functionPath' => 'modules/Portfolios/workflows/PortfoliosWorkflow.php', 'functionName' => 'PortfoliosWorkflow'],
+    ['methodName' => 'recalculateFromClaims', 'functionPath' => 'modules/Portfolios/workflows/PortfoliosWorkflow.php', 'functionName' => 'PortfoliosWorkflow'],
+    ['methodName' => 'releaseReservesToProvider', 'functionPath' => 'modules/Portfolios/workflows/PortfoliosWorkflow.php', 'functionName' => 'PortfoliosWorkflow'],
+    ['methodName' => 'stopIfMoreClaimsToUnderwrite', 'functionPath' => 'modules/Portfolios/workflows/PortfoliosWorkflow.php', 'functionName' => 'PortfoliosWorkflow'],
+    ['methodName' => 'createHOAttorneyConfirmationRequests', 'functionPath' => 'modules/Portfolios/workflows/PortfoliosWorkflow.php', 'functionName' => 'PortfoliosWorkflow'],
+    ['methodName' => 'resetToNew', 'functionPath' => 'modules/Portfolios/workflows/PortfoliosWorkflow.php', 'functionName' => 'PortfoliosWorkflow'],
   ],
   'PortfolioPurchases' => [
-    [ 'methodName' => 'generatePortfolioPurchaseName', 'functionPath' => 'modules/PortfolioPurchases/workflows/PortfolioPurchasesWorkflow.php', 'functionName' => 'PortfolioPurchasesWorkflow' ],
-    [ 'methodName' => 'recalculateFromClaims', 'functionPath' => 'modules/PortfolioPurchases/workflows/PortfolioPurchasesWorkflow.php', 'functionName' => 'PortfolioPurchasesWorkflow' ],
-    [ 'methodName' => 'checkClaimsApproved', 'functionPath' => 'modules/PortfolioPurchases/workflows/PortfolioPurchasesWorkflow.php', 'functionName' => 'PortfolioPurchasesWorkflow' ],
-    [ 'methodName' => 'exportPurchaseToQuickBooks', 'functionPath' => 'modules/PortfolioPurchases/workflows/PortfolioPurchasesWorkflow.php', 'functionName' => 'PortfolioPurchasesWorkflow' ],
-    [ 'methodName' => 'recalculateFromBuybackClaims', 'functionPath' => 'modules/PortfolioPurchases/workflows/PortfolioPurchasesWorkflow.php', 'functionName' => 'PortfolioPurchasesWorkflow' ],
-    [ 'methodName' => 'checkNoPurchaseDocument', 'functionPath' => 'modules/PortfolioPurchases/workflows/PortfolioPurchasesWorkflow.php', 'functionName' => 'PortfolioPurchasesWorkflow' ],
-    [ 'methodName' => 'sendForSigning', 'functionPath' => 'modules/PortfolioPurchases/workflows/PortfolioPurchasesWorkflow.php', 'functionName' => 'PortfolioPurchasesWorkflow' ],
+    ['methodName' => 'generatePortfolioPurchaseName', 'functionPath' => 'modules/PortfolioPurchases/workflows/PortfolioPurchasesWorkflow.php', 'functionName' => 'PortfolioPurchasesWorkflow'],
+    ['methodName' => 'recalculateFromClaims', 'functionPath' => 'modules/PortfolioPurchases/workflows/PortfolioPurchasesWorkflow.php', 'functionName' => 'PortfolioPurchasesWorkflow'],
+    ['methodName' => 'checkClaimsApproved', 'functionPath' => 'modules/PortfolioPurchases/workflows/PortfolioPurchasesWorkflow.php', 'functionName' => 'PortfolioPurchasesWorkflow'],
+    ['methodName' => 'exportPurchaseToQuickBooks', 'functionPath' => 'modules/PortfolioPurchases/workflows/PortfolioPurchasesWorkflow.php', 'functionName' => 'PortfolioPurchasesWorkflow'],
+    ['methodName' => 'recalculateFromBuybackClaims', 'functionPath' => 'modules/PortfolioPurchases/workflows/PortfolioPurchasesWorkflow.php', 'functionName' => 'PortfolioPurchasesWorkflow'],
+    ['methodName' => 'checkNoPurchaseDocument', 'functionPath' => 'modules/PortfolioPurchases/workflows/PortfolioPurchasesWorkflow.php', 'functionName' => 'PortfolioPurchasesWorkflow'],
+    ['methodName' => 'sendForSigning', 'functionPath' => 'modules/PortfolioPurchases/workflows/PortfolioPurchasesWorkflow.php', 'functionName' => 'PortfolioPurchasesWorkflow'],
+    ['methodName' => 'updateOpenDateOfPortfolios', 'functionPath' => 'modules/PortfolioPurchases/workflows/PortfolioPurchasesWorkflow.php', 'functionName' => 'PortfolioPurchasesWorkflow'],
+    ['methodName' => 'updateOpenDateOfPortfoliosAll', 'functionPath' => 'modules/PortfolioPurchases/workflows/PortfolioPurchasesWorkflow.php', 'functionName' => 'PortfolioPurchasesWorkflow'],
   ],
   'DocumentTypes' => [
-    [ 'methodName' => 'refreshDocumentTypesPaths', 'functionPath' => 'modules/DocumentTypes/workflows/DocumentTypesWorkflow.php', 'functionName' => 'DocumentTypesWorkflow' ],
+    ['methodName' => 'refreshDocumentTypesPaths', 'functionPath' => 'modules/DocumentTypes/workflows/DocumentTypesWorkflow.php', 'functionName' => 'DocumentTypesWorkflow'],
   ],
   'Programs' => [
-    [ 'methodName' => 'verifyAlgorithmParameters', 'functionPath' => 'modules/Programs/workflows/ProgramsWorkflow.php', 'functionName' => 'ProgramsWorkflow' ],
-    [ 'methodName' => 'debugTemporalDataCron', 'functionPath' => 'modules/Programs/workflows/ProgramsWorkflow.php', 'functionName' => 'ProgramsWorkflow' ],
+    ['methodName' => 'verifyAlgorithmParameters', 'functionPath' => 'modules/Programs/workflows/ProgramsWorkflow.php', 'functionName' => 'ProgramsWorkflow'],
+    ['methodName' => 'debugTemporalDataCron', 'functionPath' => 'modules/Programs/workflows/ProgramsWorkflow.php', 'functionName' => 'ProgramsWorkflow'],
   ],
   'LawFirms' => [
-    [ 'methodName' => 'createActivationLink', 'functionPath' => 'modules/LawFirms/workflows/LawFirmsWorkflow.php', 'functionName' => 'LawFirmsWorkflow' ],
-    [ 'methodName' => 'createResetPasswordLink', 'functionPath' => 'modules/LawFirms/workflows/LawFirmsWorkflow.php', 'functionName' => 'LawFirmsWorkflow' ],
-    [ 'methodName' => 'createOnetimePassword', 'functionPath' => 'modules/LawFirms/workflows/LawFirmsWorkflow.php', 'functionName' => 'LawFirmsWorkflow' ],
+    ['methodName' => 'createActivationLink', 'functionPath' => 'modules/LawFirms/workflows/LawFirmsWorkflow.php', 'functionName' => 'LawFirmsWorkflow'],
+    ['methodName' => 'createResetPasswordLink', 'functionPath' => 'modules/LawFirms/workflows/LawFirmsWorkflow.php', 'functionName' => 'LawFirmsWorkflow'],
+    ['methodName' => 'createOnetimePassword', 'functionPath' => 'modules/LawFirms/workflows/LawFirmsWorkflow.php', 'functionName' => 'LawFirmsWorkflow'],
   ],
 ];
 
@@ -128,14 +133,14 @@ $manager = new VTEntityMethodManager();
 $existingMethods = [];
 
 $modules = Settings_ModuleManager_Module_Model::getAll();
-foreach($modules as $id => $module) {
+foreach ($modules as $id => $module) {
   $moduleName = $module->getName();
   if (!in_array($moduleName, ['HelpDesk', 'ModComments'])) {
     $existingMethods[$moduleName] = $manager->methodsForModule($moduleName);
   }
 }
 
-foreach($existingMethods as $moduleName => $methodNames) {
+foreach ($existingMethods as $moduleName => $methodNames) {
   if (array_key_exists($moduleName, $customFunctions)) {
     $customMethods = $customFunctions[$moduleName];
     $customMethodNames = array_column($customMethods, 'methodName');
@@ -145,7 +150,7 @@ foreach($existingMethods as $moduleName => $methodNames) {
   }
   foreach ($customMethods as $customMethod) {
     ['methodName' => $methodName, 'functionPath' => $functionPath, 'functionName' => $functionName] = $customMethod;
-    
+
     if (!in_array($methodName, $methodNames)) {
       echo "$moduleName.$methodName" . PHP_EOL;
       $manager->addEntityMethod($moduleName, $methodName, $functionPath, $functionName);
@@ -171,7 +176,7 @@ $taskTypes = [
   'VTGeneratePackage' => ['modules' => ['include' => [], 'exclude' => []], 'name' => 'VTGeneratePackage', 'label' => 'Generate Package', 'classname' => 'VTGeneratePackage', 'classpath' => 'modules/com_vtiger_workflow/tasks/VTGeneratePackage.php', 'templatepath' => 'com_vtiger_workflow/taskforms/VTGeneratePackage.tpl', 'sourcemodule' => NULL],
   'VTToast' => ['modules' => ['include' => [], 'exclude' => []], 'name' => 'VTToast', 'label' => 'Toast', 'classname' => 'VTToast', 'classpath' => 'modules/com_vtiger_workflow/tasks/VTToast.php', 'templatepath' => 'com_vtiger_workflow/taskforms/VTToast.tpl', 'sourcemodule' => NULL],
 ];
-foreach($taskTypes as $taskTypeName => $taskType) {
+foreach ($taskTypes as $taskTypeName => $taskType) {
   if (!empty(VTTaskType::getInstanceFromTaskType($taskTypeName)->get('name'))) {
     echo "  exists\n";
   } else {
@@ -185,19 +190,19 @@ echo "Ensuring event handlers\n";
 // [event] => [ 'className', 'includeModules', 'excludeModules' ]
 $eventHandlers = [
   'EditViewPreSave' => [
-    [ 'className' => 'Cases_DuplicateId_Handler', 'includeModules' => 'Cases', 'excludeModules' => ''],
-    [ 'className' => 'TexasCases_DuplicateId_Handler', 'includeModules' => 'TexasCases', 'excludeModules' => ''],
-    [ 'className' => 'Claims_DuplicateId_Handler', 'includeModules' => 'Claims', 'excludeModules' => ''],
-    [ 'className' => 'DocumentTypes_Loop_Handler', 'includeModules' => 'DocumentTypes', 'excludeModules' => ''],
+    ['className' => 'Cases_DuplicateId_Handler', 'includeModules' => 'Cases', 'excludeModules' => ''],
+    ['className' => 'TexasCases_DuplicateId_Handler', 'includeModules' => 'TexasCases', 'excludeModules' => ''],
+    ['className' => 'Claims_DuplicateId_Handler', 'includeModules' => 'Claims', 'excludeModules' => ''],
+    ['className' => 'DocumentTypes_Loop_Handler', 'includeModules' => 'DocumentTypes', 'excludeModules' => ''],
   ],
   'UserAfterSave' => [
-    [ 'className' => 'ModTracker_ModTrackerHandler_Handler', 'includeModules' => 'Users', 'excludeModules' => ''],
+    ['className' => 'ModTracker_ModTrackerHandler_Handler', 'includeModules' => 'Users', 'excludeModules' => ''],
   ],
 ];
 
-foreach($eventHandlers as $event => $handlers) {
+foreach ($eventHandlers as $event => $handlers) {
   echo "  $event\n";
-  foreach($handlers as $handler) {
+  foreach ($handlers as $handler) {
     echo "    " . $handler['className'] . "\n";
     $result = \App\EventHandler::registerHandler($event, $handler['className'], $handler['includeModules'], $handler['excludeModules']);
     echo "    Status: " . ($result ? "true" : "false") . PHP_EOL;
@@ -206,7 +211,7 @@ foreach($eventHandlers as $event => $handlers) {
 
 // ensure crons
 echo "Ensuring crons\n";
-$crons = [ 
+$crons = [
   [
     'name' => 'LBL_BATCH_TASKS_QUEUE_HANDLER', 'handler_class' => 'BatchTasks_HandleQueue_Cron',
     'frequency' => 60, 'module' => 'BatchTasks', 'status' => 1, 'sequence' => 0,
@@ -309,18 +314,25 @@ $crons = [
   ],
 ];
 
-foreach($crons as $cron) {
+foreach ($crons as $cron) {
   $isExists = (new \App\Db\Query())->from('vtiger_cron_task')->where(['name' => $cron['name'], 'handler_class' => $cron['handler_class']])->exists();
   if (!$isExists) {
     \vtlib\Cron::register(
-      $cron['name'], $cron['handler_class'], $cron['frequency'], 
-      $cron['module'], $cron['status'], $cron['sequence'], $cron['description']);
+      $cron['name'],
+      $cron['handler_class'],
+      $cron['frequency'],
+      $cron['module'],
+      $cron['status'],
+      $cron['sequence'],
+      $cron['description']
+    );
   }
 }
 
 // ensure files
 echo "Ensure file overrides\n";
-function rcopy($src, $dst, $level = 0) {
+function rcopy($src, $dst, $level = 0)
+{
   echo "  " . str_pad('', $level * 2, ' ') . "$src -> $dst\n";
   if (is_dir($src)) {
     if (!file_exists($dst)) {
@@ -332,8 +344,7 @@ function rcopy($src, $dst, $level = 0) {
         rcopy("$src/$file", "$dst/$file", $level + 1);
       }
     }
-  }
-  else if (file_exists($src)) {
+  } else if (file_exists($src)) {
     copy($src, $dst);
   }
 }
