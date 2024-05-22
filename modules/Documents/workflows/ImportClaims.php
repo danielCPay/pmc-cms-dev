@@ -811,6 +811,10 @@ class ImportClaims
 
         $ws = $this->spreadsheet->setActiveSheetIndex(0);
 
+        var_dump("czytaj " . $ws);
+        exit();
+
+
         $rzi = 1;
         self::$naglowki = [];
         self::$pusteNaglowki = [];
