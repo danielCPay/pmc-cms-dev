@@ -98,73 +98,73 @@ class analizator_claim
             return $rt;
         } else
             if (str_contains($k, 'attorney')) {
-                $nag['pre_attorney'][1] = $nag['pre_attorney'][1] ?? null ?: $xv;
-                $nag['pre_attorney'][0] = NumberFormat::FORMAT_TEXT;
-                return [true, 'pre_attorney'];
-            } else
-                if (strstr($k, 'email')) {
-                    $nag['insured_e_mail'][1] = $nag['ins_e_mail'][1] ?? null ?: $xv;
-                    $nag['insured_e_mail'][0] = NumberFormat::FORMAT_TEXT;
-                    return [false, 'set_insured_e_mail'];
-                } else
-                    if (str_starts_with($k, 'claim#') || str_starts_with($k, "claimn")) {
-                        $nag['nu_claim'][1] = $nag['nu_claim'][1] ?? null ?: $xv;
-                        $nag['nu_claim'][0] = NumberFormat::FORMAT_TEXT;
-                        return [false, 'set_nu_claim'];
-                    } else
-                        if (str_starts_with($k, 'policy#') || str_starts_with($k, "policyn")) {
-                            $nag['nu_policy'][1] = $nag['nu_policy'][1] ?? null ?: $xv;
-                            $nag['nu_policy'][0] = NumberFormat::FORMAT_TEXT;
-                            return [false, 'set_nu_policy'];
-                        } else
-                            if ($k == 'typeofjob') {
-                                $nag['type_of_job'][1] = $nag['type_of_job'][1] ?? null ?: $xv;
-                                $nag['type_of_job'][0] = NumberFormat::FORMAT_TEXT;
-                                return [true, 'type_of_job'];
-                            } else
-                                if (str_starts_with($k, 'insuranceco')) {
-                                    $nag['insurance_company'][1] = $nag['insurance_company'][1] ?? null ?: $xv;
-                                    $nag['insurance_company'][0] = NumberFormat::FORMAT_TEXT;
-                                    return [true, 'insurance_company'];
-                                } else
-                                    if (str_starts_with($k, 'invoiceam')) {
-                                        $nag['invoice_value'][1] = $nag['invoice_value'][1] ?? null ?: $xv;
-                                        $nag['invoice_value'][0] = NumberFormat::FORMAT_CURRENCY_USD_SIMPLE;
-                                        $nag['invoice_name'][1] = 'Invoice Name';
-                                        $nag['invoice_name'][0] = NumberFormat::FORMAT_TEXT;
-                                        return [false, 'set_invoice_value'];
-                                    } else
-                                        if (str_starts_with($k, 'finalinvoiceam')) {
-                                            $nag['final_invoice'][1] = $nag['final_invoice'][1] ?? null ?: $xv;
-                                            $nag['final_invoice'][0] = NumberFormat::FORMAT_CURRENCY_USD_SIMPLE;
-                                            return [false, 'set_fin_invoice_value'];
-                                        } else
-                                            if (str_starts_with($k, 'initialinvoiceam')) {
-                                                $nag['initial_invoice'][1] = $nag['initial_initial'][1] ?? null ?: $xv;
-                                                $nag['initial_invoice'][0] = NumberFormat::FORMAT_CURRENCY_USD_SIMPLE;
-                                                return [false, 'set_ini_invoice_value'];
-                                            } else
-                                                if (str_starts_with($k, 'loporaob') || $k == 'typeofclaim') {
-                                                    $nag['type_of_claim'][1] = $nag['type_of_claim'][1] ?? null ?: $xv;
-                                                    $nag['type_of_claim'][0] = NumberFormat::FORMAT_TEXT;
-                                                    return [false, 'set_lop_or_aob'];
-                                                } elseif ($k == 'dol') {
-                                                    $nag['dol'][1] = $nag['dol'][1] ?? null ?: $xv;
-                                                    $nag['dol'][0] = NumberFormat::FORMAT_DATE_XLSX14;
-                                                    return [false, 'set_dol'];
-                                                } elseif ($k == 'dos') {
-                                                    $nag['dos'][1] = $nag['dos'][1] ?? null ?: $xv;
-                                                    $nag['dos'][0] = NumberFormat::FORMAT_DATE_XLSX14;
-                                                    return [false, 'set_dos'];
-                                                } else if ($k == 'dofn' || strstr($k, "dateoffirstn")) {
-                                                    $nag['dofn'][1] = $nag['dofn'][1] ?? null ?: $xv;
-                                                    $nag['dofn'][0] = NumberFormat::FORMAT_DATE_XLSX14;
-                                                    return [false, 'set_dofn'];
-                                                } elseif ($k == 'partialpayments' || $k == "partialpayment" || $k == 'priorcollections') {
-                                                    $nag['part_pay'][1] = $nag['part_pay'][1] ?? null ?: $xv;
-                                                    $nag['part_pay'][0] = NumberFormat::FORMAT_CURRENCY_USD_SIMPLE;
-                                                    return [false, 'set_partial_pay'];
-                                                }
+            $nag['pre_attorney'][1] = $nag['pre_attorney'][1] ?? null ?: $xv;
+            $nag['pre_attorney'][0] = NumberFormat::FORMAT_TEXT;
+            return [true, 'pre_attorney'];
+        } else
+            if (strstr($k, 'email')) {
+            $nag['insured_e_mail'][1] = $nag['ins_e_mail'][1] ?? null ?: $xv;
+            $nag['insured_e_mail'][0] = NumberFormat::FORMAT_TEXT;
+            return [false, 'set_insured_e_mail'];
+        } else
+            if (str_starts_with($k, 'claim#') || str_starts_with($k, "claimn")) {
+            $nag['nu_claim'][1] = $nag['nu_claim'][1] ?? null ?: $xv;
+            $nag['nu_claim'][0] = NumberFormat::FORMAT_TEXT;
+            return [false, 'set_nu_claim'];
+        } else
+            if (str_starts_with($k, 'policy#') || str_starts_with($k, "policyn")) {
+            $nag['nu_policy'][1] = $nag['nu_policy'][1] ?? null ?: $xv;
+            $nag['nu_policy'][0] = NumberFormat::FORMAT_TEXT;
+            return [false, 'set_nu_policy'];
+        } else
+            if ($k == 'typeofjob') {
+            $nag['type_of_job'][1] = $nag['type_of_job'][1] ?? null ?: $xv;
+            $nag['type_of_job'][0] = NumberFormat::FORMAT_TEXT;
+            return [true, 'type_of_job'];
+        } else
+            if (str_starts_with($k, 'insuranceco')) {
+            $nag['insurance_company'][1] = $nag['insurance_company'][1] ?? null ?: $xv;
+            $nag['insurance_company'][0] = NumberFormat::FORMAT_TEXT;
+            return [true, 'insurance_company'];
+        } else
+            if (str_starts_with($k, 'invoiceam')) {
+            $nag['invoice_value'][1] = $nag['invoice_value'][1] ?? null ?: $xv;
+            $nag['invoice_value'][0] = NumberFormat::FORMAT_CURRENCY_USD_SIMPLE;
+            $nag['invoice_name'][1] = 'Invoice Name';
+            $nag['invoice_name'][0] = NumberFormat::FORMAT_TEXT;
+            return [false, 'set_invoice_value'];
+        } else
+            if (str_starts_with($k, 'finalinvoiceam')) {
+            $nag['final_invoice'][1] = $nag['final_invoice'][1] ?? null ?: $xv;
+            $nag['final_invoice'][0] = NumberFormat::FORMAT_CURRENCY_USD_SIMPLE;
+            return [false, 'set_fin_invoice_value'];
+        } else
+            if (str_starts_with($k, 'initialinvoiceam')) {
+            $nag['initial_invoice'][1] = $nag['initial_initial'][1] ?? null ?: $xv;
+            $nag['initial_invoice'][0] = NumberFormat::FORMAT_CURRENCY_USD_SIMPLE;
+            return [false, 'set_ini_invoice_value'];
+        } else
+            if (str_starts_with($k, 'loporaob') || $k == 'typeofclaim') {
+            $nag['type_of_claim'][1] = $nag['type_of_claim'][1] ?? null ?: $xv;
+            $nag['type_of_claim'][0] = NumberFormat::FORMAT_TEXT;
+            return [false, 'set_lop_or_aob'];
+        } elseif ($k == 'dol') {
+            $nag['dol'][1] = $nag['dol'][1] ?? null ?: $xv;
+            $nag['dol'][0] = NumberFormat::FORMAT_DATE_XLSX14;
+            return [false, 'set_dol'];
+        } elseif ($k == 'dos') {
+            $nag['dos'][1] = $nag['dos'][1] ?? null ?: $xv;
+            $nag['dos'][0] = NumberFormat::FORMAT_DATE_XLSX14;
+            return [false, 'set_dos'];
+        } else if ($k == 'dofn' || strstr($k, "dateoffirstn")) {
+            $nag['dofn'][1] = $nag['dofn'][1] ?? null ?: $xv;
+            $nag['dofn'][0] = NumberFormat::FORMAT_DATE_XLSX14;
+            return [false, 'set_dofn'];
+        } elseif ($k == 'partialpayments' || $k == "partialpayment" || $k == 'priorcollections') {
+            $nag['part_pay'][1] = $nag['part_pay'][1] ?? null ?: $xv;
+            $nag['part_pay'][0] = NumberFormat::FORMAT_CURRENCY_USD_SIMPLE;
+            return [false, 'set_partial_pay'];
+        }
 
         return null;
     }
@@ -213,12 +213,12 @@ class analizator_claim
 }
 class claim_in_xls_row
 {
-    const OK = 0;
-    const MOD = 1;
-    const POWTORZ = 2;
-    const BLAD_KOL = 3;
-    const BLAD_REK = 4;
-    const TERMINATED = 5;
+    const   OK = 0;
+    const   MOD = 1;
+    const   POWTORZ = 2;
+    const   BLAD_KOL = 3;
+    const   BLAD_REK = 4;
+    const   TERMINATED = 5;
 
     public array $kolumny;
     public int $status;
@@ -281,7 +281,8 @@ class claim_in_xls_row
         if ($this->czy_ten_sam_claim($dc)) {
             if (!isset($dc->faktury))
                 return false;
-            foreach ($dc->faktury as $cf) foreach ($this->faktury as $xf)
+            foreach ($dc->faktury as $cf)
+                foreach ($this->faktury as $xf)
                     if ($xf->wartosc == $cf->wartosc && $xf->nazwa == $cf->nazwa && $xf->prior_coll == $cf->prior_coll)
                         return true;
         }
@@ -468,8 +469,7 @@ class claim_in_xls_row
     {
         $dotPos = strrpos($num, '.');
         $commaPos = strrpos($num, ',');
-        $sep = (($dotPos > $commaPos) && $dotPos) ? $dotPos :
-            ((($commaPos > $dotPos) && $commaPos) ? $commaPos : false);
+        $sep = (($dotPos > $commaPos) && $dotPos) ? $dotPos : ((($commaPos > $dotPos) && $commaPos) ? $commaPos : false);
 
         if (!$sep) {
             return floatval(preg_replace("/[^0-9]/", "", $num));
@@ -477,22 +477,22 @@ class claim_in_xls_row
 
         return floatval(
             preg_replace("/[^0-9]/", "", substr($num, 0, $sep)) . '.' .
-            preg_replace("/[^0-9]/", "", substr($num, $sep + 1, strlen($num)))
+                preg_replace("/[^0-9]/", "", substr($num, $sep + 1, strlen($num)))
         );
     }
 
-    function ustaw_date(string $s): ?string
+    function    ustaw_date(String $s): ?string
     {
         unset($ds);
         unset($znal);
         if (preg_match('/(202.)[\.\-\/\\\\](..)[\.\-\/\\\\](..)/', $s, $znal) == 1)
             $ds = $s;
         else
-            if (preg_match('/(..)[\.\-\/\\\\](..)[\.\-\/\\\\](202.)/', $s, $znal) == 1)
-                $ds = $znal[3] . '-' . $znal[1] . '-' . $znal[2];
-            else
-                if (preg_match('/(..)[\.\-\/\\\\](..)[\.\-\/\\\\](2.)/', $s, $znal) == 1)
-                    $ds = '20' . $znal[3] . '-' . $znal[1] . '-' . $znal[2];
+        if (preg_match('/(..)[\.\-\/\\\\](..)[\.\-\/\\\\](202.)/', $s, $znal) == 1)
+            $ds = $znal[3] . '-' . $znal[1] . '-' . $znal[2];
+        else
+        if (preg_match('/(..)[\.\-\/\\\\](..)[\.\-\/\\\\](2.)/', $s, $znal) == 1)
+            $ds = '20' . $znal[3] . '-' . $znal[1] . '-' . $znal[2];
 
         if (isset($znal[1]) && isset($ds)) {
             if ($znal[1] > 12)
@@ -508,19 +508,19 @@ class claim_in_xls_row
 
         return null;
     }
-    function set_nu_policy(string $s)
+    function    set_nu_policy(String $s)
     {
         $this->wywolane[__FUNCTION__] = true;
 
         $this->nu_policy = preg_replace('/\s+/u', '', $s);
     }
-    function set_nu_claim(string $s)
+    function    set_nu_claim(String $s)
     {
         $this->wywolane[__FUNCTION__] = true;
 
         $this->nu_claim = preg_replace('/\s+/u', '', $s);
     }
-    function set_dofn(string $s)
+    function    set_dofn(String $s)
     {
         $f = $this->ustaw_date($s);
         if (!isset($f))
@@ -530,7 +530,7 @@ class claim_in_xls_row
 
         $this->dofn = $f;
     }
-    function set_dos(string $s)
+    function    set_dos(String $s)
     {
         $f = $this->ustaw_date($s);
         if (!isset($f))
@@ -540,7 +540,7 @@ class claim_in_xls_row
 
         $this->dos = $f;
     }
-    function set_dol(string $s)
+    function    set_dol(String $s)
     {
         $f = $this->ustaw_date($s);
         if (!isset($f))
@@ -550,7 +550,7 @@ class claim_in_xls_row
 
         $this->dol = $f;
     }
-    function set_partial_pay(string $s)
+    function    set_partial_pay(String $s)
     {
         $this->wywolane[__FUNCTION__] = true;
 
@@ -559,7 +559,7 @@ class claim_in_xls_row
 
         $this->part_pay = $this->tofloat($s);
     }
-    function set_ini_invoice_value(string $s)
+    function    set_ini_invoice_value(String $s)
     {
         $this->wywolane[__FUNCTION__] = true;
 
@@ -567,7 +567,7 @@ class claim_in_xls_row
 
         $this->faktury[] = $f;
     }
-    function set_fin_invoice_value(string $s)
+    function    set_fin_invoice_value(String $s)
     {
         $this->wywolane[__FUNCTION__] = true;
 
@@ -575,7 +575,7 @@ class claim_in_xls_row
 
         $this->faktury[] = $f;
     }
-    function set_invoice_value(string $s)
+    function    set_invoice_value(String $s)
     {
         $this->wywolane[__FUNCTION__] = true;
         if (($this->wywolane['set_fin_invoice_value'] ?? false) || ($this->wywolane['set_ini_invoice_value'] ?? false))
@@ -587,7 +587,7 @@ class claim_in_xls_row
 
         $this->faktury[] = $f;
     }
-    static public function normalizuj_name(string $s): string
+    static public function    normalizuj_name(String $s): string
     {
         $s = str_replace(" and ", " & ", $s);
         $s = str_replace(" AND ", " & ", $s);
@@ -597,7 +597,7 @@ class claim_in_xls_row
 
         return $s;
     }
-    function set_insured_e_mail(string $s)
+    function    set_insured_e_mail(String $s)
     {
         if (!filter_var($s, FILTER_VALIDATE_EMAIL))
             return;
@@ -606,7 +606,7 @@ class claim_in_xls_row
 
         $this->ins_e_mail = strtolower($s);
     }
-    function set_lop_or_aob(string $s)
+    function    set_lop_or_aob(string $s)
     {
         if ($s == 'LOP' || $s == 'HO' || $s == 'AOB' || $s == 'Estimates' || $s == 'PA' || $s == 'DTP' || $s == 'Flood') {
             $this->wywolane[__FUNCTION__] = true;
@@ -652,8 +652,7 @@ class ImportClaims
     }
     public static function import_claims_from_excel(Vtiger_Record_Model $recordModel)
     {
-        \App\Log::warning('ImportClaims::import_claims_from_excel F-' . memory_get_usage(false) . " T-" . memory_get_usage(true));
-        ;
+        \App\Log::warning('ImportClaims::import_claims_from_excel F-' . memory_get_usage(false) . " T-" . memory_get_usage(true));;
 
         $path = $recordModel->getFileDetails()['path'];
         $fn = $recordModel->get('filename');
@@ -686,7 +685,7 @@ class ImportClaims
             $m->czytaj($path . $at);
             $stat = $fn . ' successfully read - processing claims';
             $recordModel->set('verification_warnings', $stat);
-            \App\Toasts::addToast(\App\User::getCurrentUserId(), $stat);
+            \App\Toasts::addToast(\App\User::getCurrentUserOriginalId(), $stat);
             $recordModel->save();
             $m->utworz_nowe_claimy_w_pam();
             $m->utworz_nowe_claimy_w_db($recordModel);
@@ -720,28 +719,8 @@ class ImportClaims
         $recordModel->set('filename', 'rep_' . $fn);
         $recordModel->set('verification_warnings', $status . PHP_EOL . $wfm);
         $recordModel->save();
-        \App\Log::warning('ImportClaims::pamiec_po F-' . memory_get_usage(false) . " T-" . memory_get_usage(true));
-        ;
+        \App\Log::warning('ImportClaims::pamiec_po F-' . memory_get_usage(false) . " T-" . memory_get_usage(true));;
     }
-    public static function import_checks_from_excel(Vtiger_Record_Model $recordModel)
-    {
-        \App\Log::warning('ImportClaims::import_claims_from_excel F-' . memory_get_usage(false) . " T-" . memory_get_usage(true));
-        ;
-
-        $path = $recordModel->getFileDetails()['path'];
-        $fn = $recordModel->get('filename');
-        $at = $recordModel->getFileDetails()['attachmentsid'];
-
-        // Counting rows without processing the data
-        $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($path . $at);
-        $worksheet = $spreadsheet->getActiveSheet();
-        $rowCount = $worksheet->getHighestRow();
-
-        // Update the record model with the row count information
-        $recordModel->set('verification_warnings', 'Number of rows in the Excel file: ' . $rowCount);
-        $recordModel->save();
-    }
-
     public function utworz_nowe_claimy_w_pam()
     {
         $claims = [];
@@ -794,10 +773,12 @@ class ImportClaims
         $pt = 0;
         $clnr = 0;
         $clrqty = 0;
-        foreach ($this->dBclsL->claims as $cli) foreach ($cli as $dc)
+        foreach ($this->dBclsL->claims as $cli)
+            foreach ($cli as $dc)
                 if (isset($dc->zXl) && $dc->faktury[0]->xcl->status == 0)
                     $clrqty++;
-        foreach ($this->dBclsL->claims as $cli) foreach ($cli as $dc)
+        foreach ($this->dBclsL->claims as $cli)
+            foreach ($cli as $dc)
                 if (isset($dc->zXl))
                     try {
                         $nbr = $dc->zapisz_do_db();
@@ -889,7 +870,7 @@ class insured_in_db
     public ?string $zip;
     public ?string $id;
     public ?string $phone;
-    public bool $built;
+    public bool   $built;
 
     public function ins_ustaw_z_db(array $par)
     {
@@ -944,7 +925,7 @@ class insured_in_db
 class insuredsDb
 {
     public array $insureds;
-    public array $states;
+    public array  $states;
 
     function zaladuj_states()
     {
@@ -958,21 +939,12 @@ class insuredsDb
 
         $qg = new \App\QueryGenerator('Insureds');
         $q = $qg->setField([
-            'id',
-            'insured_name',
-            'insured1_first_name',
-            'insured1_last_name',
-            'insured2_first_name',
-            'insured2_last_name',
-            'insured3_first_name',
-            'insured3_last_name',
-            'insured4_first_name',
-            'insured4_last_name',
-            'street',
-            'zip',
-            'city',
-            'state',
-            'phone',
+            'id', 'insured_name',
+            'insured1_first_name', 'insured1_last_name',
+            'insured2_first_name', 'insured2_last_name',
+            'insured3_first_name', 'insured3_last_name',
+            'insured4_first_name', 'insured4_last_name',
+            'street', 'zip', 'city', 'state', 'phone',
             'e_mail'
         ])->createQuery();
         $rez = $q->all();
@@ -1110,7 +1082,7 @@ class insuredsDb
 
         $insured->save();
         $cl->insured->id = $insured->get('id');
-        $this->insureds[$cl->insured->get_key()] = $cl->insured;
+        $this->insureds[$cl->insured->get_key()]  = $cl->insured;
         $cl->faktury[0]->xcl->kolumny['insured_name'][1] = claim_in_xls_row::BLAD_KOL;
         $cl->faktury[0]->xcl->kolumny['first_name_1'][1] = claim_in_xls_row::BLAD_KOL;
         stat_append($cl->faktury[0]->xcl->status_kol, "New insured created");
@@ -1196,13 +1168,15 @@ class law_firmDb
                         stat_append($cl->faktury[$id]->xcl->status_row, "Law firm not known ");
                     } else
                         stat_append($cl->faktury[$id]->xcl->status_kol, "Law firm not known ");
-                } else {
+                }
+            else {
                 if (!empty($cl->ho_law_firm_id) && $lf[0] != $this->firmsIds[$cl->ho_law_firm_id])
                     for ($id = 0; $id < sizeof($cl->faktury); $id++) {
                         $cl->ho_law_firm_id = $lf[1];
                         $cl->faktury[$id]->xcl->kolumny['ho_law_firm'][1] = claim_in_xls_row::BLAD_KOL;
                         stat_append($cl->faktury[$id]->xcl->status_kol, "Attorney law firm different & overwritten");
-                    } elseif (empty($cl->ho_law_firm_id))
+                    }
+                elseif (empty($cl->ho_law_firm_id))
                     $cl->ho_law_firm_id = $lf[1];
             }
     }
@@ -1318,9 +1292,9 @@ class attorneysDb
     {
         $f = $this->attorneys[attorneysDb::normalizuj($at)] ?? null;
         switch (sizeof($f ?? [])) {
-            case 0:
+            case    0:
                 return;
-            case 1:
+            case    1:
                 $cldb->set('aob_dtp_attorney', $f[0][0]);
                 break;
             default:
@@ -1368,12 +1342,12 @@ class insurance_coDb
 }
 class faktura_w_db
 {
-    public string $nazwa;
-    public string $type_of_job;
-    public float $wartosc;
-    public ?float $estimate_am;
-    public ?float $prior_coll;
-    public $xcl;
+    public string  $nazwa;
+    public string  $type_of_job;
+    public float  $wartosc;
+    public ?float  $estimate_am;
+    public ?float  $prior_coll;
+    public  $xcl;
     static int $fl = 0;
 
     public function __construct(string $n, float $w, ?float $p, claim_in_xls_row &$c = null)
@@ -1688,17 +1662,17 @@ class nowy_Excel
                 $blad_kol = true;
             }
             switch ($cls->status) {
-                case claim_in_xls_row::OK: {
-                    if ($blad_kol == true)
-                        $rowki_warn++;
-                    else
-                        $rowki_ok++;
-                    break;
-                }
-                case claim_in_xls_row::BLAD_REK:
+                case    claim_in_xls_row::OK: {
+                        if ($blad_kol == true)
+                            $rowki_warn++;
+                        else
+                            $rowki_ok++;
+                        break;
+                    }
+                case    claim_in_xls_row::BLAD_REK:
                     $rowki_blad++;
                     break;
-                case claim_in_xls_row::POWTORZ:
+                case    claim_in_xls_row::POWTORZ:
                     $rowki_dup++;
                     break;
             }
