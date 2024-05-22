@@ -33,7 +33,6 @@ class ChecksRegister_Module_Model extends Vtiger_Module_Model
    */
   public static function processCheck(Vtiger_Record_Model $recordModel)
   {
-
     $id = $recordModel->getId() ?: "NEW";
     \App\Log::warning("ChecksRegister::processCheck:$id");
 
@@ -72,7 +71,7 @@ class ChecksRegister_Module_Model extends Vtiger_Module_Model
     $cacheNameClaims = "CheckRegister:Claims";
     $cacheNameProviders = "CheckRegister:Providers";
     $cacheNameInsuranceCompanies = "CheckRegister:InsuranceCompanies";
-    if (\App\Cache::has('ChecksRegister', $cacheNameCases)) {
+    if (\App\Cache::has('ChecksRegister', $cacheNameCases)){
       $cases = \App\Cache::get('ChecksRegister', $cacheNameCases);
     } else {
       $queryGenerator = new \App\QueryGenerator('Cases');
@@ -90,7 +89,7 @@ class ChecksRegister_Module_Model extends Vtiger_Module_Model
       }, $query->all());
       \App\Cache::save('ChecksRegister', $cacheNameCases);
     }
-    if (\App\Cache::has('ChecksRegister', $cacheNameOutsideCases)) {
+    if (\App\Cache::has('ChecksRegister', $cacheNameOutsideCases)){
       $outsideCases = \App\Cache::get('ChecksRegister', $cacheNameOutsideCases);
     } else {
       $queryGenerator = new \App\QueryGenerator('OutsideCases');
@@ -107,7 +106,7 @@ class ChecksRegister_Module_Model extends Vtiger_Module_Model
       }, $query->all());
       \App\Cache::save('ChecksRegister', $cacheNameOutsideCases);
     }
-    if (\App\Cache::has('ChecksRegister', $cacheNameClaims)) {
+    if (\App\Cache::has('ChecksRegister', $cacheNameClaims)){
       $claims = \App\Cache::get('ChecksRegister', $cacheNameClaims);
     } else {
       $queryGenerator = new \App\QueryGenerator('Claims');
@@ -128,7 +127,7 @@ class ChecksRegister_Module_Model extends Vtiger_Module_Model
       }, $query->all());
       \App\Cache::save('ChecksRegister', $cacheNameClaims);
     }
-    if (\App\Cache::has('ChecksRegister', $cacheNameProviders)) {
+    if (\App\Cache::has('ChecksRegister', $cacheNameProviders)){
       $providers = \App\Cache::get('ChecksRegister', $cacheNameProviders);
     } else {
       $queryGenerator = new \App\QueryGenerator('Providers');
@@ -142,7 +141,7 @@ class ChecksRegister_Module_Model extends Vtiger_Module_Model
       }, $query->all());
       \App\Cache::save('ChecksRegister', $cacheNameProviders);
     }
-    if (\App\Cache::has('ChecksRegister', $cacheNameInsuranceCompanies)) {
+    if (\App\Cache::has('ChecksRegister', $cacheNameInsuranceCompanies)){
       $insuranceCompanies = \App\Cache::get('ChecksRegister', $cacheNameInsuranceCompanies);
     } else {
       $queryGenerator = new \App\QueryGenerator('InsuranceCompanies');
@@ -169,11 +168,11 @@ class ChecksRegister_Module_Model extends Vtiger_Module_Model
 
     // find match providers
     $processedProvider = preg_replace('/[^[:alnum:]]+/ui', '', $providerName);
-    $matchedProviders = array_filter($providers, function ($provider) use ($processedProvider) {
+    $matchedProviders = array_filter($providers, function($provider) use ($processedProvider) {
       return strcasecmp($provider['provider_abbreviation'], $processedProvider) === 0;
     });
     if (count($matchedProviders) === 0) {
-      $matchedProviders = array_filter($providers, function ($provider) use ($processedProvider) {
+      $matchedProviders = array_filter($providers, function($provider) use ($processedProvider) {
         return strcasecmp($provider['provider_name'], $processedProvider) === 0;
       });
     }
@@ -190,16 +189,16 @@ class ChecksRegister_Module_Model extends Vtiger_Module_Model
     $processedClaimNumber = preg_replace('/[^[:alnum:]]+/ui', '', $claimNumber);
 
     // find matching case by provider + claim number
-    $cases = array_filter($cases, function ($case) use ($processedClaimNumber, $provider) {
-      return strcasecmp($case['claim_number'], $processedClaimNumber) === 0 &&
+    $cases = array_filter($cases, function($case) use ($processedClaimNumber, $provider) {
+      return strcasecmp($case['claim_number'], $processedClaimNumber) === 0 && 
         (($case['provider'] && $case['provider'] === $provider)
-          || ($case['provider_2'] && $case['provider_2'] === $provider)
-          || ($case['provider_3'] && $case['provider_3'] === $provider)
-          || ($case['provider_4'] && $case['provider_4'] === $provider)
-          || ($case['provider_5'] && $case['provider_5'] === $provider)
-        );
+        || ($case['provider_2'] && $case['provider_2'] === $provider)
+        || ($case['provider_3'] && $case['provider_3'] === $provider)
+        || ($case['provider_4'] && $case['provider_4'] === $provider)
+        || ($case['provider_5'] && $case['provider_5'] === $provider)
+      );
     });
-    $outsideCases = array_filter($outsideCases, function ($outsideCase) use ($processedClaimNumber, $provider) {
+    $outsideCases = array_filter($outsideCases, function($outsideCase) use ($processedClaimNumber, $provider) {
       return strcasecmp($outsideCase['claim_number'], $processedClaimNumber) === 0 && $outsideCase['provider'] === $provider;
     });
 
@@ -207,13 +206,9 @@ class ChecksRegister_Module_Model extends Vtiger_Module_Model
     if (count($cases) === 0 && count($outsideCases) === 0) {
       $warnings[] = "Case (or Outside Case) not found by Provider and Claim Number";
     } else if (count($cases) > 1) {
-      $warnings[] = "Multiple cases (" . \App\TextParser::textTruncate(implode(' ', array_map(function ($case) {
-        return $case['case_id'];
-      }, $cases)), 100) . ") found by Provider and Claim Number";
+      $warnings[] = "Multiple cases (" . \App\TextParser::textTruncate(implode(' ', array_map(function ($case) { return $case['case_id']; }, $cases)), 100) . ") found by Provider and Claim Number";
     } else if (count($outsideCases) > 1) {
-      $warnings[] = "Multiple outside cases (" . \App\TextParser::textTruncate(implode(' ', array_map(function ($case) {
-        return $case['outside_case_id'];
-      }, $outsideCases)), 100) . ") found by Provider and Claim Number";
+      $warnings[] = "Multiple outside cases (" . \App\TextParser::textTruncate(implode(' ', array_map(function ($case) { return $case['outside_case_id']; }, $outsideCases)), 100) . ") found by Provider and Claim Number";
     } else if (count($cases) === 1 && count($outsideCases) === 1) {
       $warnings[] = "Both Case (" . reset($cases)['case_id'] . ") and Outside Case (" . reset($outsideCases)['outside_case_id'] . ") found by Provider and Claim Number";
     } else if (count($cases) === 1) {
@@ -225,7 +220,7 @@ class ChecksRegister_Module_Model extends Vtiger_Module_Model
     }
 
     // find matching claims by provider + claim number
-    $claims = array_filter($claims, function ($claim) use ($processedClaimNumber, $provider) {
+    $claims = array_filter($claims, function($claim) use ($processedClaimNumber, $provider) {
       return strcasecmp($claim['claim_number'], $processedClaimNumber) === 0 && $claim['provider'] === $provider;
     });
 
@@ -233,16 +228,12 @@ class ChecksRegister_Module_Model extends Vtiger_Module_Model
     if (count($claims) === 0) {
       $warnings[] = "Claim not found by Provider and Claim Number";
     } else if ($case) {
-      $mismatchedClaims = array_filter($claims, function ($claim) use ($case) {
-        return $claim['case'] != $case['id'];
-      });
+      $mismatchedClaims = array_filter($claims, function($claim) use ($case) { return $claim['case'] != $case['id']; });
       foreach ($mismatchedClaims as $mismatchedClaim) {
         $warnings[] = "Claim '" . \App\Record::getLabel($mismatchedClaim['id']) . "' matched by Provider and Claim Number does not match Case";
       }
     } else if ($outsideCase) {
-      $mismatchedClaims = array_filter($claims, function ($claim) use ($outsideCase) {
-        return $claim['outside_case'] != $outsideCase['id'];
-      });
+      $mismatchedClaims = array_filter($claims, function($claim) use ($outsideCase) { return $claim['outside_case'] != $outsideCase['id']; });
       foreach ($mismatchedClaims as $mismatchedClaim) {
         $warnings[] = "Claim '" . \App\Record::getLabel($mismatchedClaim['id']) . "' matched by Provider and Claim Number does not match Outside Case";
       }
@@ -262,26 +253,18 @@ class ChecksRegister_Module_Model extends Vtiger_Module_Model
         $warnings[] = "Insured in Outside Case does not match Insured in Check";
       }
     }
-    $mismatchedClaims = array_filter($claims, function ($claim) use ($insured) {
-      return strcasecmp($claim['insured'], $insured) !== 0;
-    });
+    $mismatchedClaims = array_filter($claims, function($claim) use ($insured) { return strcasecmp($claim['insured'], $insured) !== 0; });
     foreach ($mismatchedClaims as $mismatchedClaim) {
       $warnings[] = "Insured in Claim '" . \App\Record::getLabel($mismatchedClaim['id']) . "' does not match Insured in Check";
     }
 
     //	set claim ids to space separated list of claim labels, set portfolio to space separated list of portfolio labels from claims
-    $claimIds = implode(' ', array_map(function ($claim) {
-      return $claim['claim_id'];
-    }, $claims));
-    $portfolios = implode(' ', array_map(function ($claim) {
-      return $claim['portfolio_name'];
-    }, $claims));
+    $claimIds = implode(' ', array_map(function($claim) { return $claim['claim_id']; }, $claims));
+		$portfolios = implode(' ', array_map(function($claim) { return $claim['portfolio_name']; }, $claims));
 
     // match insurance company
     $processedInsuranceCompany = preg_replace('/[^[:alnum:]]+/ui', '', $insuranceCompanyName);
-    $insuranceCompanies = array_unique(array_map(function ($row) {
-      return $row['id'];
-    }, array_filter($insuranceCompanies, function ($insuranceCompany) use ($processedInsuranceCompany) {
+    $insuranceCompanies = array_unique(array_map(function ($row) { return $row['id']; }, array_filter($insuranceCompanies, function($insuranceCompany) use ($processedInsuranceCompany) {
       return strcasecmp($insuranceCompany['insurance_company_name'], $processedInsuranceCompany) === 0;
     })));
 
@@ -310,7 +293,7 @@ class ChecksRegister_Module_Model extends Vtiger_Module_Model
     foreach ($claims as $claim) {
       $relationModel->addRelation($recordModel->getId(), $claim['id']);
     }
-
+    
     $relationModel = \Vtiger_Relation_Model::getInstance($checksRegisterModule, Vtiger_Module_Model::getInstance('Portfolios'));
     foreach ($claims as $claim) {
       $relationModel->addRelation($recordModel->getId(), $claim['portfolio_id']);
@@ -318,7 +301,6 @@ class ChecksRegister_Module_Model extends Vtiger_Module_Model
 
     // download file from URL in db_link
     $dbLink = $recordModel->get('db_link');
-
     if ($dbLink) {
       // remove GET parameter dl with it's value and append dl=1
       $dbLink = preg_replace('/\bdl=[^&]*&?/', '', $dbLink);
@@ -326,9 +308,8 @@ class ChecksRegister_Module_Model extends Vtiger_Module_Model
 
       $params = [];
       $file = \App\Fields\File::loadFromUrl($dbLink, $params, true);
-
-      if ($file && $file->validateAndSecure()) {
-
+      if ($file && $file->validateAndSecure())
+      {
         $params['document_type'] = $documentType;
         $params['checks_register'] = $recordModel->getId();
         ['crmid' => $fileId] = \App\Fields\File::saveFromContent($file, $params);
@@ -338,6 +319,7 @@ class ChecksRegister_Module_Model extends Vtiger_Module_Model
         if ($relationModel->getRelationType() != Vtiger_Relation_Model::RELATION_O2M || empty($relationModel->getRelationField())) {
           $relationModel->addRelation($recordModel->getId(), $fileId);
         }
+
         $recordModel->set('check', $fileId);
         $recordModel->save();
       } else if ($file) {

@@ -1,9 +1,0 @@
-{
-	"php": {
-		"Clients": "YF Clients",
-		"SINGLE_Clients": "YF Clients",
-		"LBL_CUSTOM_INFORMATION": "Custom Information",
-		"LBL_BASIC_INFORMATION": "Basic Information",
-		"Client Name": "Client Name"
-	}
-}

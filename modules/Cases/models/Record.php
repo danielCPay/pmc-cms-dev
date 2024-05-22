@@ -63,6 +63,11 @@ class Cases_Record_Model extends Vtiger_Record_Model
         
         HO Damages = sum of HO Claimed Invoices' Invoice Value
         HO Prior Collections = sum of related HO Claimed Invoices' "Prior Collections"
+
+        Claims Statuses = comma separated unique list from Claims->Claim Status
+        Claims Onboarding Statuses = comma separated unique list from Claims->Onboarding Status
+        Claims Buyback Statuses = comma separated unique list from Claims->Buyback Status
+        HO attorney confirmation statuses = comma separated unique list from Claims->HO attorney confirmation status
        */
 
       $providerInvoices = 0;
@@ -79,6 +84,7 @@ class Cases_Record_Model extends Vtiger_Record_Model
       $claimStatuses = [];
       $claimOnboardingStatuses = [];
       $claimBuybackStatuses = [];
+      $hoAttorneys = [];
 
       $currentUserId = \App\User::getCurrentUserId();
       $currentBaseUserId = \App\Session::has('baseUserId') && \App\Session::get('baseUserId') ? \App\Session::get('baseUserId') : null;
@@ -101,7 +107,8 @@ class Cases_Record_Model extends Vtiger_Record_Model
         ->addCondition('case', $id, 'eid')
         ->setFields(['total_bill_amount', 'prior_collections', 'adjusted_face_value', 'hurdle', 
           'overhead_and_profit', 'purchase_price', 'date_of_first_notification',
-          'portfolio', 'claim_status', 'onboarding_status', 'buyback_status'])
+          'portfolio', 'claim_status', 'onboarding_status', 'buyback_status',
+          'ho_attorney_confirmation_statu'])
         ->createQuery()
         ->all();
 
@@ -134,21 +141,25 @@ class Cases_Record_Model extends Vtiger_Record_Model
         if (!in_array($portfolio, $portfolios)) {
           $portfolios[] = $portfolio;
         }
-        if (!in_array($claimData['providerProvidersprovider_abbreviation'], $providers)) {
+        if ($claimData['providerProvidersprovider_abbreviation'] && !in_array($claimData['providerProvidersprovider_abbreviation'], $providers)) {
           $providers[] = $claimData['providerProvidersprovider_abbreviation'];
         }
 
         $claimStatus = $claimData['claim_status'];
-        if (!in_array($claimStatus, $claimStatuses)) {
+        if ($claimStatus && !in_array($claimStatus, $claimStatuses)) {
           $claimStatuses[] = $claimStatus;
         }
         $claimOnboardingStatus = $claimData['onboarding_status'];
-        if (!in_array($claimOnboardingStatus, $claimOnboardingStatuses)) {
+        if ($claimOnboardingStatus && !in_array($claimOnboardingStatus, $claimOnboardingStatuses)) {
           $claimOnboardingStatuses[] = $claimOnboardingStatus;
         }
         $claimBuybackStatus = $claimData['buyback_status'];
-        if (!in_array($claimBuybackStatus, $claimBuybackStatuses)) {
+        if ($claimBuybackStatus && !in_array($claimBuybackStatus, $claimBuybackStatuses)) {
           $claimBuybackStatuses[] = $claimBuybackStatus;
+        }
+        $hoAttorney = $claimData['ho_attorney_confirmation_statu'];
+        if ($hoAttorney && !in_array($hoAttorney, $hoAttorneys)) {
+          $hoAttorneys[] = $hoAttorney;
         }
       }
       $firstNoticeOfLoss = $firstNoticeOfLoss ?: $this->get('first_notice_of_loss');
@@ -165,6 +176,8 @@ class Cases_Record_Model extends Vtiger_Record_Model
       $claimOnboardingStatuses = \App\TextParser::textTruncate(implode(', ', $claimOnboardingStatuses), 255);
       sort($claimBuybackStatuses);
       $claimBuybackStatuses = \App\TextParser::textTruncate(implode(', ', $claimBuybackStatuses), 255);
+      sort($hoAttorneys);
+      $hoAttorneys = \App\TextParser::textTruncate(implode(', ', $hoAttorneys), 255);
 
       $pmcCollectionsLimit = $this->calculatePMCCollectionsLimit();
 
@@ -182,6 +195,7 @@ class Cases_Record_Model extends Vtiger_Record_Model
       $this->set('claims_statuses', $claimStatuses);
       $this->set('claims_onboarding_statuses', $claimOnboardingStatuses);
       $this->set('claims_buyback_statuses', $claimBuybackStatuses);
+      $this->set('ho_attorney_confirm_statuses', $hoAttorneys);
 
       $hoDamages = 0;
       $hoPriorCollections = 0;

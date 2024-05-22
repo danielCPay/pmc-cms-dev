@@ -48,7 +48,7 @@
 								<optgroup
 										label="{\App\Language::translate($RELATION_MODULE_NAME, $RELATION_MODULE_NAME)} - {\App\Language::translate('LBL_RELATIONSHIPS_BASED_ON_MODULES')}">
 									{foreach from=$RELATION_MODULE_MODEL->getFields() item=FIELD_MODEL}
-										{if $FIELD_MODEL->isReferenceField() || ($RELATION_MODULE_MODEL->getName()=="Documents" && in_array($FIELD_MODEL->getName(),$RESTRICTFIELDS)) || in_array($FIELD_MODEL->getFieldDataType(), ['multiCurrency', 'multiDependField', 'multiDomain', 'multiEmail', 'multiImage', 'multiReferenceValue', 'image'])}
+										{if ($RELATION_MODULE_MODEL->getName()=="Documents" && in_array($FIELD_MODEL->getName(),$RESTRICTFIELDS)) || in_array($FIELD_MODEL->getFieldDataType(), ['multiCurrency', 'multiDependField', 'multiDomain', 'multiEmail', 'multiImage', 'multiReferenceValue', 'image'])}
 												{continue}
 											{/if}
 										{assign var=FIELD_INFO value=$FIELD_MODEL->getFieldInfo($MODULE_MODEL)}
@@ -115,7 +115,7 @@
 					<optgroup
 							label="{\App\Language::translate($RELATION_MODULE_NAME, $RELATION_MODULE_NAME)} - {\App\Language::translate('LBL_RELATIONSHIPS_BASED_ON_MODULES')}">
 						{foreach from=$RELATION_MODULE_MODEL->getFields() item=FIELD_MODEL}
-							{if $FIELD_MODEL->isReferenceField() || ($RELATION_MODULE_MODEL->getName()=="Documents" && in_array($FIELD_MODEL->getName(),$RESTRICTFIELDS)) || in_array($FIELD_MODEL->getFieldDataType(), ['multiCurrency', 'multiDependField', 'multiDomain', 'multiEmail', 'multiImage', 'multiReferenceValue', 'image'])}
+							{if ($RELATION_MODULE_MODEL->getName()=="Documents" && in_array($FIELD_MODEL->getName(),$RESTRICTFIELDS)) || in_array($FIELD_MODEL->getFieldDataType(), ['multiCurrency', 'multiDependField', 'multiDomain', 'multiEmail', 'multiImage', 'multiReferenceValue', 'image'])}
 								{continue}
 							{/if}
 							{assign var=FIELD_INFO value=$FIELD_MODEL->getFieldInfo($MODULE_MODEL)}

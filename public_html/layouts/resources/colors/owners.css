@@ -1,54 +1,44 @@
-.ownerCBg_1 { background: #E6FAD8 !important; font-weight: 500 !important; color: black !important;}
-.ownerCT_1 { color: #E6FAD8 !important; }
-.ownerCBr_1 { border-color: #E6FAD8 !important; }
-.ownerCBg_6 { background: #E6FAD8 !important; font-weight: 500 !important; color: black !important;}
-.ownerCT_6 { color: #E6FAD8 !important; }
-.ownerCBr_6 { border-color: #E6FAD8 !important; }
-.ownerCBg_20 { background: #E6FAD8 !important; font-weight: 500 !important; color: black !important;}
-.ownerCT_20 { color: #E6FAD8 !important; }
-.ownerCBr_20 { border-color: #E6FAD8 !important; }
-.ownerCBg_21 { background: #E6FAD8 !important; font-weight: 500 !important; color: black !important;}
-.ownerCT_21 { color: #E6FAD8 !important; }
-.ownerCBr_21 { border-color: #E6FAD8 !important; }
-.ownerCBg_28 { background: #E6FAD8 !important; font-weight: 500 !important; color: black !important;}
-.ownerCT_28 { color: #E6FAD8 !important; }
-.ownerCBr_28 { border-color: #E6FAD8 !important; }
-.ownerCBg_45 { background: #E6FAD8 !important; font-weight: 500 !important; color: black !important;}
-.ownerCT_45 { color: #E6FAD8 !important; }
-.ownerCBr_45 { border-color: #E6FAD8 !important; }
-.ownerCBg_47 { background: #E6FAD8 !important; font-weight: 500 !important; color: black !important;}
-.ownerCT_47 { color: #E6FAD8 !important; }
-.ownerCBr_47 { border-color: #E6FAD8 !important; }
-.ownerCBg_48 { background: #E6FAD8 !important; font-weight: 500 !important; color: black !important;}
-.ownerCT_48 { color: #E6FAD8 !important; }
-.ownerCBr_48 { border-color: #E6FAD8 !important; }
-.ownerCBg_49 { background: #E6FAD8 !important; font-weight: 500 !important; color: black !important;}
-.ownerCT_49 { color: #E6FAD8 !important; }
-.ownerCBr_49 { border-color: #E6FAD8 !important; }
-.ownerCBg_50 { background: #E6FAD8 !important; font-weight: 500 !important; color: black !important;}
-.ownerCT_50 { color: #E6FAD8 !important; }
-.ownerCBr_50 { border-color: #E6FAD8 !important; }
-.ownerCBg_51 { background: #E6FAD8 !important; font-weight: 500 !important; color: black !important;}
-.ownerCT_51 { color: #E6FAD8 !important; }
-.ownerCBr_51 { border-color: #E6FAD8 !important; }
-.ownerCBg_52 { background: #E6FAD8 !important; font-weight: 500 !important; color: black !important;}
-.ownerCT_52 { color: #E6FAD8 !important; }
-.ownerCBr_52 { border-color: #E6FAD8 !important; }
-.ownerCBg_53 { background: #E6FAD8 !important; font-weight: 500 !important; color: black !important;}
-.ownerCT_53 { color: #E6FAD8 !important; }
-.ownerCBr_53 { border-color: #E6FAD8 !important; }
-.ownerCBg_61 { background: #E6FAD8 !important; font-weight: 500 !important; color: black !important;}
-.ownerCT_61 { color: #E6FAD8 !important; }
-.ownerCBr_61 { border-color: #E6FAD8 !important; }
-.ownerCBg_63 { background: #E6FAD8 !important; font-weight: 500 !important; color: black !important;}
-.ownerCT_63 { color: #E6FAD8 !important; }
-.ownerCBr_63 { border-color: #E6FAD8 !important; }
-.ownerCBg_64 { background: #E6FAD8 !important; font-weight: 500 !important; color: black !important;}
-.ownerCT_64 { color: #E6FAD8 !important; }
-.ownerCBr_64 { border-color: #E6FAD8 !important; }
-.ownerCBg_66 { background: #E6FAD8 !important; font-weight: 500 !important; color: black !important;}
-.ownerCT_66 { color: #E6FAD8 !important; }
-.ownerCBr_66 { border-color: #E6FAD8 !important; }
-.ownerCBg_96 { background: #E6FAD8 !important; font-weight: 500 !important; color: black !important;}
-.ownerCT_96 { color: #E6FAD8 !important; }
-.ownerCBr_96 { border-color: #E6FAD8 !important; }
+.ownerCBg_1 {
+	background: #e6fad8 !important;
+	font-weight: 500 !important;
+	color: black !important;
+}
+.ownerCT_1 {
+	color: #e6fad8 !important;
+}
+.ownerCBr_1 {
+	border-color: #e6fad8 !important;
+}
+.ownerCBg_2 {
+	background: #e6fad8 !important;
+	font-weight: 500 !important;
+	color: black !important;
+}
+.ownerCT_2 {
+	color: #e6fad8 !important;
+}
+.ownerCBr_2 {
+	border-color: #e6fad8 !important;
+}
+.ownerCBg_3 {
+	background: #e6fad8 !important;
+	font-weight: 500 !important;
+	color: black !important;
+}
+.ownerCT_3 {
+	color: #e6fad8 !important;
+}
+.ownerCBr_3 {
+	border-color: #e6fad8 !important;
+}
+.ownerCBg_4 {
+	background: #e6fad8 !important;
+	font-weight: 500 !important;
+	color: black !important;
+}
+.ownerCT_4 {
+	color: #e6fad8 !important;
+}
+.ownerCBr_4 {
+	border-color: #e6fad8 !important;
+}

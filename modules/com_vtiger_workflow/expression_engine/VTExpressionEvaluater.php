@@ -232,6 +232,38 @@ class VTFieldExpressionEvaluater
 		return strftime('%Y-%m-%d', strtotime(-$noOfDays . ' days', $baseDate));
 	}
 
+	public static function __vt_add_months($arr)
+	{
+		if (\count($arr) > 1) {
+			$baseDate = $arr[0];
+			$noOfMonths = $arr[1];
+		} else {
+			$noOfMonths = $arr[0];
+		}
+		if (null === $baseDate || empty($baseDate)) {
+			$baseDate = date('Y-m-d'); // Current date
+		}
+		preg_match('/\d\d\d\d-\d\d-\d\d/', $baseDate, $match);
+		$baseDate = strtotime($match[0]);
+		return strftime('%Y-%m-%d', strtotime($noOfMonths . ' months', $baseDate));
+	}
+
+	public static function __vt_sub_months($arr)
+	{
+		if (\count($arr) > 1) {
+			$baseDate = $arr[0];
+			$noOfMonths = $arr[1];
+		} else {
+			$noOfMonths = $arr[0];
+		}
+		if (null === $baseDate || empty($baseDate)) {
+			$baseDate = date('Y-m-d'); // Current date
+		}
+		preg_match('/\d\d\d\d-\d\d-\d\d/', $baseDate, $match);
+		$baseDate = strtotime($match[0]);
+		return strftime('%Y-%m-%d', strtotime(-$noOfMonths . ' months', $baseDate));
+	}
+
 	public static function __vt_get_date($arr)
 	{
 		$type = $arr[0];
@@ -385,6 +417,13 @@ class VTFieldExpressionEvaluater
 		return $attorneyId ?: 0;
 	}
 
+	public static function __vt_get_county_from_address($arr)
+	{
+		[$address] = $arr;
+
+		return \App\Utils::getCounty($address);
+	}
+
 	public function __construct($expr)
 	{
 		$this->operators = [
@@ -406,6 +445,8 @@ class VTFieldExpressionEvaluater
 			'time_diffmonths' => '__vt_time_diffmonths',
 			'add_days' => '__vt_add_days',
 			'sub_days' => '__vt_sub_days',
+			'add_months' => '__vt_add_months',
+			'sub_months' => '__vt_sub_months',
 			'get_date' => '__vt_get_date',
 			'get_datetime' => '__vt_get_datetime',
 			'add_time' => '__vt_add_time',
@@ -423,6 +464,7 @@ class VTFieldExpressionEvaluater
 			'remove_white_chars' => '__vt_remove_white_chars',
 			'remove_nonalphanumeric_chars' => '__vt_remove_nonalphanumeric_chars',
 			'get_by_user_group' => '__vt_get_by_user_group',
+			'get_county_from_address' => '__vt_get_county_from_address',
 		];
 
 		$this->operations = array_merge($this->functions, $this->operators);

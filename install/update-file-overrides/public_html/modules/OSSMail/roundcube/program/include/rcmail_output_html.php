@@ -2399,12 +2399,30 @@ EOF;
 
         // add oauth login button
         if ($this->config->get('oauth_auth_uri') && $this->config->get('oauth_provider')) {
-            // hide login form fields when `oauth_login_redirect` is configured
-            // if ($this->config->get('oauth_login_redirect')) {
-                $out = '';
-            // }
+            $out = '';
 
             $link_attr = ['href' => $this->app->url(['action' => 'oauth']), 'id' => 'rcmloginoauth', 'class' => 'button oauth ' . $this->config->get('oauth_provider'), 'target' => '_top'];
+            
+            $oauthConfigs = $this->config->get('oauth_configs');
+            if (is_array($oauthConfigs) && count($oauthConfigs) > 1) {
+                $input_host = new html_select(['name' => '_host', 'id' => 'rcmloginhost', 'class' => 'custom-select']);
+    
+                foreach ($oauthConfigs as $key => $value) {
+                    $input_host->add($key, $link_attr['href'] . '&host=' . $key);
+                }
+
+                // change href to JS function that will navigate window to the selected host
+                $link_attr['href'] = '#';
+                $link_attr['onclick'] = 'javascript:window.top.location=document.getElementById(\'rcmloginhost\').value; return false;';
+            }
+            else if (is_array($oauthConfigs) && ($host = key($oauthConfigs)) !== null) {
+                $input_host = new html_hiddenfield([
+                    'name' => '_host', 'id' => 'rcmloginhost', 'value' => $host]);
+                $link_attr['href'] .= '&host=' . $host;
+            }
+
+            $out .= $input_host->show();
+            
             $out .= html::p('oauthlogin', html::a($link_attr, $this->app->gettext(['name' => 'oauthlogin', 'vars' => ['provider' => $this->config->get('oauth_provider_name', 'OAuth')]])));
         }
 

@@ -404,4 +404,57 @@ class Utils
 
 		return $strA === $strB;
 	}
+
+	/**
+	 * Get the county from the address
+	 * 
+	 * @param $address
+	 * 
+	 * @return string County ID from county dictionary
+	 * 
+	 * @throws \Exception Geocoding failed or county not found in counties dictionary
+	 */
+	public static function getCounty( string $address )
+	{
+		\App\Log::warning("Utils::getCounty:$address");
+
+		$url = "https://atlas.microsoft.com/search/address/json?api-version=1.0&countrySet=US&limit=1&query=$address";
+    $requestOptions = \App\RequestHttp::getOptions();
+    $requestOptions['headers']['Authorization'] = \App\Config::api('azureAddressKey');
+
+    \App\Log::warning("Utils::getCounty:$url");
+
+    $result = (new \GuzzleHttp\Client($requestOptions))->get($url, ['timeout' => 20, 'connect_timeout' => 10]);
+    if (200 == $result->getStatusCode()) {
+      $response = $result->getBody();
+    } else {
+      throw new \Exception("Azure Address request failed: {$result->getStatusCode()}/{$result->getReasonPhrase()}");
+    }
+
+    $json = \App\Json::decode($response);
+
+    if ($json['summary']['numResults'] < 1) {
+      // error, not found
+			\App\Log::warning("Utils::getCounty:$response");
+      throw new \Exception("Could not geolocate address '$address'");
+    } else {
+      $countyName = $json['results'][0]['address']['countrySecondarySubdivision'];
+			
+			\App\Log::warning("Utils::getCounty:$countyName");
+        
+      // find county in Counties
+      $county = (new \App\QueryGenerator('Counties'))
+        ->setField('id')
+        ->addCondition('county', $countyName, 's')
+        ->createQuery()
+        ->scalar();
+
+      if (empty($county)) {
+				throw new \Exception("County $countyName not found in Counties dictionary");
+      }
+
+			\App\Log::warning("Utils::getCounty:$county");
+			return $county;
+		}
+	}
 }

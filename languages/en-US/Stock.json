@@ -1,9 +1,0 @@
-{
-	"php": {
-		"Stock": "YF Stock ",
-		"SINGLE_Stock": "YF Stock ",
-		"LBL_CUSTOM_INFORMATION": "Custom Information",
-		"LBL_BASIC_INFORMATION": "Basic Information",
-		"Stock Name": "Stock Name"
-	}
-}

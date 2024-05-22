@@ -118,77 +118,102 @@ class Vtiger_Workflow_Handler
 			$this->workflows[$moduleName] = $wfs->getWorkflowsForModule($moduleName);
 		}
 		
-		foreach ($this->workflows[$moduleName] as &$workflow) {
-			if ($condition && !\in_array($workflow->executionCondition, $condition)) {
-				continue;
+		try {
+			$currentUserId = \App\User::getCurrentUserId();
+			$currentBaseUserId = \App\Session::has('baseUserId') && \App\Session::get('baseUserId') ? \App\Session::get('baseUserId') : null;
+			$systemUserId = \App\User::getUserIdByFullName('System');
+			if ($currentUserId !== $systemUserId) {
+				\App\Log::warning("Vtiger_Workflow_Handler::performTasks:switching to System user ($systemUserId)");
+				$recordModel->executeUser = $currentUserId;
+				\App\User::resetCurrentUserRealId();
+				\App\User::setCurrentUserId($systemUserId);
+				if (\App\Session::has('baseUserId') && \App\Session::get('baseUserId')) {
+          \App\Session::delete('baseUserId');
+        }
 			}
-			$recordModel->shouldTriggerChanged = false;
-			switch ($workflow->executionCondition) {
-				case VTWorkflowManager::$ON_FIRST_SAVE:
-					if ($recordModel->isNew()) {
-						$doEvaluate = true;
-					} else {
-						$doEvaluate = false;
-					}
-					break;
-				case VTWorkflowManager::$ONCE:
-					if ($workflow->isCompletedForRecord($recordModel->getId())) {
-						$doEvaluate = false;
-					} else {
-						$doEvaluate = true;
-					}
-					break;
-				case VTWorkflowManager::$ON_EVERY_SAVE:
-					$doEvaluate = true;
-					if ($recordModel->isMovedToTrash() && self::checkWorkflowHasTasks($workflow, ['VTEntityWorkflow', 'SumFieldFromDependent'])) {
-						$recordModel->shouldTriggerChanged = true;
-						\App\Log::warning("Set trigger for $workflow->executionCondition");
-					}
-					break;
-				case VTWorkflowManager::$ON_MODIFY:
-					$doEvaluate = !$recordModel->isNew() && !empty($recordModel->getPreviousValue());
-					break;
-				case VTWorkflowManager::$MANUAL:
-					$doEvaluate = false;
-					break;
-				case VTWorkflowManager::$ON_SCHEDULE:
-					$doEvaluate = false;
-					break;
-				case VTWorkflowManager::$ON_DELETE:
-					$doEvaluate = true;
-					break;
-				case VTWorkflowManager::$TRIGGER:
-					$doEvaluate = false;
-					break;
-				case VTWorkflowManager::$BLOCK_EDIT:
-					$doEvaluate = false;
-					break;
-				case VTWorkflowManager::$ON_RELATED:
-					$recordModel = Vtiger_Record_Model::getInstanceById($eventHandler->getParams()['sourceRecordId']);
-					$doEvaluate = true;
-					break;
-				default:
-					throw new \App\Exceptions\AppException('Should never come here! Execution Condition:' . $workflow->executionCondition);
-			}
-			if ($doEvaluate && $workflow->evaluate($recordModel, $recordModel->getId())) {
-				if (VTWorkflowManager::$ONCE == $workflow->executionCondition) {
-					$workflow->markAsCompletedForRecord($recordModel->getId());
-				}
-				try {
-					$workflow->performTasks($recordModel);
-				} catch (\App\Exceptions\BatchErrorHandledWorkflowException $e) {
-					// do not write BatchError, already handled
-					throw $e;
-				} catch (\App\Exceptions\BatchErrorHandledNoRethrowWorkflowException $e) {
-					continue;
-				} catch (\App\Exceptions\NoRethrowWorkflowException $e) {
-					VTWorkflowUtils::createBatchErrorEntry($workflow, $moduleName, "Error during processing", $recordModel->getId(), "Error occurred while processing record - {$e->getMessage()}");
-					continue;
-				} catch (\Exception $e) {
-					VTWorkflowUtils::createBatchErrorEntry($workflow, $moduleName, "Error during processing", $recordModel->getId(), "Error occurred while processing record - {$e->getMessage()}");
 
-					throw $e;
+			foreach ($this->workflows[$moduleName] as &$workflow) {
+				if ($condition && !\in_array($workflow->executionCondition, $condition)) {
+					continue;
 				}
+				$recordModel->shouldTriggerChanged = false;
+				switch ($workflow->executionCondition) {
+					case VTWorkflowManager::$ON_FIRST_SAVE:
+						if ($recordModel->isNew()) {
+							$doEvaluate = true;
+						} else {
+							$doEvaluate = false;
+						}
+						break;
+					case VTWorkflowManager::$ONCE:
+						if ($workflow->isCompletedForRecord($recordModel->getId())) {
+							$doEvaluate = false;
+						} else {
+							$doEvaluate = true;
+						}
+						break;
+					case VTWorkflowManager::$ON_EVERY_SAVE:
+						$doEvaluate = true;
+						if ($recordModel->isMovedToTrash() && self::checkWorkflowHasTasks($workflow, ['VTEntityWorkflow', 'SumFieldFromDependent'])) {
+							$recordModel->shouldTriggerChanged = true;
+							\App\Log::warning("Set trigger for $workflow->executionCondition");
+						}
+						break;
+					case VTWorkflowManager::$ON_MODIFY:
+						$doEvaluate = !$recordModel->isNew() && !empty($recordModel->getPreviousValue());
+						break;
+					case VTWorkflowManager::$MANUAL:
+						$doEvaluate = false;
+						break;
+					case VTWorkflowManager::$ON_SCHEDULE:
+						$doEvaluate = false;
+						break;
+					case VTWorkflowManager::$ON_DELETE:
+						$doEvaluate = true;
+						break;
+					case VTWorkflowManager::$TRIGGER:
+						$doEvaluate = false;
+						break;
+					case VTWorkflowManager::$BLOCK_EDIT:
+						$doEvaluate = false;
+						break;
+					case VTWorkflowManager::$ON_RELATED:
+						$recordModel = Vtiger_Record_Model::getInstanceById($eventHandler->getParams()['sourceRecordId']);
+						$doEvaluate = true;
+						break;
+					default:
+						throw new \App\Exceptions\AppException('Should never come here! Execution Condition:' . $workflow->executionCondition);
+				}
+				if ($doEvaluate && $workflow->evaluate($recordModel, $recordModel->getId())) {
+					if (VTWorkflowManager::$ONCE == $workflow->executionCondition) {
+						$workflow->markAsCompletedForRecord($recordModel->getId());
+					}
+					try {
+						$workflow->performTasks($recordModel);
+					} catch (\App\Exceptions\BatchErrorHandledWorkflowException $e) {
+						// do not write BatchError, already handled
+						throw $e;
+					} catch (\App\Exceptions\BatchErrorHandledNoRethrowWorkflowException $e) {
+						continue;
+					} catch (\App\Exceptions\NoRethrowWorkflowException $e) {
+						VTWorkflowUtils::createBatchErrorEntry($workflow, $moduleName, "Error during processing", $recordModel->getId(), "Error occurred while processing record - {$e->getMessage()}");
+						continue;
+					} catch (\Exception $e) {
+						VTWorkflowUtils::createBatchErrorEntry($workflow, $moduleName, "Error during processing", $recordModel->getId(), "Error occurred while processing record - {$e->getMessage()}");
+
+						throw $e;
+					}
+				}
+			}
+		} finally {
+			if ($currentUserId !== $systemUserId) {
+				\App\Log::warning("Vtiger_Workflow_Handler::performTasks:restoring user ($currentUserId)");
+				\App\User::resetCurrentUserRealId();
+				\App\User::setCurrentUserId($currentUserId);
+				if ($currentBaseUserId) {
+          \App\Log::warning("TexasCases::recalculateFromClaims:resetting base user to $currentBaseUserId");
+          \App\Session::set('baseUserId', $currentBaseUserId);
+        }
 			}
 		}
 	}

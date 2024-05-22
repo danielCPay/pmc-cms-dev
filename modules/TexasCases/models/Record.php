@@ -85,10 +85,8 @@ class TexasCases_Record_Model extends Vtiger_Record_Model
       \App\Log::warning("TexasCases::recalculateFromClaims:user is $currentUserId, should be $targetUserId");
       if ($targetUserId != $currentUserId) {
         \App\Log::warning("TexasCases::recalculateFromClaims:setting user to $targetUserId");
+        \App\User::resetCurrentUserRealId();
         \App\User::setCurrentUserId($targetUserId);
-        if (\App\Session::has('baseUserId') && \App\Session::get('baseUserId')) {
-          \App\Session::delete('baseUserId');
-        }
       }
 
       $queryGenerator = new \App\QueryGenerator('Claims');
@@ -107,6 +105,7 @@ class TexasCases_Record_Model extends Vtiger_Record_Model
       if ($targetUserId != $currentUserId) {
         \App\Log::warning("TexasCases::recalculateFromClaims:resetting user to $currentUserId");
         \App\User::setCurrentUserId($currentUserId);
+        \App\User::resetCurrentUserRealId();
         if ($currentBaseUserId) {
           \App\Log::warning("TexasCases::recalculateFromClaims:resetting base user to $currentBaseUserId");
           \App\Session::set('baseUserId', $currentBaseUserId);

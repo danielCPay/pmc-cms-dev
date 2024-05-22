@@ -15,6 +15,28 @@
  */
 class Portfolios_Record_Model extends Vtiger_Record_Model
 {
+  /**
+   * Contains list of funtions to call in recalculateAll(). This field is used instead 
+   * of `get_class_methods` with filter to allow mainatining order of calls.
+   */
+  protected $recalculateFunctions = ["recalculateFromClaims", "recalculateFromPortfolioPurchases"];
+
+  /**
+   * Wrapper function that calls all recalculateX functions.
+   */
+  public function recalculateAll() {
+    $id = $this->getId();
+    $lockAutomation = $this->get('lock_automation');
+    \App\Log::warning("Portfolios::recalculateAll:$id/$lockAutomation");
+
+    if (!$lockAutomation) {
+      \App\Log::warning("Portfolios::recalculateAll:recalculateMethods = [" . implode(', ', $this->recalculateFunctions) . "]");
+      foreach ($this->recalculateFunctions as $method) {
+        $this->$method();
+      }
+    }
+  }
+
   public function recalculateFromClaims() {
     $id = $this->getId();
     
@@ -355,6 +377,50 @@ class Portfolios_Record_Model extends Vtiger_Record_Model
 
       \App\Log::trace("Portfolios::recalculateFromClaims:internal_cash_transfer = $internalCashTransfer");
       $this->set('internal_cash_transfer', round($internalCashTransfer, 2));
+      
+      $this->save();
+    }
+  }
+
+  /**
+   * Calculations for all fields that are based on the related Portfolio Purchases.
+   */
+  public function recalculateFromPortfolioPurchases() {
+    $id = $this->getId();
+    $lockAutomation = $this->get('lock_automation');
+    \App\Log::warning("Portfolios::recalculateFromPortfolioPurchases:$id/$lockAutomation");
+
+    if (!$lockAutomation) {
+      /*
+        Investor = comma separated unique list from related portfolio purchases
+        Opened Date = lowest value of Purchase Date from related portfolio purchases
+       */
+      $investors = [];
+      $openedDate = NULL;
+
+      $queryGenerator = new \App\QueryGenerator('PortfolioPurchases');
+      $purchases = $queryGenerator
+        ->addCondition('portfolio', $id, 'eid')
+        ->setFields(['investor', 'purchase_date'])
+        ->createQuery()
+        ->all();
+
+      foreach ($purchases as $purchaseData) {
+        $investor = \App\Record::getLabel($purchaseData['investor']);
+        if ($investor && !in_array($investor, $investors)) {
+          $investors[] = $investor;
+        }
+
+        if ($openedDate === NULL || ($purchaseData['purchase_date'] && $purchaseData['purchase_date'] < $openedDate)) {
+          $openedDate = $purchaseData['purchase_date'];
+        }
+      }
+      
+      sort($investors);
+      $investors = \App\TextParser::textTruncate(implode(', ', $investors), 255);
+      
+      $this->set('investor', $investors);
+      $this->set('opened_date', substr($openedDate, 0, 10));
       
       $this->save();
     }

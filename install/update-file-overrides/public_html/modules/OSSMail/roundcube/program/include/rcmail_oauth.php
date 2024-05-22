@@ -79,6 +79,7 @@ class rcmail_oauth
             'verify_peer'     => $this->rcmail->config->get('oauth_verify_peer', true),
             'auth_parameters' => $this->rcmail->config->get('oauth_auth_parameters', []),
             'login_redirect'  => $this->rcmail->config->get('oauth_login_redirect', false),
+            'oauth_configs'   => $this->rcmail->config->get('oauth_configs'),
         ];
     }
 
@@ -109,8 +110,7 @@ class rcmail_oauth
     public function is_enabled()
     {
         return !empty($this->options['provider']) &&
-            !empty($this->options['token_uri']) &&
-            !empty($this->options['client_id']);
+            !empty($this->options['token_uri']);
     }
 
     /**
@@ -168,15 +168,19 @@ class rcmail_oauth
      */
     public function login_redirect()
     {
-        if (!empty($this->options['auth_uri']) && !empty($this->options['client_id'])) {
+        $oauthConfigs = $this->options['oauth_configs'];
+        $host = $_GET['host'] ?? $_SESSION['oauth_host'] ?? array_keys($oauthConfigs)[0];
+        $oauthConfig = $oauthConfigs[$host];
+        if (!empty($this->options['auth_uri']) && !empty($oauthConfig['client_id'])) {
             // create a secret string
             $_SESSION['oauth_state'] = rcube_utils::random_bytes(12);
+            $_SESSION['oauth_host'] = $host;
 
             // compose full oauth login uri
             $delimiter = strpos($this->options['auth_uri'], '?') > 0 ? '&' : '?';
             $query = http_build_query([
                 'response_type' => 'code',
-                'client_id'     => $this->options['client_id'],
+                'client_id'     => $oauthConfig['client_id'],
                 'scope'         => $this->options['scope'],
                 'redirect_uri'  => $this->get_redirect_uri(),
                 'state'         => $_SESSION['oauth_state'],
@@ -207,9 +211,13 @@ class rcmail_oauth
      */
     public function request_access_token($auth_code, $state = null)
     {
+        $oauthConfigs = $this->options['oauth_configs'];
+        $host = $_SESSION['oauth_host'] ?? $_GET['hd'];
+        $oauthConfig = $oauthConfigs[$host] ?? [];
+
         $oauth_token_uri     = $this->options['token_uri'];
-        $oauth_client_id     = $this->options['client_id'];
-        $oauth_client_secret = $this->options['client_secret'];
+        $oauth_client_id     = $oauthConfig['client_id'];
+        $oauth_client_secret = $oauthConfig['client_secret'];
         $oauth_identity_uri  = $this->options['identity_uri'];
 
         if (!empty($oauth_token_uri) && !empty($oauth_client_secret)) {
@@ -340,7 +348,7 @@ class rcmail_oauth
             $this->last_error = "Missing required OAuth config options 'oauth_token_uri', 'oauth_client_id', 'oauth_client_secret'";
 
             rcube::raise_error([
-                    'message' => $this->last_error,
+                    'message' => $this->last_error . '\n' . 'host = ' . $_SESSION['oauth_host'],
                     'file'    => __FILE__,
                     'line'    => __LINE__,
                 ], true, false
@@ -363,8 +371,10 @@ class rcmail_oauth
     public function refresh_access_token(array $token)
     {
         $oauth_token_uri     = $this->options['token_uri'];
-        $oauth_client_id     = $this->options['client_id'];
-        $oauth_client_secret = $this->options['client_secret'];
+        
+        $oauthConfigs = $this->options['oauth_configs'];
+        $host = $_SESSION['oauth_host'] ?? $_GET['hd'];
+        $oauthConfig = $oauthConfigs[$host] ?? [];
 
         // send token request to get a real access token for the given auth code
         try {
@@ -374,8 +384,8 @@ class rcmail_oauth
             ]);
             $response = $client->post($oauth_token_uri, [
                     'form_params' => [
-                        'client_id'     => $oauth_client_id,
-                        'client_secret' => $oauth_client_secret,
+                        'client_id'     => $oauthConfig['client_id'],
+                        'client_secret' => $oauthConfig['client_secret'],
                         'refresh_token' => $this->rcmail->decrypt($token['refresh_token']),
                         'grant_type'    => 'refresh_token',
                     ],

@@ -334,6 +334,7 @@ class Claims_Record_Model extends Vtiger_Record_Model
       $case->setRecordFieldValues($this);
       $case->set('first_notice_of_loss', $this->get('date_of_first_notification'));
       $case->set('pre_litigation_status', null);
+      $case->set('otc_final_status', 'OPEN');
       $case->save();
 
       $this->set($isOutside ? 'outside_case' : 'case', $case->getId());

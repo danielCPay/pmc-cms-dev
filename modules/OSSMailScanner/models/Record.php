@@ -370,15 +370,20 @@ class OSSMailScanner_Record_Model extends Vtiger_Record_Model
 			if (count($uids)) {
 				$dbCommand = \App\Db::getInstance()->createCommand();
 				foreach ($uids as $uid) {
-					$mail = OSSMail_Record_Model::getMail($mbox, $uid);
-					self::executeActions($account, $mail, $folder);
-					unset($mail);
-					$dbCommand->update('vtiger_ossmailscanner_folders_uid', ['uid' => $uid], ['user_id' => $account['user_id'], 'folder' => $folder])->execute();
-					++$countEmails;
-					if (!self::updateScanHistory($scan_id, ['status' => '1', 'count' => $countEmails, 'action' => 'Action_CronMailScanner'])
-						|| $countEmails >= \App\Config::performance('NUMBERS_EMAILS_DOWNLOADED_DURING_ONE_SCANNING')) {
-						$break = true;
-						break;
+					try
+					{
+						$mail = OSSMail_Record_Model::getMail($mbox, $uid);
+						self::executeActions($account, $mail, $folder);
+						unset($mail);
+						$dbCommand->update('vtiger_ossmailscanner_folders_uid', ['uid' => $uid], ['user_id' => $account['user_id'], 'folder' => $folder])->execute();
+						++$countEmails;
+						if (!self::updateScanHistory($scan_id, ['status' => '1', 'count' => $countEmails, 'action' => 'Action_CronMailScanner'])
+							|| $countEmails >= \App\Config::performance('NUMBERS_EMAILS_DOWNLOADED_DURING_ONE_SCANNING')) {
+							$break = true;
+							break;
+						}
+					} catch (\Exception $e) {
+						\App\Log::error( "OSSmailScanner_Record_Model::mailScan:error fetching mail " . $account['user_id'] . "/$folder/$uid - " . $e->getMessage());
 					}
 				}
 			}

@@ -128,7 +128,7 @@ class Documents_activityReports_Cron extends \App\CronHandler
             return;
 
         \App\Log::warning( 'ActivityReports::process F-' . memory_get_usage( false) . " T-" . memory_get_usage( true));
-        \App\User::setCurrentUserId(\App\User::getUserIdByName('---'));
+        \App\User::setCurrentUserId(\App\User::getUserIdByFullName('System'));
         $bd = array();
         $this->znajdz_typ_dokumentu();
         $this->znajdz_brakujace_dokumenty( $bd);

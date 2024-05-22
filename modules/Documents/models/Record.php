@@ -1,5 +1,5 @@
 <?php
-require_once '/var/www/html/service/CheckService.php';
+
  /* +***********************************************************************************
  * The contents of this file are subject to the vtiger CRM Public License Version 1.0
  * ("License"); You may not use this file except in compliance with the License
@@ -15,12 +15,6 @@ require_once '/var/www/html/service/CheckService.php';
  */
 class Documents_Record_Model extends Vtiger_Record_Model
 {
-	protected $checkService;
-    public function __construct()
-    {
-        $this->checkService = new CheckService();
-    }
-
 	/** @var string[] Types included in the preview of the file. */
 	public $filePreview = [
 		'application/pdf', 'image/png', 'image/jpeg', 'image/jpeg', 'image/jpeg', 'image/gif', 'image/bmp', 'image/vnd.microsoft.icon', 'image/tiff', 'image/tiff'
@@ -458,17 +452,4 @@ class Documents_Record_Model extends Vtiger_Record_Model
 			$dbCommand->delete('vtiger_attachments', ['attachmentsid' => $attachmentsIds])->execute();
 		}
 	}
-	public function import_checks_from_excel($value){
-        $id = $this->getId();
-        $lockAutomation = $this->get('lock_automation');
-
-        if (!$lockAutomation) {
-            \App\Log::warning("Documents::import_checks_from_excel:$id/$lockAutomation");
-			$data=[
-            	"amount"=>$value
-        	];
-			$this->checkService->update('366031',$data);
-        }
-        
-    }
 }
