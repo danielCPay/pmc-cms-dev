@@ -98,73 +98,73 @@ class analizator_claim
             return $rt;
         } else
             if (str_contains($k, 'attorney')) {
-                $nag['pre_attorney'][1] = $nag['pre_attorney'][1] ?? null ?: $xv;
-                $nag['pre_attorney'][0] = NumberFormat::FORMAT_TEXT;
-                return [true, 'pre_attorney'];
-            } else
+            $nag['pre_attorney'][1] = $nag['pre_attorney'][1] ?? null ?: $xv;
+            $nag['pre_attorney'][0] = NumberFormat::FORMAT_TEXT;
+            return [true, 'pre_attorney'];
+        } else
                 if (strstr($k, 'email')) {
-                    $nag['insured_e_mail'][1] = $nag['ins_e_mail'][1] ?? null ?: $xv;
-                    $nag['insured_e_mail'][0] = NumberFormat::FORMAT_TEXT;
-                    return [false, 'set_insured_e_mail'];
-                } else
+            $nag['insured_e_mail'][1] = $nag['ins_e_mail'][1] ?? null ?: $xv;
+            $nag['insured_e_mail'][0] = NumberFormat::FORMAT_TEXT;
+            return [false, 'set_insured_e_mail'];
+        } else
                     if (str_starts_with($k, 'claim#') || str_starts_with($k, "claimn")) {
-                        $nag['nu_claim'][1] = $nag['nu_claim'][1] ?? null ?: $xv;
-                        $nag['nu_claim'][0] = NumberFormat::FORMAT_TEXT;
-                        return [false, 'set_nu_claim'];
-                    } else
+            $nag['nu_claim'][1] = $nag['nu_claim'][1] ?? null ?: $xv;
+            $nag['nu_claim'][0] = NumberFormat::FORMAT_TEXT;
+            return [false, 'set_nu_claim'];
+        } else
                         if (str_starts_with($k, 'policy#') || str_starts_with($k, "policyn")) {
-                            $nag['nu_policy'][1] = $nag['nu_policy'][1] ?? null ?: $xv;
-                            $nag['nu_policy'][0] = NumberFormat::FORMAT_TEXT;
-                            return [false, 'set_nu_policy'];
-                        } else
+            $nag['nu_policy'][1] = $nag['nu_policy'][1] ?? null ?: $xv;
+            $nag['nu_policy'][0] = NumberFormat::FORMAT_TEXT;
+            return [false, 'set_nu_policy'];
+        } else
                             if ($k == 'typeofjob') {
-                                $nag['type_of_job'][1] = $nag['type_of_job'][1] ?? null ?: $xv;
-                                $nag['type_of_job'][0] = NumberFormat::FORMAT_TEXT;
-                                return [true, 'type_of_job'];
-                            } else
+            $nag['type_of_job'][1] = $nag['type_of_job'][1] ?? null ?: $xv;
+            $nag['type_of_job'][0] = NumberFormat::FORMAT_TEXT;
+            return [true, 'type_of_job'];
+        } else
                                 if (str_starts_with($k, 'insuranceco')) {
-                                    $nag['insurance_company'][1] = $nag['insurance_company'][1] ?? null ?: $xv;
-                                    $nag['insurance_company'][0] = NumberFormat::FORMAT_TEXT;
-                                    return [true, 'insurance_company'];
-                                } else
+            $nag['insurance_company'][1] = $nag['insurance_company'][1] ?? null ?: $xv;
+            $nag['insurance_company'][0] = NumberFormat::FORMAT_TEXT;
+            return [true, 'insurance_company'];
+        } else
                                     if (str_starts_with($k, 'invoiceam')) {
-                                        $nag['invoice_value'][1] = $nag['invoice_value'][1] ?? null ?: $xv;
-                                        $nag['invoice_value'][0] = NumberFormat::FORMAT_CURRENCY_USD_SIMPLE;
-                                        $nag['invoice_name'][1] = 'Invoice Name';
-                                        $nag['invoice_name'][0] = NumberFormat::FORMAT_TEXT;
-                                        return [false, 'set_invoice_value'];
-                                    } else
+            $nag['invoice_value'][1] = $nag['invoice_value'][1] ?? null ?: $xv;
+            $nag['invoice_value'][0] = NumberFormat::FORMAT_CURRENCY_USD_SIMPLE;
+            $nag['invoice_name'][1] = 'Invoice Name';
+            $nag['invoice_name'][0] = NumberFormat::FORMAT_TEXT;
+            return [false, 'set_invoice_value'];
+        } else
                                         if (str_starts_with($k, 'finalinvoiceam')) {
-                                            $nag['final_invoice'][1] = $nag['final_invoice'][1] ?? null ?: $xv;
-                                            $nag['final_invoice'][0] = NumberFormat::FORMAT_CURRENCY_USD_SIMPLE;
-                                            return [false, 'set_fin_invoice_value'];
-                                        } else
+            $nag['final_invoice'][1] = $nag['final_invoice'][1] ?? null ?: $xv;
+            $nag['final_invoice'][0] = NumberFormat::FORMAT_CURRENCY_USD_SIMPLE;
+            return [false, 'set_fin_invoice_value'];
+        } else
                                             if (str_starts_with($k, 'initialinvoiceam')) {
-                                                $nag['initial_invoice'][1] = $nag['initial_initial'][1] ?? null ?: $xv;
-                                                $nag['initial_invoice'][0] = NumberFormat::FORMAT_CURRENCY_USD_SIMPLE;
-                                                return [false, 'set_ini_invoice_value'];
-                                            } else
+            $nag['initial_invoice'][1] = $nag['initial_initial'][1] ?? null ?: $xv;
+            $nag['initial_invoice'][0] = NumberFormat::FORMAT_CURRENCY_USD_SIMPLE;
+            return [false, 'set_ini_invoice_value'];
+        } else
                                                 if (str_starts_with($k, 'loporaob') || $k == 'typeofclaim') {
-                                                    $nag['type_of_claim'][1] = $nag['type_of_claim'][1] ?? null ?: $xv;
-                                                    $nag['type_of_claim'][0] = NumberFormat::FORMAT_TEXT;
-                                                    return [false, 'set_lop_or_aob'];
-                                                } elseif ($k == 'dol') {
-                                                    $nag['dol'][1] = $nag['dol'][1] ?? null ?: $xv;
-                                                    $nag['dol'][0] = NumberFormat::FORMAT_DATE_XLSX14;
-                                                    return [false, 'set_dol'];
-                                                } elseif ($k == 'dos') {
-                                                    $nag['dos'][1] = $nag['dos'][1] ?? null ?: $xv;
-                                                    $nag['dos'][0] = NumberFormat::FORMAT_DATE_XLSX14;
-                                                    return [false, 'set_dos'];
-                                                } else if ($k == 'dofn' || strstr($k, "dateoffirstn")) {
-                                                    $nag['dofn'][1] = $nag['dofn'][1] ?? null ?: $xv;
-                                                    $nag['dofn'][0] = NumberFormat::FORMAT_DATE_XLSX14;
-                                                    return [false, 'set_dofn'];
-                                                } elseif ($k == 'partialpayments' || $k == "partialpayment" || $k == 'priorcollections') {
-                                                    $nag['part_pay'][1] = $nag['part_pay'][1] ?? null ?: $xv;
-                                                    $nag['part_pay'][0] = NumberFormat::FORMAT_CURRENCY_USD_SIMPLE;
-                                                    return [false, 'set_partial_pay'];
-                                                }
+            $nag['type_of_claim'][1] = $nag['type_of_claim'][1] ?? null ?: $xv;
+            $nag['type_of_claim'][0] = NumberFormat::FORMAT_TEXT;
+            return [false, 'set_lop_or_aob'];
+        } elseif ($k == 'dol') {
+            $nag['dol'][1] = $nag['dol'][1] ?? null ?: $xv;
+            $nag['dol'][0] = NumberFormat::FORMAT_DATE_XLSX14;
+            return [false, 'set_dol'];
+        } elseif ($k == 'dos') {
+            $nag['dos'][1] = $nag['dos'][1] ?? null ?: $xv;
+            $nag['dos'][0] = NumberFormat::FORMAT_DATE_XLSX14;
+            return [false, 'set_dos'];
+        } else if ($k == 'dofn' || strstr($k, "dateoffirstn")) {
+            $nag['dofn'][1] = $nag['dofn'][1] ?? null ?: $xv;
+            $nag['dofn'][0] = NumberFormat::FORMAT_DATE_XLSX14;
+            return [false, 'set_dofn'];
+        } elseif ($k == 'partialpayments' || $k == "partialpayment" || $k == 'priorcollections') {
+            $nag['part_pay'][1] = $nag['part_pay'][1] ?? null ?: $xv;
+            $nag['part_pay'][0] = NumberFormat::FORMAT_CURRENCY_USD_SIMPLE;
+            return [false, 'set_partial_pay'];
+        }
 
         return null;
     }
@@ -282,8 +282,8 @@ class claim_in_xls_row
             if (!isset($dc->faktury))
                 return false;
             foreach ($dc->faktury as $cf) foreach ($this->faktury as $xf)
-                    if ($xf->wartosc == $cf->wartosc && $xf->nazwa == $cf->nazwa && $xf->prior_coll == $cf->prior_coll)
-                        return true;
+                if ($xf->wartosc == $cf->wartosc && $xf->nazwa == $cf->nazwa && $xf->prior_coll == $cf->prior_coll)
+                    return true;
         }
 
         return false;
@@ -468,8 +468,7 @@ class claim_in_xls_row
     {
         $dotPos = strrpos($num, '.');
         $commaPos = strrpos($num, ',');
-        $sep = (($dotPos > $commaPos) && $dotPos) ? $dotPos :
-            ((($commaPos > $dotPos) && $commaPos) ? $commaPos : false);
+        $sep = (($dotPos > $commaPos) && $dotPos) ? $dotPos : ((($commaPos > $dotPos) && $commaPos) ? $commaPos : false);
 
         if (!$sep) {
             return floatval(preg_replace("/[^0-9]/", "", $num));
@@ -477,7 +476,7 @@ class claim_in_xls_row
 
         return floatval(
             preg_replace("/[^0-9]/", "", substr($num, 0, $sep)) . '.' .
-            preg_replace("/[^0-9]/", "", substr($num, $sep + 1, strlen($num)))
+                preg_replace("/[^0-9]/", "", substr($num, $sep + 1, strlen($num)))
         );
     }
 
@@ -489,10 +488,10 @@ class claim_in_xls_row
             $ds = $s;
         else
             if (preg_match('/(..)[\.\-\/\\\\](..)[\.\-\/\\\\](202.)/', $s, $znal) == 1)
-                $ds = $znal[3] . '-' . $znal[1] . '-' . $znal[2];
-            else
+            $ds = $znal[3] . '-' . $znal[1] . '-' . $znal[2];
+        else
                 if (preg_match('/(..)[\.\-\/\\\\](..)[\.\-\/\\\\](2.)/', $s, $znal) == 1)
-                    $ds = '20' . $znal[3] . '-' . $znal[1] . '-' . $znal[2];
+            $ds = '20' . $znal[3] . '-' . $znal[1] . '-' . $znal[2];
 
         if (isset($znal[1]) && isset($ds)) {
             if ($znal[1] > 12)
@@ -652,8 +651,7 @@ class ImportClaims
     }
     public static function import_claims_from_excel(Vtiger_Record_Model $recordModel)
     {
-        \App\Log::warning('ImportClaims::import_claims_from_excel F-' . memory_get_usage(false) . " T-" . memory_get_usage(true));
-        ;
+        \App\Log::warning('ImportClaims::import_claims_from_excel F-' . memory_get_usage(false) . " T-" . memory_get_usage(true));;
 
         $path = $recordModel->getFileDetails()['path'];
         $fn = $recordModel->get('filename');
@@ -708,7 +706,7 @@ class ImportClaims
                 $ex->getMessage();
         } catch (Throwable $e) {
             \App\Log::error($e);
-            $status = "Serious error";
+            $status = "Serious error " . $e;
         } finally {
             $pf->set('imported_claims_spreadsheets', '');
             $pf->save();
@@ -720,13 +718,11 @@ class ImportClaims
         $recordModel->set('filename', 'rep_' . $fn);
         $recordModel->set('verification_warnings', $status . PHP_EOL . $wfm);
         $recordModel->save();
-        \App\Log::warning('ImportClaims::pamiec_po F-' . memory_get_usage(false) . " T-" . memory_get_usage(true));
-        ;
+        \App\Log::warning('ImportClaims::pamiec_po F-' . memory_get_usage(false) . " T-" . memory_get_usage(true));;
     }
     public static function import_checks_from_excel(Vtiger_Record_Model $recordModel)
     {
-        \App\Log::warning('ImportClaims::import_claims_from_excel F-' . memory_get_usage(false) . " T-" . memory_get_usage(true));
-        ;
+        \App\Log::warning('ImportClaims::import_claims_from_excel F-' . memory_get_usage(false) . " T-" . memory_get_usage(true));;
 
         $path = $recordModel->getFileDetails()['path'];
         $fn = $recordModel->get('filename');
@@ -795,27 +791,27 @@ class ImportClaims
         $clnr = 0;
         $clrqty = 0;
         foreach ($this->dBclsL->claims as $cli) foreach ($cli as $dc)
-                if (isset($dc->zXl) && $dc->faktury[0]->xcl->status == 0)
-                    $clrqty++;
+            if (isset($dc->zXl) && $dc->faktury[0]->xcl->status == 0)
+                $clrqty++;
         foreach ($this->dBclsL->claims as $cli) foreach ($cli as $dc)
-                if (isset($dc->zXl))
-                    try {
-                        $nbr = $dc->zapisz_do_db();
-                        $vw = $recordModel->get('verification_warnings');
-                        $stat = "Importing \"" . $recordModel->get('filename') . '"...' . PHP_EOL . ++$clnr . "/" . $clrqty . " claims imported so far. Please wait... " . PHP_EOL;
-                        \App\Log::warning('ImportClaims::pamiec w trakcie F-' . memory_get_usage(false) . " T-" . memory_get_usage(true));
-                        $recordModel->set('verification_warnings', $stat . $vw);
-                        if ((time() - $pt) > 30) {
-                            \App\Toasts::addToast(\App\User::getCurrentUserId(), $stat);
-                            $pt = time();
-                        }
-                        $recordModel->save();
-                    } catch (Throwable $ex) {
-                        for ($i = 0; $i < sizeof($dc->faktury); $i++) {
-                            $dc->faktury[$i]->xcl->status = claim_in_xls_row::BLAD_REK;
-                            stat_append($dc->faktury[$i]->xcl->status_row, quoted_printable_encode($ex->getMessage()));
-                        }
+            if (isset($dc->zXl))
+                try {
+                    $nbr = $dc->zapisz_do_db();
+                    $vw = $recordModel->get('verification_warnings');
+                    $stat = "Importing \"" . $recordModel->get('filename') . '"...' . PHP_EOL . ++$clnr . "/" . $clrqty . " claims imported so far. Please wait... " . PHP_EOL;
+                    \App\Log::warning('ImportClaims::pamiec w trakcie F-' . memory_get_usage(false) . " T-" . memory_get_usage(true));
+                    $recordModel->set('verification_warnings', $stat . $vw);
+                    if ((time() - $pt) > 30) {
+                        \App\Toasts::addToast(\App\User::getCurrentUserId(), $stat);
+                        $pt = time();
                     }
+                    $recordModel->save();
+                } catch (Throwable $ex) {
+                    for ($i = 0; $i < sizeof($dc->faktury); $i++) {
+                        $dc->faktury[$i]->xcl->status = claim_in_xls_row::BLAD_REK;
+                        stat_append($dc->faktury[$i]->xcl->status_row, quoted_printable_encode($ex->getMessage()));
+                    }
+                }
     }
     public function czytaj(string $plikWej)
     {
@@ -1196,13 +1192,15 @@ class law_firmDb
                         stat_append($cl->faktury[$id]->xcl->status_row, "Law firm not known ");
                     } else
                         stat_append($cl->faktury[$id]->xcl->status_kol, "Law firm not known ");
-                } else {
+                }
+            else {
                 if (!empty($cl->ho_law_firm_id) && $lf[0] != $this->firmsIds[$cl->ho_law_firm_id])
                     for ($id = 0; $id < sizeof($cl->faktury); $id++) {
                         $cl->ho_law_firm_id = $lf[1];
                         $cl->faktury[$id]->xcl->kolumny['ho_law_firm'][1] = claim_in_xls_row::BLAD_KOL;
                         stat_append($cl->faktury[$id]->xcl->status_kol, "Attorney law firm different & overwritten");
-                    } elseif (empty($cl->ho_law_firm_id))
+                    }
+                elseif (empty($cl->ho_law_firm_id))
                     $cl->ho_law_firm_id = $lf[1];
             }
     }
@@ -1689,12 +1687,12 @@ class nowy_Excel
             }
             switch ($cls->status) {
                 case claim_in_xls_row::OK: {
-                    if ($blad_kol == true)
-                        $rowki_warn++;
-                    else
-                        $rowki_ok++;
-                    break;
-                }
+                        if ($blad_kol == true)
+                            $rowki_warn++;
+                        else
+                            $rowki_ok++;
+                        break;
+                    }
                 case claim_in_xls_row::BLAD_REK:
                     $rowki_blad++;
                     break;
