@@ -658,8 +658,7 @@ class ImportClaims
         $at = $recordModel->getFileDetails()['attachmentsid'];
        
         $pf = Vtiger_Record_Model::getInstanceById(\App\Request::_get('portfolio'));
-        /*var_dump("Income import_claims_from_excel" . $pf);
-        exit();*/
+      
         if (empty($pf)) {
             $recordModel->set('verification_warnings', "Nothing imported - the workflow must be called from Portfolios module");
             $recordModel->save();
@@ -703,13 +702,11 @@ class ImportClaims
                 $wfm = $ex->getMessage();
                 throw $ex;
             }
-        } catch (AttorneyException $ex) {
-            var_dump($ex);
+        } catch (AttorneyException $ex) {           
             \App\Log::error($ex);
             $status = "HO Critical Error at row " . $ex->getCode() . PHP_EOL .
                 $ex->getMessage();
-        } catch (Throwable $e) {
-            var_dump($e);
+        } catch (Throwable $e) {           
             \App\Log::error($e);
             $status = "Serious error " . $e;
         } finally {
