@@ -1607,7 +1607,7 @@ class nowy_Excel
         else {
             $this->ws->insertNewRowBefore(1, count($this->rowki));
 
-            //$this->ustawNaglowki();
+            $this->ustawNaglowki();
             $r = $this->ustawRowki();
         }
 
