@@ -652,20 +652,19 @@ class ImportClaims
     public static function import_claims_from_excel(Vtiger_Record_Model $recordModel)
     {
         \App\Log::warning('ImportClaims::import_claims_from_excel F-' . memory_get_usage(false) . " T-" . memory_get_usage(true));;
-        
+
         $path = $recordModel->getFileDetails()['path'];
         $fn = $recordModel->get('filename');
         $at = $recordModel->getFileDetails()['attachmentsid'];
 
-        var_dump("Income import_claims_from_excel");
-        exit();
-        
         $pf = Vtiger_Record_Model::getInstanceById(\App\Request::_get('portfolio'));
         if (empty($pf)) {
             $recordModel->set('verification_warnings', "Nothing imported - the workflow must be called from Portfolios module");
             $recordModel->save();
             return;
         }
+        var_dump("Income import_claims_from_excel");
+        exit();
         $if = $pf->get('imported_claims_spreadsheets');
         if (!empty($if)) {
             \App\Log::warning('ImportClaims::already_started : ' . $fn);
