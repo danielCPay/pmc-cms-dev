@@ -701,10 +701,12 @@ class ImportClaims
                 throw $ex;
             }
         } catch (AttorneyException $ex) {
+            var_dump($ex);
             \App\Log::error($ex);
             $status = "HO Critical Error at row " . $ex->getCode() . PHP_EOL .
                 $ex->getMessage();
         } catch (Throwable $e) {
+            var_dump($e);
             \App\Log::error($e);
             $status = "Serious error " . $e;
         } finally {
