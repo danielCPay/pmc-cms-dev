@@ -1629,10 +1629,11 @@ class nowy_Excel
         $coord = 'A1:' . $alphabet[sizeof($this->naglowki)] . '1';
         $coordP = $alphabet[sizeof($this->naglowki) + 1] . '1:' . $alphabet[sizeof($this->naglowki) + sizeof(ImportClaims::$pusteNaglowki)] . '1';
 
-        /*$this->ws->getStyle($coord)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('FF00B0F0');
+        $this->ws->getStyle($coord)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('FF00B0F0');
         $this->ws->getStyle($coord)->getAlignment()->setHorizontal('center');
         $this->ws->getStyle($coordP)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('FFC0C0C0');
-        $this->ws->getStyle($coordP)->getAlignment()->setHorizontal('center');*/
+        $this->ws->getStyle($coordP)->getAlignment()->setHorizontal('center');
+
         $k = 2;
 
         $al = 1;
