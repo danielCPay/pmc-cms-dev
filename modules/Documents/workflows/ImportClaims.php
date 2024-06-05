@@ -785,8 +785,8 @@ class ImportClaims
         $isHO = false;
         /** @var claim_in_xls_row $xc */
         foreach ($this->xlClaims as $xc) {
-            // if ($xc->status == claim_in_xls_row::BLAD_REK || $xc->status == claim_in_xls_row::TERMINATED)
-            //     continue;
+            if ($xc->status == claim_in_xls_row::BLAD_REK || $xc->status == claim_in_xls_row::TERMINATED)
+                continue;
 
             $zlc = $claims[$xc->nu_claim] ?? $this->dBclsL->claims[$xc->nu_claim] ?? null;
             unset($c);
@@ -941,7 +941,8 @@ class ImportClaims
             }
             $c->sprawdz_obowiazkowe();
             $this->xlClaims[] = $c;
-        }       
+        }
+        var_dump($this->xlClaims);
     }
 }
 class insured_in_db
