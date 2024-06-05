@@ -763,7 +763,7 @@ class ImportClaims
             $status = "HO Critical Error at row " . $ex->getCode() . PHP_EOL .
                 $ex->getMessage();
         } catch (Throwable $e) {
-            \App\Log::error($e);            
+            \App\Log::error($e);
             $status = "Serious error";
         } finally {
             $pf->set('imported_claims_spreadsheets', '');
@@ -856,11 +856,11 @@ class ImportClaims
         $clnr = 0;
         $clrqty = 0;
         foreach ($this->dBclsL->claims as $cli)
-            var_dump($cli);       
-        foreach ($cli as $dc)
 
-            if (isset($dc->zXl) && $dc->faktury[0]->xcl->status == 0)
-                $clrqty++;
+            foreach ($cli as $dc)
+
+                if (isset($dc->zXl) && $dc->faktury[0]->xcl->status == 0)
+                    $clrqty++;
         foreach ($this->dBclsL->claims as $cli)
             foreach ($cli as $dc)
                 if (isset($dc->zXl))
@@ -942,6 +942,7 @@ class ImportClaims
             $c->sprawdz_obowiazkowe();
             $this->xlClaims[] = $c;
         }
+        var_dump($this->xlClaims);
     }
 }
 class insured_in_db
