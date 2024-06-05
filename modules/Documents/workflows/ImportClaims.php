@@ -858,11 +858,12 @@ class ImportClaims
         $clnr = 0;
         $clrqty = 0;
         foreach ($this->dBclsL->claims as $cli)
-            foreach ($cli as $dc)
-                var_dump($dc->faktury[0]);
+            var_dump($cli);
         exit();
-        if (isset($dc->zXl) && $dc->faktury[0]->xcl->status == 0)
-            $clrqty++;
+        foreach ($cli as $dc)
+
+            if (isset($dc->zXl) && $dc->faktury[0]->xcl->status == 0)
+                $clrqty++;
         foreach ($this->dBclsL->claims as $cli)
             foreach ($cli as $dc)
                 if (isset($dc->zXl))
