@@ -804,6 +804,8 @@ class ImportClaims
        catch ( Throwable $e)
        {
            \App\Log::error( $e);
+           var_dump($e);
+           exit();
            $status = "Serious error";
        }
        finally
