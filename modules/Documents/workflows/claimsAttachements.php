@@ -107,7 +107,7 @@ class claimsAttachements
             $url = claimsAttachements::znormalizujLinkGoogle( $url);
 
         $plik = pobierz_zalacznik::pobierz($url);
-        if ( !empty( $plik[0]))
+        if ( !empty( $plik[0]) && $plik[0] !== 'ok')
             return $plik;
 
         $res = tempnam( "/tmp", "dropbox");
