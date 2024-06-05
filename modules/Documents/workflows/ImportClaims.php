@@ -2029,7 +2029,7 @@ class nowy_Excel
 
         $spreadsheet->addExternalSheet( clone $this->wej_spreadsheet->setActiveSheetIndex( 0));
 
-        $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
+        $writer = IOFactory::createWriter($spreadsheet, 'xlsx');
         $writer->save( $wynik);
         $spreadsheet->disconnectWorksheets();
         unset( $spreadsheet);
