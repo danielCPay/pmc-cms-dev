@@ -152,7 +152,6 @@ class ImportChecks
 
 			$checks = [];
 			$rowIterator = $workSheet->getRowIterator($rowsChecked + 1);
-			$empty_row = 0;
 			foreach ($rowIterator as $row)
 			{
 				$check = [];
@@ -167,17 +166,7 @@ class ImportChecks
 
 					$check[$column["fieldName"]] = $cellValue;
 				}
-				if ( !empty( $check[ 'check_number']) && !empty( $check[ 'amount']) && !empty( $check[ 'claim_number']))
-				{
-					$checks[] = $check;
-					$empty_row = 0;
-				}
-				else
-					$empty_row++;
-
-				if ( $empty_row == 51)
-					break;
-
+				$checks[] = $check;
 			}
 		}
 		catch (Exception $ex)

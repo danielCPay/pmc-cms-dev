@@ -464,14 +464,12 @@ class claim_in_xls_row
             $this->kolumny['ho_law_firm'][1] = self::BLAD_KOL;
             stat_append( $this->status_row, "Empty both HO PA Firm and HO Attorney Firm");
         }
-        /*
         if ( ( !empty($this->ho_law_firm) && !empty($this->ho_pa_firm)) ) {
             $this->status = self::BLAD_REK;
             $this->kolumny['ho_pa_firm'][1] = self::BLAD_KOL;
             $this->kolumny['ho_law_firm'][1] = self::BLAD_KOL;
             stat_append( $this->status_row, "Both HO PA Firm and HO Attorney Firm are set");
         }
-        */
         if ( empty( $this->pre_attorney))
         {
             $this->status = self::BLAD_REK;
@@ -543,6 +541,8 @@ class claim_in_xls_row
 
     function    ustaw_date( String $s) : ?string
     {
+        \App\Log::warning("ustaw_date($s)");
+
         unset($ds);
         unset($znal);
         if ( preg_match( '/(202\d)[\.\-\/\\\\](\d{1,2})[\.\-\/\\\\](\d{1,2})/',$s, $znal) == 1)
@@ -554,6 +554,7 @@ class claim_in_xls_row
         if ( preg_match( '/(\d{1,2})[\.\-\/\\\\](\d{1,2})[\.\-\/\\\\](2\d)/',$s, $znal) == 1)
             $ds = '20' . $znal[3] . '-' . str_pad( $znal[1], 2, '0', STR_PAD_LEFT) . '-' . str_pad( $znal[2], 2, '0', STR_PAD_LEFT);
 
+        \App\Log::warning(var_export([$ds, $znal], true));
         if ( isset( $znal[1]) && isset( $ds))
         {
             if ($znal[1] > 12)
@@ -562,6 +563,7 @@ class claim_in_xls_row
             return $ds;
         }
 
+        \App\Log::warning(var_export([floatval($s)], true));
         if ( floatval( $s) > 10)
         {
             $myDateTime = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject( $s);
@@ -781,16 +783,15 @@ class ImportClaims
            $status = $w->zapisz_Xlsx( $path . $at);
            $m->spreadsheet->disconnectWorksheets();
            $wfs = new \VTWorkflowManager();
-           if ($nums[0] > 0) 
-            $workflowHO = $wfs->retrieveByName('CREATE_HO_ATTORNEY_CONFIRMATION_REQUESTS', 'Portfolios');
-	   if ( $nums[1] > 0)
-            $workflowPA = $wfs->retrieveByName('CREATE_PUBLIC_ADJUSTER_CONFIRMATION_REQUESTS', 'Portfolios');
+           if ($nums[0] > 0) {
+            $workflow = $wfs->retrieveByName('CREATE_HO_ATTORNEY_CONFIRMATION_REQUESTS', 'Portfolios');
+           } else {
+            $workflow = $wfs->retrieveByName('CREATE_PUBLIC_ADJUSTER_CONFIRMATION_REQUESTS', 'Portfolios');
+           }
            try
            {
-               if (isset($workflowHO))
-                   $workflowHO->performTasks($pf);
-               if (isset($workflowPA))
-                   $workflowPA->performTasks($pf);
+               if (isset($workflow))
+                   $workflow->performTasks($pf);
            }
            catch ( Exception $ex)
            {
@@ -826,8 +827,8 @@ class ImportClaims
     public function utworz_nowe_claimy_w_pam()
     {
         $claims = [];
-     //   $isPA = false;
-     //   $isHO = false;
+        $isPA = false;
+        $isHO = false;
         /** @var claim_in_xls_row $xc */
         foreach ($this->xlClaims as $xc)
         {
@@ -863,7 +864,6 @@ class ImportClaims
 
             if ( !isset( $c))
             {
-                /*
                 if (!empty($xc->ho_law_firm)) {
                     if ( $isPA) {
                         $xc->status = claim_in_xls_row::BLAD_REK;
@@ -883,7 +883,6 @@ class ImportClaims
 
                     $isPA = true;
                 }
-                */
 
                 $nc = new claim_in_db();
                 $nc->init_zXl($xc);
