@@ -140,6 +140,11 @@ class analizator_claim
             $nag['insurance_company'][0] = NumberFormat::FORMAT_TEXT;
             return [true, 'insurance_company'];
         } else
+        if (str_starts_with($k, 'primecontr')) {
+            $nag['prime_contractor_name'][1] = $nag['prime_contractor_name'][1] ?? null ?: $xv;
+            $nag['prime_contractor_name'][0] = NumberFormat::FORMAT_TEXT;
+            return [true, 'prime_contractor_name'];
+        } else
             if (str_starts_with($k, 'invoiceam')) {
             $nag['invoice_value'][1] = $nag['invoice_value'][1] ?? null ?: $xv;
             $nag['invoice_value'][0] = NumberFormat::FORMAT_CURRENCY_USD_SIMPLE;
@@ -241,6 +246,7 @@ class claim_in_xls_row
     public ?string $insured_name;
     public ?string $type_of_job;
     public ?string $insurance_company;
+    public ?string $prime_contractor_name;
     public ?string $ho_pa_firm;
     public ?string $ho_law_firm;
     public ?string $pre_attorney;
@@ -331,6 +337,10 @@ class claim_in_xls_row
             stat_append($this->status_kol, "Diff. " . ImportClaims::$naglowki['insurance_company'][1] . " with existing " . $cl->insurance_company);
             $this->kolumny['insurance_company'][1] = self::BLAD_KOL;
         }
+        if (strtolower($this->prime_contractor_name ?? null) != strtolower($cl->prime_contractor_name)) {
+            stat_append($this->status_kol, "Diff. " . ImportClaims::$naglowki['prime_contractor_name'][1] . " with existing " . $cl->prime_contractor_name);
+            $this->kolumny['prime_contractor_name'][1] = self::BLAD_KOL;
+        }
         if (($this->ho_law_firm ?? null) != $cl->ho_law_firm) {
             stat_append($this->status_kol, "Diff. HO Attorney firm with existing " . $cl->ho_law_firm);
             $this->kolumny['ho_law_firm'][1] = self::BLAD_KOL;
@@ -393,6 +403,7 @@ class claim_in_xls_row
         $this->kolumny['mortgage_loan_number'][0] = $this->mortgage_loan_number ?? null;
         $this->kolumny['mortgage_contact_info'][0] = $this->mortgage_contact_info ?? null;
         $this->kolumny['monday_item_id'][0] = $this->monday_item_id ?? null;
+        $this->kolumny['prime_contractor_name'][0] = $this->prime_contractor_name ?? null;
         $this->kolumny['type_of_loss'][0] = $this->type_of_loss ?? null;
 
         if (isset($this->faktury))
@@ -479,6 +490,11 @@ class claim_in_xls_row
             $this->status = self::BLAD_REK;
             $this->kolumny['insurance_company'][1] = self::BLAD_KOL;
             stat_append($this->status_row, "Empty " . (ImportClaims::$naglowki['insurance_company'][1] ?? "Insurance co."));
+        }
+        if (empty($this->prime_contractor_name)) {
+            $this->status = self::BLAD_REK;
+            $this->kolumny['prime_contractor_name'][1] = self::BLAD_KOL;
+            stat_append($this->status_row, "Empty " . (ImportClaims::$naglowki['prime_contractor_name'][1] ?? "Prime contr."));
         }
         if (empty($this->faktury)) {
             $this->status = self::BLAD_REK;
@@ -657,6 +673,7 @@ class ImportClaims
     public array $xlClaims;
     static public insuredsDb $dBinsL;
     static public insurance_coDb $dBincoL;
+    static public contractors_Db $dBcontrcoL;
     static public law_firmDb $dBlawFL;
     static public attorneysDb $dBattL;
     static public adjustersDb $dBadjL;
@@ -682,6 +699,8 @@ class ImportClaims
         self::$dBinsL->zaladuj_ins();
         self::$dBincoL = new insurance_coDb();
         self::$dBincoL->zaladuj();
+        self::$dBcontrcoL = new contractors_Db();
+        self::$dBcontrcoL->zaladuj();
         self::$dBlawFL = new law_firmDb();
         self::$dBlawFL->zaladuj();
         self::$dBattL = new attorneysDb();
@@ -1569,6 +1588,33 @@ class insurance_coDb
         $cl->insurance_company_id = $i;
     }
 }
+class contractors_Db
+{
+    public array $contractors;
+
+    function zaladuj()
+    {
+        $qg = new \App\QueryGenerator('Contractors');
+        $qg->setField(['id', 'contractorname']);
+        $q = $qg->createQuery();
+
+        $rez = $q->all();
+        $this->contractors = [];
+        foreach ($rez as $pos)
+            $this->contractors[strtolower($pos['prime_contractor_name'])] = $pos['id'];
+    }
+    function sprawdz($cl)
+    {
+        $i = $this->contractors[strtolower($cl->prime_contractor_name)] ?? null;
+        if (!isset($i)) {
+            $cl->faktury[0]->xcl->kolumny['prime_contractor_name'][1] = claim_in_xls_row::BLAD_KOL;
+            stat_append($cl->faktury[0]->xcl->status_kol, "Prime Contractor Name not known ");
+            return;
+        }
+
+        $cl->contractor_id = $i;
+    }
+}
 class adjustersDb
 {
     public array $adjusterIds;
@@ -1717,6 +1763,7 @@ class claim_in_db
     public ?string $date_of_fn;
     public ?string $date_of_loss;
     public ?string $insurance_company;
+    public ?string $prime_contractor_name;
     public ?string $ho_law_firm;
     public ?string $ho_pa_firm;
     public ?float $prior_coll;
@@ -1730,6 +1777,7 @@ class claim_in_db
     public ?string $mortgage_contact_info;
     public ?string $monday_item_id;
     public int $insurance_company_id;
+    public int $contractor_id;
     public int $ho_law_firm_id;
     public int $ho_attorney_id;
     public int $public_adjuster_id;
@@ -1741,6 +1789,7 @@ class claim_in_db
     {
         $this->claim_id = $pos['id'];
         $this->insurance_company = $pos['insurance_companyInsuranceCompaniesinsurance_company_name'];
+        $this->prime_contractor_name = $pos['prime_contractor_nameContractorscontractorname'];
         $this->ho_law_firm = $pos['ho_law_firmLawFirmslaw_firm_name'];
         $this->pre_attorney = $pos['pre_attorney_name'];
         $this->policy_number = $pos['policy_number'];
@@ -1759,7 +1808,7 @@ class claim_in_db
         $this->insured->name = claim_in_xls_row::normalizuj_name(strtolower($pos['insuredInsuredsinsured_name']));
         $this->insured->street = $pos['insuredInsuredsstreet'];
         $this->ho_attorney_id = $pos['ho_attorney'];
-        $this->public_adjuster_id = $pos['public_adjuster'];      
+        $this->public_adjuster_id = $pos['public_adjuster'];
     }
     public function init_zXl(claim_in_xls_row &$xc)
     {
@@ -1768,6 +1817,7 @@ class claim_in_db
         $this->insured = new insured_in_db();
         $this->insured->ustaw_z_xl($xc);
         $this->insurance_company = $xc->insurance_company ?? null;
+        $this->prime_contractor_name = $xc->prime_contractor_name ?? null;
         $this->ho_law_firm = $xc->ho_law_firm ?? null;
         $this->ho_pa_firm = $xc->ho_pa_firm ?? null;
         $this->policy_number = $xc->nu_policy ?? null;
@@ -1792,6 +1842,7 @@ class claim_in_db
     {
         ImportClaims::$dBinsL->sprawdz_lub_stworz($this);
         ImportClaims::$dBincoL->sprawdz($this);
+        ImportClaims::$dBcontrcoL->sprawdz($this);
         ImportClaims::$dBattL->sprawdz($this);
         ImportClaims::$dBadjL->sprawdz($this);
         ImportClaims::$dBlawFL->sprawdz($this);
@@ -1816,7 +1867,7 @@ class claim_in_db
         $cldb->set('date_of_first_notification', $this->date_of_fn);
         $cldb->set('pre_court_case_number', $this->pre_ccn);
         $cldb->set('pre_county', $this->pre_county);
-        $cldb->set('pre_attorney_name', $this->pre_attorney);      
+        $cldb->set('pre_attorney_name', $this->pre_attorney);
         ImportClaims::$dBattL->set_dtp_attorney($this->faktury, $cldb, $this->pre_attorney);
         $cldb->set('insured', $this->insured->id);
         $cldb->set('provider', ImportClaims::$provider);
@@ -1837,6 +1888,8 @@ class claim_in_db
 
         if (isset($this->insurance_company_id))
             $cldb->set('insurance_company', $this->insurance_company_id);
+        if (isset($this->contractor_id))
+            $cldb->set('contractorname', $this->contractor_id);
         if (isset($this->ho_law_firm_id))
             $cldb->set('ho_law_firm', $this->ho_law_firm_id);
         if (isset($this->ho_attorney_id))
@@ -1873,6 +1926,7 @@ class claimsDb
         // $qg->setCustomColumn( [ 'u_yf_claimedinvoices.value', 'u_yf_claimedinvoices.claimed_invoice_name'] );
 
         $qg->addRelatedField(['sourceField' => 'insurance_company', 'relatedModule' => 'InsuranceCompanies', 'relatedField' => 'insurance_company_name']);
+        $qg->addRelatedField(['sourceField' => 'prime_contractor_name', 'relatedModule' => 'Contractors', 'relatedField' => 'contractorname']);
         $qg->addRelatedField(['sourceField' => 'ho_law_firm', 'relatedModule' => 'LawFirms', 'relatedField' => 'law_firm_name']);
         $qg->addRelatedField(['sourceField' => 'insured', 'relatedModule' => 'Insureds', 'relatedField' => 'e_mail',]);
         $qg->addRelatedField(['sourceField' => 'insured', 'relatedModule' => 'Insureds', 'relatedField' => 'insured_name',]);
