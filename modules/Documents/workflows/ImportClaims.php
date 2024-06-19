@@ -102,7 +102,7 @@ class analizator_claim
             return $rt;
         } elseif ($rt = self::testfield($k, $nag, 'mortgagecontactinfo', 'mortgage_contact_info', $xv)) {
             return $rt;
-        } elseif ($rt = self::testfield($k, $nag, 'monday_item_id', 'monday_item_id', $xv)) {
+        } elseif ($rt = self::testfield($k, $nag, 'mondayitemid', 'monday_item_id', $xv)) {
             return $rt;
         } else
             if (str_contains($k, 'aobattorney')) {
