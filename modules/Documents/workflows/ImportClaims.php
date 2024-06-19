@@ -1929,13 +1929,14 @@ class claimsDb
         $qg->setField(['id', 'policy_number', 'claim_number', 'type_of_job', 'type_of_claim', 'date_of_loss', 'date_of_service', 'insured', 'pre_attorney_name', 'ho_attorney', 'public_adjuster']);
         // $qg->setCustomColumn( [ 'u_yf_claimedinvoices.value', 'u_yf_claimedinvoices.claimed_invoice_name'] );
 
-        $qg->addRelatedField(['sourceField' => 'insurance_company', 'relatedModule' => 'InsuranceCompanies', 'relatedField' => 'insurance_company_name']);
-        $qg->addRelatedField(['sourceField' => 'prime_contractor_name', 'relatedModule' => 'Contractors', 'relatedField' => 'contractorname']);
+        $qg->addRelatedField(['sourceField' => 'insurance_company', 'relatedModule' => 'InsuranceCompanies', 'relatedField' => 'insurance_company_name']);       
         $qg->addRelatedField(['sourceField' => 'ho_law_firm', 'relatedModule' => 'LawFirms', 'relatedField' => 'law_firm_name']);
         $qg->addRelatedField(['sourceField' => 'insured', 'relatedModule' => 'Insureds', 'relatedField' => 'e_mail',]);
         $qg->addRelatedField(['sourceField' => 'insured', 'relatedModule' => 'Insureds', 'relatedField' => 'insured_name',]);
         $qg->addRelatedField(['sourceField' => 'insured', 'relatedModule' => 'Insureds', 'relatedField' => 'street',]);
         $qg->addRelatedField(['sourceField' => 'mortgage_company', 'relatedModule' => 'MortgageCompanies', 'relatedField' => 'name']);
+        $qg->addRelatedField(['sourceField' => 'prime_contractor_name', 'relatedModule' => 'Contractors', 'relatedField' => 'contractorname']);
+        
         $qg->addCondition('provider', ImportClaims::$provider, 'eid');
         $qg->addCondition('portfolio', ImportClaims::$portfolio, 'eid');
         // $q = $qg->addJoin(['LEFT JOIN', 'u_yf_claimedinvoices', 'u_yf_claimedinvoices.claim = u_yf_claims.claimsid']);
