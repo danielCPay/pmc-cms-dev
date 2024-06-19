@@ -789,6 +789,8 @@ class ImportClaims
             $status = "HO Critical Error at row " . $ex->getCode() . PHP_EOL .
                 $ex->getMessage();
         } catch (Throwable $e) {
+            var_dump($e);
+            exit();
             \App\Log::error($e);
             $status = "Serious error";
         } finally {
