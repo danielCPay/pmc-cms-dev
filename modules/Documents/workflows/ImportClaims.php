@@ -1604,11 +1604,11 @@ class contractors_Db
         $rez = $q->all();
         $this->contractors = [];
         foreach ($rez as $pos)
-            var_dump($pos);
-        $this->contractors[strtolower($pos['prime_contractor_name'])] = $pos['id'];
+            $this->contractors[strtolower($pos['contractorname'])] = $pos['id'];
     }
     function sprawdz($cl)
     {
+        var_dump($cl);
         $i = $this->contractors[strtolower($cl->prime_contractor_name)] ?? null;
         if (!isset($i)) {
             $cl->faktury[0]->xcl->kolumny['prime_contractor_name'][1] = claim_in_xls_row::BLAD_KOL;
