@@ -789,9 +789,6 @@ class ImportClaims
             $status = "HO Critical Error at row " . $ex->getCode() . PHP_EOL .
                 $ex->getMessage();
         } catch (Throwable $e) {
-            var_dump($e);
-            exit();
-
             \App\Log::error($e);
             $status = "Serious error";
         } finally {
@@ -1608,7 +1605,6 @@ class contractors_Db
     }
     function sprawdz($cl)
     {
-        var_dump($cl);
         $i = $this->contractors[strtolower($cl->prime_contractor_name)] ?? null;
         if (!isset($i)) {
             $cl->faktury[0]->xcl->kolumny['prime_contractor_name'][1] = claim_in_xls_row::BLAD_KOL;
@@ -1891,7 +1887,7 @@ class claim_in_db
         }
 
         if (isset($this->insurance_company_id))
-            $cldb->set('insurance_company', $this->insurance_company_id);      
+            $cldb->set('insurance_company', $this->insurance_company_id);
         if (isset($this->ho_law_firm_id))
             $cldb->set('ho_law_firm', $this->ho_law_firm_id);
         if (isset($this->ho_attorney_id))
@@ -1901,7 +1897,7 @@ class claim_in_db
         $cldb->set('pre_litigation_status', $this->plst);
 
         if (isset($this->contractor_id))
-        $cldb->set('prime_contractor', $this->contractor_id);
+            $cldb->set('prime_contractor', $this->contractor_id);
 
         if (isset($this->mortgage_company_id))
             $cldb->set('mortgage_company', $this->mortgage_company_id);
@@ -1930,7 +1926,7 @@ class claimsDb
         $qg->setField(['id', 'policy_number', 'claim_number', 'type_of_job', 'type_of_claim', 'date_of_loss', 'date_of_service', 'insured', 'pre_attorney_name', 'ho_attorney', 'public_adjuster']);
         // $qg->setCustomColumn( [ 'u_yf_claimedinvoices.value', 'u_yf_claimedinvoices.claimed_invoice_name'] );
 
-        $qg->addRelatedField(['sourceField' => 'insurance_company', 'relatedModule' => 'InsuranceCompanies', 'relatedField' => 'insurance_company_name']);       
+        $qg->addRelatedField(['sourceField' => 'insurance_company', 'relatedModule' => 'InsuranceCompanies', 'relatedField' => 'insurance_company_name']);
         $qg->addRelatedField(['sourceField' => 'ho_law_firm', 'relatedModule' => 'LawFirms', 'relatedField' => 'law_firm_name']);
         $qg->addRelatedField(['sourceField' => 'insured', 'relatedModule' => 'Insureds', 'relatedField' => 'e_mail',]);
         $qg->addRelatedField(['sourceField' => 'insured', 'relatedModule' => 'Insureds', 'relatedField' => 'insured_name',]);
