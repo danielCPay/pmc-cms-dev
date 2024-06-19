@@ -791,7 +791,7 @@ class ImportClaims
         } catch (Throwable $e) {
             var_dump($e);
             exit();
-            
+
             \App\Log::error($e);
             $status = "Serious error";
         } finally {
@@ -1604,7 +1604,8 @@ class contractors_Db
         $rez = $q->all();
         $this->contractors = [];
         foreach ($rez as $pos)
-            $this->contractors[strtolower($pos['prime_contractor_name'])] = $pos['id'];
+            var_dump($pos);
+        $this->contractors[strtolower($pos['prime_contractor_name'])] = $pos['id'];
     }
     function sprawdz($cl)
     {
