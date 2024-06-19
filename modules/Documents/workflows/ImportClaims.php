@@ -1891,9 +1891,7 @@ class claim_in_db
         }
 
         if (isset($this->insurance_company_id))
-            $cldb->set('insurance_company', $this->insurance_company_id);
-        if (isset($this->contractor_id))
-            $cldb->set('contractorname', $this->contractor_id);
+            $cldb->set('insurance_company', $this->insurance_company_id);      
         if (isset($this->ho_law_firm_id))
             $cldb->set('ho_law_firm', $this->ho_law_firm_id);
         if (isset($this->ho_attorney_id))
@@ -1901,6 +1899,9 @@ class claim_in_db
         if (isset($this->public_adjuster_id))
             $cldb->set('public_adjuster', $this->public_adjuster_id);
         $cldb->set('pre_litigation_status', $this->plst);
+
+        if (isset($this->contractor_id))
+        $cldb->set('prime_contractor', $this->contractor_id);
 
         if (isset($this->mortgage_company_id))
             $cldb->set('mortgage_company', $this->mortgage_company_id);
@@ -1935,8 +1936,8 @@ class claimsDb
         $qg->addRelatedField(['sourceField' => 'insured', 'relatedModule' => 'Insureds', 'relatedField' => 'insured_name',]);
         $qg->addRelatedField(['sourceField' => 'insured', 'relatedModule' => 'Insureds', 'relatedField' => 'street',]);
         $qg->addRelatedField(['sourceField' => 'mortgage_company', 'relatedModule' => 'MortgageCompanies', 'relatedField' => 'name']);
-        $qg->addRelatedField(['sourceField' => 'prime_contractor_name', 'relatedModule' => 'Contractors', 'relatedField' => 'contractorname']);
-        
+        $qg->addRelatedField(['sourceField' => 'prime_contractor', 'relatedModule' => 'Contractors', 'relatedField' => 'contractorname']);
+
         $qg->addCondition('provider', ImportClaims::$provider, 'eid');
         $qg->addCondition('portfolio', ImportClaims::$portfolio, 'eid');
         // $q = $qg->addJoin(['LEFT JOIN', 'u_yf_claimedinvoices', 'u_yf_claimedinvoices.claim = u_yf_claims.claimsid']);
