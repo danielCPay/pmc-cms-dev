@@ -1753,13 +1753,13 @@ class claim_in_db
         $this->mortgage_company = $pos['mortgage_companyMortgageCompaniesname'];
         $this->mortgage_loan_number = $pos['mortgage_loan_no'];
         $this->mortgage_contact_info = $pos['mortgage_contact_info'];
+        $this->monday_item_id = $pos['monday_item_id'];
         $this->insured = new insured_in_db();
         $this->insured->e_mail = strtolower($pos['insuredInsuredse_mail']);
         $this->insured->name = claim_in_xls_row::normalizuj_name(strtolower($pos['insuredInsuredsinsured_name']));
         $this->insured->street = $pos['insuredInsuredsstreet'];
         $this->ho_attorney_id = $pos['ho_attorney'];
-        $this->public_adjuster_id = $pos['public_adjuster'];
-        $this->monday_item_id = $pos['monday_item_id'];
+        $this->public_adjuster_id = $pos['public_adjuster'];      
     }
     public function init_zXl(claim_in_xls_row &$xc)
     {
@@ -1816,8 +1816,7 @@ class claim_in_db
         $cldb->set('date_of_first_notification', $this->date_of_fn);
         $cldb->set('pre_court_case_number', $this->pre_ccn);
         $cldb->set('pre_county', $this->pre_county);
-        $cldb->set('pre_attorney_name', $this->pre_attorney);
-        $cldb->set('monday_item_id', $this->monday_item_id);
+        $cldb->set('pre_attorney_name', $this->pre_attorney);      
         ImportClaims::$dBattL->set_dtp_attorney($this->faktury, $cldb, $this->pre_attorney);
         $cldb->set('insured', $this->insured->id);
         $cldb->set('provider', ImportClaims::$provider);
@@ -1850,7 +1849,7 @@ class claim_in_db
             $cldb->set('mortgage_company', $this->mortgage_company_id);
         $cldb->set('mortgage_loan_no', $this->mortgage_loan_number);
         $cldb->set('mortgage_contact_info', $this->mortgage_contact_info);
-
+        $cldb->set('monday_item_id', $this->monday_item_id);
         $cldb->save();
 
         $this->claim_id = $cldb->get('id');
