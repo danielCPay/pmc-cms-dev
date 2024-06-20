@@ -337,8 +337,6 @@ class claim_in_xls_row
             stat_append($this->status_kol, "Diff. " . ImportClaims::$naglowki['insurance_company'][1] . " with existing " . $cl->insurance_company);
             $this->kolumny['insurance_company'][1] = self::BLAD_KOL;
         }
-        var_dump($this->prime_contractor_name . " " . $cl->prime_contractor_name);
-
         if (strtolower($this->prime_contractor_name ?? null) != strtolower($cl->prime_contractor_name)) {
             stat_append($this->status_kol, "Diff. " . ImportClaims::$naglowki['prime_contractor_name'][1] . " with existing " . $cl->prime_contractor_name);
             $this->kolumny['prime_contractor_name'][1] = self::BLAD_KOL;
