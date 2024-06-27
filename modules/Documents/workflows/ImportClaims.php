@@ -2138,6 +2138,8 @@ class nowy_Excel
                 $this->ws->getStyle('A' . $cls->rz . ':' . 'K' . $cls->rz)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('FFC0C0C0');
                 $this->ws->getCell('A' . $cls->rz)->setValue("Duplicated");
             }
+            var_dump($cls);
+            exit();
         }
 
         $message = '';
