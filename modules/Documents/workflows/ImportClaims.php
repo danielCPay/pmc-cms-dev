@@ -361,8 +361,8 @@ class claim_in_xls_row
                     stat_append($this->status_kol, "Too big precision for prior coll.");
                 }
         }
-        var_dump($this->status);
-        exit();
+        var_dump($this->$cl);
+        //exit();
         return $this->status;
     }
     function sprawdz_obowiazkowe()
