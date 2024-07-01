@@ -1296,6 +1296,8 @@ class law_firmDb
 
                 if (empty($lf[2])) {
                     for ($id = 0; $id < sizeof($cl->faktury); $id++) {
+                        var_dump($cl);
+                        exit();
                         if (empty($cl->ho_attorney_id)) {
                             $cl->faktury[$id]->xcl->status = claim_in_xls_row::BLAD_REK;
                             stat_append($cl->faktury[$id]->xcl->status_row, "HO Attorney not known ");
