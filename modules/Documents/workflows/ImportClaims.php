@@ -653,7 +653,7 @@ class claim_in_xls_row
     }
     function    set_lop_or_aob(string $s)
     {
-        if ($s == 'HO' || $s == 'AOB' || $s == 'Estimates' || $s == 'PA' || $s == 'Flood' || $s == 'LOP/DTP') {
+        if ($s == 'HO' || $s == 'AOB' || $s == 'Estimates' || $s == 'PA' || $s == 'Flood' || $s == 'LOP/DTP' || $s == 'WOA') {
             $this->wywolane[__FUNCTION__] = true;
             $this->type_of_claim = $s;
         }
