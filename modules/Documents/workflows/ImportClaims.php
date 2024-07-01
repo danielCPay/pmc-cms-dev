@@ -781,7 +781,7 @@ class ImportClaims
                 $ex->getMessage();
         } catch (Throwable $e) {
             \App\Log::error($e);
-            $status = "Serious error";
+            $status = "Serious error" . $e;
         } finally {
             $pf->set('imported_claims_spreadsheets', '');
             $pf->save();
